@@ -1,0 +1,4 @@
+html, body { background: var(--surface); color: var(--ink); }
+body { margin: 0; font-family: var(--font-sans); font-size: 17px; line-height: 27px; -webkit-font-smoothing: antialiased; }
+a { color: var(--link); }
+a:hover { color: var(--ink); }
