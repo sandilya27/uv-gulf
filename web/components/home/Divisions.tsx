@@ -27,6 +27,7 @@ export function Divisions() {
               onMouseEnter={() => setHover(p.key)}
               style={{ flexGrow: active ? 1.7 : 1, background: active ? "var(--navy-800)" : "var(--navy-900)" }}
             >
+              <img className="division-photo" src={`/assets/images/${p.key === "i" ? "inspection" : "training"}.webp`} alt="" loading="lazy" decoding="async" aria-hidden="true" />
               <span aria-hidden="true" className="division-num">{p.num}</span>
               <Eyebrow>{p.eyebrow}</Eyebrow>
               <h2 className="division-title">{p.title}</h2>

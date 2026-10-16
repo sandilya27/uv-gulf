@@ -6,6 +6,7 @@ import { Motion } from "@/components/site/Motion";
 import { SiteHeaderBar } from "@/components/site/SiteHeaderBar";
 import { SITE_CONFIG } from "@/lib/content";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 
 const saira = Saira({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-saira" });
 const barlow = Barlow({ subsets: ["latin"], weight: ["400", "500", "600", "700"], style: ["normal", "italic"], variable: "--font-barlow" });

@@ -29,7 +29,7 @@ export default function InspectionPage() {
 
       <MethodExplorer />
 
-      <PhotoBand slotId="band-inspection" placeholder="Site photo: calibration bench or gauges on a plant" height="clamp(380px,60vh,560px)">
+      <PhotoBand slotId="band-inspection" src="/assets/images/calibration.webp" placeholder="Illustrative image of pressure gauges and precision calibration equipment on a laboratory bench" height="clamp(380px,60vh,560px)">
         <Eyebrow>Calibration</Eyebrow>
         <p className="h-band-quote">We calibrate pressure, temperature, flow and gas instruments on-shore and off-shore, with certificates traceable to national standards.</p>
       </PhotoBand>

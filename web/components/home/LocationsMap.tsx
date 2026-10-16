@@ -3,7 +3,7 @@
 // "Where we work": city list + map of the Kingdom. Lines draw from Khobar to each city on
 // first view; hovering a city in the list or on the map highlights it in both places.
 import { useState } from "react";
-import { Eyebrow } from "@/components/ds";
+import { Button, Eyebrow } from "@/components/ds";
 import { CITY_DATA } from "@/lib/content";
 import { SAUDI_PATH } from "@/lib/saudi-path";
 
@@ -20,30 +20,33 @@ const GRID: { x1: number; y1: number; x2: number; y2: number }[] = [];
 for (let lo = 36; lo <= 56; lo += 4) { const [x] = P(lo, 0); GRID.push({ x1: x, y1: 0, x2: x, y2: 500 }); }
 for (let la = 18; la <= 32; la += 4) { const [, y] = P(0, la); GRID.push({ x1: 0, y1: y, x2: 600, y2: y }); }
 
-const LABEL_T = { start: "translate(0,-50%)", middle: "translate(-50%,-50%)", end: "translate(-100%,-50%)" } as const;
-
 export function LocationsMap() {
   const [city, setCity] = useState("Khobar");
   const desc = city === "Khobar" ? "Head office · Kingdom of Saudi Arabia" : "Service location";
 
   return (
-    <section id="where" className="section bg-alt anchor">
+    <section id="where" className="section bg-alt anchor coverage-section">
       <div className="wrap where-grid">
-        <div data-reveal="1" className="stack-24">
+        <div data-reveal="1" className="stack-24 coverage-copy">
           <div className="stack-12">
             <Eyebrow>Where we work</Eyebrow>
-            <h2 className="h2">Head office in Khobar, service across the Kingdom</h2>
+            <h2 className="h2">Rooted in Khobar.<br /><span>Across the Kingdom.</span></h2>
           </div>
+          <p className="body-lg coverage-intro">Inspection, testing and technical expertise, delivered where your operations take place.</p>
+          <div className="coverage-stats"><div><strong>01</strong><span>Head office</span></div><div><strong>{String(PTS.length).padStart(2, "0")}</strong><span>Cities served</span></div><div><strong>KSA</strong><span>Service coverage</span></div></div>
+          <div className="coverage-list-heading"><span>Explore our coverage</span><span>Saudi Arabia ↗</span></div>
           <div className="city-list">
             {PTS.map((c) => (
               <button key={c.name} type="button" className={"city-row" + (c.name === city ? " is-active" : "")} aria-pressed={c.name === city} onMouseEnter={() => setCity(c.name)} onFocus={() => setCity(c.name)} onClick={() => setCity(c.name)}>
                 <span className="city-name">{c.name}</span>
-                <span className="city-tag">{c.tag}</span>
+                <span className="city-tag">{c.name === "Khobar" ? "HQ" : "↗"}</span>
               </button>
             ))}
           </div>
         </div>
         <div data-reveal="1" data-delay="150" className="map-card">
+          <div className="coverage-map-heading"><span><i /> Our service network</span><span>SA / 01</span></div>
+          <div className="coverage-map-visual">
           <svg viewBox="0 0 600 500" role="img" aria-label="Map of UV Gulf locations in Saudi Arabia" className="map-svg">
             {GRID.map((g, i) => <line key={i} {...g} className="map-grid" />)}
             <path d={SAUDI_PATH} className="map-land" />
@@ -63,18 +66,14 @@ export function LocationsMap() {
                 </g>
               );
             })}
+            {PTS.map((c) => <text key={c.name} x={c.lx} y={c.ly} textAnchor={c.anchor} dominantBaseline="middle" className={"coverage-map-label" + (c.name === city ? " is-active" : "")}>{c.name}</text>)}
           </svg>
-          <div className="map-labels" aria-hidden="true">
-            {PTS.map((c) => {
-              const a = c.name === city;
-              return (
-                <span key={c.name} style={{ left: c.lx / 6 + "%", top: c.ly / 5 + "%", transform: LABEL_T[c.anchor], fontWeight: a ? 700 : 500, color: a ? "var(--ink)" : "var(--ink-muted)" }}>{c.name}</span>
-              );
-            })}
           </div>
           <div className="map-foot" aria-live="polite">
+            <div className="coverage-selected"><span className="coverage-selected-kicker">{city === "Khobar" ? "Our base" : "Selected service city"}</span>
             <span className="map-foot-city">{city}</span>
-            <span className="map-foot-desc">{desc}</span>
+            <span className="map-foot-desc">{desc}</span></div>
+            <Button variant="on-deep" arrow href="/contact?type=inspection">Discuss your site</Button>
           </div>
         </div>
       </div>

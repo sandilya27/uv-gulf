@@ -19,7 +19,7 @@ export default function TrainingPage() {
       <section className="section bg-alt">
         <div className="wrap delivery-grid">
           <div data-reveal="1" className="delivery-photo">
-            <div data-parallax="0.08" className="delivery-photo-img"><PhotoSlot id="training-photo" placeholder="Training session photo, Khobar centre" /></div>
+            <div data-parallax="0.08" className="delivery-photo-img"><PhotoSlot id="training-photo" src="/assets/images/training.webp" placeholder="Illustrative image of an instructor demonstrating pipe inspection to industrial trainees" /></div>
           </div>
           <div data-reveal="1" data-delay="120" className="stack-16">
             <Eyebrow>Delivery</Eyebrow>
