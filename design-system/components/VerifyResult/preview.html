@@ -1,0 +1,16 @@
+<!-- @dsCard group="Verification" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>VerifyResult — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var U = window.UVGulf, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'uvg-stack'},
+    h(U.VerifyResult,{status:'valid',record:{number:'UVG-TR-2026-004812',holder:'Mohammed A. (example)',course:'Rigger Training — Level 2',issued:'14 Mar 2026',expires:'13 Mar 2029'}}),
+    h(U.VerifyResult,{status:'expired',record:{number:'UVG-TR-2022-001207',expires:'02 Feb 2025'}}),
+    h(U.VerifyResult,{status:'not-found'}),
+    h(U.VerifyResult,{status:'unavailable'})));
+</script>
+</body>
+</html>

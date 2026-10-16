@@ -1,0 +1,15 @@
+<!-- @dsCard group="Cards" height=340 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ServiceCard — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var U = window.UVGulf, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'uvg-grid'},
+    h(U.ServiceCard,{title:'Non-Destructive Testing',code:'NDT',summary:'Find defects in welds, pipework and vessels without taking them out of service.',items:['Ultrasonic testing (UT)','Radiography testing (RT)','Magnetic particle testing (MT)','Dye penetrant testing (PT)'],href:'#'}),
+    h(U.ServiceCard,{title:'Calibration',summary:'Calibration and overhaul of field instruments, on-shore and off-shore.',items:['Pressure and temperature','Flow meters and gas detectors','Pressure relief valves','Dimensional and electrical'],href:'#'}),
+    h(U.ServiceCard,{title:'Technical Advisory',summary:'Advice on standards, materials, lifting equipment and site risk.',items:['Regulations and standards','Risk and hazard assessment','On-site consultation'],href:'#'})));
+</script>
+</body>
+</html>

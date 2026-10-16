@@ -1,0 +1,15 @@
+<!-- @dsCard group="Cards" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>CourseCard — preview</title></head>
+<body>
+<div id="root"></div>
+<script>
+  var U = window.UVGulf, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div',{className:'uvg-grid'},
+    h(U.CourseCard,{title:'Rigger Training',summary:'Safe slinging, load calculation and signalling for lifting operations.',audience:'Riggers, lifting supervisors',duration:'On request',format:'Classroom + practical',href:'#'}),
+    h(U.CourseCard,{title:'Scaffolding Training',summary:'Erection, inspection and dismantling of tube-and-fitting and system scaffolds.',audience:'Scaffolders, inspectors',duration:'On request',format:'On-site or Khobar centre',href:'#'}),
+    h(U.CourseCard,{title:'Occupational Health & Safety',body:'NEBOSH',summary:'Internationally recognised safety qualification for supervisors and managers.',audience:'Supervisors, HSE staff',format:'Classroom',href:'#'})));
+</script>
+</body>
+</html>
