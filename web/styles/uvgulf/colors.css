@@ -1,0 +1,66 @@
+/* UV Gulf colour tokens. Generated from source/tokens.json. Light theme on :root; dark theme via [data-theme="dark"]. */
+:root {
+  --logo-navy: #004e72;
+  --logo-sky: #279bd6;
+  --navy-950: #031b29;
+  --navy-900: #002a3f;
+  --navy-800: #003a56;
+  --sky-600: #00679a;
+  --sky-300: #6cc4f0;
+  --sky-100: #e3f2fb;
+  --signal-500: #f2a900;
+  --steel-50: #f4f7f9;
+  --steel-200: #d3dde4;
+  --steel-500: #6b7f8e;
+  --steel-700: #3d4f5c;
+  --surface: #ffffff;
+  --surface-alt: #f4f7f9;
+  --surface-raised: #ffffff;
+  --surface-deep: #002a3f;
+  --surface-tint: #e3f2fb;
+  --ink: #0e2230;
+  --ink-muted: #4a5e6c;
+  --on-deep: #ffffff;
+  --on-deep-muted: #a9c3d3;
+  --primary: #004e72;
+  --primary-hover: #003a56;
+  --on-primary: #ffffff;
+  --accent: #279bd6;
+  --link: #00679a;
+  --signal: #f2a900;
+  --on-signal: #1f1600;
+  --border: #d3dde4;
+  --border-strong: #6b7f8e;
+  --focus-ring: #00679a;
+  --success: #16794a;
+  --success-bg: #e6f4ec;
+  --warning: #8a5a00;
+  --warning-bg: #fdf3dc;
+  --danger: #b42318;
+  --danger-bg: #fdecea;
+}
+
+[data-theme="dark"] {
+  --surface: #071a26;
+  --surface-alt: #0b2333;
+  --surface-raised: #102d40;
+  --surface-deep: #031520;
+  --surface-tint: #0f3248;
+  --ink: #e6eef3;
+  --ink-muted: #9db2c0;
+  --primary: #279bd6;
+  --primary-hover: #4fb0e2;
+  --on-primary: #031b29;
+  --accent: #4fb3e6;
+  --link: #6cc4f0;
+  --signal: #f5b82e;
+  --border: #1f3d50;
+  --border-strong: #5d7e92;
+  --focus-ring: #6cc4f0;
+  --success: #4cc28a;
+  --success-bg: #0d2e22;
+  --warning: #f5b82e;
+  --warning-bg: #2e2408;
+  --danger: #f97066;
+  --danger-bg: #33130f;
+}

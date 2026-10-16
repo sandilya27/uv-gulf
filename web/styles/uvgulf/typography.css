@@ -1,0 +1,52 @@
+/* UV Gulf type tokens. Display: Saira 600–700. Text: Barlow. Data: IBM Plex Mono. */
+:root {
+  --font-display: "Saira", "Arial Narrow", system-ui, sans-serif;
+  --font-sans: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Consolas", monospace;
+  --type-display-xl-size: 64px;
+  --type-display-xl-line: 64px;
+  --type-display-xl-weight: 700;
+  --type-display-xl-tracking: -0.01em;
+  --type-display-l-size: 48px;
+  --type-display-l-line: 52px;
+  --type-display-l-weight: 700;
+  --type-display-l-tracking: -0.01em;
+  --type-h1-size: 40px;
+  --type-h1-line: 46px;
+  --type-h1-weight: 700;
+  --type-h2-size: 32px;
+  --type-h2-line: 38px;
+  --type-h2-weight: 600;
+  --type-h3-size: 24px;
+  --type-h3-line: 30px;
+  --type-h3-weight: 600;
+  --type-h4-size: 19px;
+  --type-h4-line: 24px;
+  --type-h4-weight: 600;
+  --type-eyebrow-size: 13px;
+  --type-eyebrow-line: 16px;
+  --type-eyebrow-weight: 600;
+  --type-eyebrow-tracking: 0.14em;
+  --type-lead-size: 20px;
+  --type-lead-line: 30px;
+  --type-lead-weight: 400;
+  --type-body-size: 17px;
+  --type-body-line: 27px;
+  --type-body-weight: 400;
+  --type-body-sm-size: 15px;
+  --type-body-sm-line: 23px;
+  --type-body-sm-weight: 400;
+  --type-label-size: 14px;
+  --type-label-line: 20px;
+  --type-label-weight: 600;
+  --type-caption-size: 13px;
+  --type-caption-line: 18px;
+  --type-caption-weight: 500;
+  --type-code-size: 15px;
+  --type-code-line: 22px;
+  --type-code-weight: 500;
+  /* semantic aliases */
+  --text-heading-family: var(--font-display);
+  --text-body-family: var(--font-sans);
+  --text-data-family: var(--font-mono);
+}
