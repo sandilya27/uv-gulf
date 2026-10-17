@@ -2,7 +2,7 @@
 
 // UV Gulf assistant. Replies are fixed, approved sample answers (placeholder until
 // a real assistant is connected); each one links to the relevant page.
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button, Icon } from "@/components/ds";
 import { enquiryHref } from "@/lib/content";
@@ -25,6 +25,8 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 
 export function ChatWidget() {
   const router = useRouter();
+  const pathname = usePathname();
+  const [visibleOnPath, setVisibleOnPath] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [typing, setTyping] = useState(false);
   const [input, setInput] = useState("");
@@ -35,6 +37,27 @@ export function ChatWidget() {
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => () => clearTimeout(timer.current), []);
+
+  useEffect(() => {
+    const boundary = document.querySelector<HTMLElement>(".marquee")
+      ?? document.querySelector<HTMLElement>("[data-hero]");
+    const updateVisibility = () => {
+      const visible = !boundary || boundary.getBoundingClientRect().bottom <= 0;
+      setVisibleOnPath(visible ? pathname : null);
+      if (!visible) setOpen(false);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+    const observer = new ResizeObserver(updateVisibility);
+    if (boundary) observer.observe(boundary);
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+      observer.disconnect();
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (open && panelRef.current && !reducedMotion()) {
@@ -68,6 +91,8 @@ export function ChatWidget() {
       setMsgs((m) => [...m, { from: "bot", ...r }]);
     }, 1000);
   };
+
+  if (visibleOnPath !== pathname) return null;
 
   return (
     <div className="chat">

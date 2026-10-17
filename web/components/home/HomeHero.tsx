@@ -67,7 +67,18 @@ export function HomeHero() {
           <CredentialSeal standard="ISO 9001:2015" label="Quality management" />
         </div>
         </div>
-        <InspectionCore />
+        <div className="home-hero-visual">
+          <InspectionCore />
+          <div className="hero-service-strip">
+            <p className="hero-service-steps">
+              <span>Inspect</span><span aria-hidden="true">→</span>
+              <span>Test</span><span aria-hidden="true">→</span>
+              <span>Calibrate</span><span aria-hidden="true">→</span>
+              <span>Certify</span>
+            </p>
+            <p className="hero-service-caption">Technical assurance across the Kingdom.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
