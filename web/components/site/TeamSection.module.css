@@ -1,12 +1,14 @@
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
-.profile { min-width: 0; display: grid; align-content: start; gap: var(--space-6); }
+.profile { min-width: 0; display: grid; align-content: start; gap: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); }
+.profile h3 { font-family: var(--font-display); font-size: 1.5rem; }
+.details { padding: 0 var(--space-6) var(--space-8); }
 .profile h3, .profile p { margin: 0; }
 .profile p { color: var(--ink-muted); line-height: 1.6; overflow-wrap: anywhere; }
 .portrait { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); background: var(--surface-alt); }
 .profile .role { color: var(--ink); font-weight: 600; }
-.preview { padding: var(--space-8); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-alt); }
-.preview h3 { font-family: var(--font-display); margin: var(--space-6) 0 var(--space-4); }
-.preview p { margin: 0; color: var(--ink-muted); line-height: 1.7; }
-.number { font-family: var(--font-mono); color: var(--primary); }
+.notice { margin: 0; color: var(--ink-muted); font-size: 14px; line-height: 1.6; }
+.placeholder { width: 100%; aspect-ratio: 4 / 4; background: var(--surface-alt); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-6); color: var(--ink-muted); }
+.placeholder svg { width: 42%; height: auto; opacity: .25; }
+.placeholder span { font-family: var(--font-mono); font-size: 12px; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } }

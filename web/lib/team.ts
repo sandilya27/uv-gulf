@@ -12,9 +12,9 @@ export const TEAM_MEMBERS: readonly TeamMember[] = [];
 
 // Visible draft content for layout review, replaced by approved profiles when supplied.
 export const TEAM_PREVIEW = [
-  { role: "Inspection & testing", bio: "A place to introduce the people supporting equipment inspection and testing, their experience and their areas of focus." },
-  { role: "Training", bio: "A place to introduce the people delivering industrial training, their teaching approach and their specialist subjects." },
-  { role: "Client coordination", bio: "A place to introduce the people helping clients discuss requirements, plan assignments and coordinate enquiries." },
+  { name: "Omar Al-Faris", role: "Inspection Manager", bio: "Coordinates inspection assignments and helps teams turn technical requirements into clear plans and practical next steps." },
+  { name: "Daniel Mercer", role: "Training Lead", bio: "Brings a practical approach to industrial learning, connecting classroom discussions with everyday site activities." },
+  { name: "Sara Al-Nouri", role: "Client Relations Coordinator", bio: "Helps clients discuss their requirements and keeps communication clear from the first enquiry through assignment planning." },
 ] as const;
 
 export const PUBLISHED_TEAM = TEAM_MEMBERS.filter((member) =>

@@ -9,12 +9,18 @@ export function TeamSection({ variant = "full" }: { variant?: "compact" | "full"
       <Eyebrow>Our team</Eyebrow>
       <h2 id="team-title" className="h2">The people behind UV Gulf.</h2>
       {!members.length ? <>
-        <p className="body-lg">Team preview — sample descriptions for review. Individual profiles will be added once details are confirmed.</p>
+        <p className={styles.notice}>Sample profiles — fictional names and bios for layout review.</p>
         <div className={styles.grid}>
-          {TEAM_PREVIEW.map((item, index) => <article key={item.role} className={styles.preview}>
-            <span className={styles.number} aria-hidden="true">0{index + 1}</span>
-            <h3>{item.role}</h3>
-            <p>{item.bio}</p>
+          {TEAM_PREVIEW.map((item) => <article key={item.name} className={styles.profile}>
+            <div className={styles.placeholder} role="img" aria-label={`Portrait placeholder for sample profile ${item.name}`}>
+              <svg viewBox="0 0 160 180" fill="none" aria-hidden="true"><circle cx="80" cy="56" r="32" fill="currentColor" /><path d="M16 172v-20a64 64 0 0 1 128 0v20" fill="currentColor" /></svg>
+              <span>Portrait placeholder</span>
+            </div>
+            <div className={`stack-12 ${styles.details}`}>
+              <h3>{item.name}</h3>
+              <p className={styles.role}>{item.role}</p>
+              {variant === "full" ? <p>{item.bio}</p> : null}
+            </div>
           </article>)}
         </div>
       </> : null}
