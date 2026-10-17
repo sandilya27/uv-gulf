@@ -4,5 +4,9 @@
 .profile p { color: var(--ink-muted); line-height: 1.6; overflow-wrap: anywhere; }
 .portrait { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); background: var(--surface-alt); }
 .profile .role { color: var(--ink); font-weight: 600; }
+.preview { padding: var(--space-8); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-alt); }
+.preview h3 { font-family: var(--font-display); margin: var(--space-6) 0 var(--space-4); }
+.preview p { margin: 0; color: var(--ink-muted); line-height: 1.7; }
+.number { font-family: var(--font-mono); color: var(--primary); }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } }

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Button, Icon } from "@/components/ds";
 import { NAV_ITEMS } from "@/lib/content";
 
-const CURRENT: Record<string, string> = { "/inspection": "Inspection", "/training": "Training", "/industries": "Industries", "/contact": "Contact" };
+const CURRENT: Record<string, string> = { "/inspection": "Inspection", "/training": "Training", "/industries": "Industries", "/about": "About", "/contact": "Contact" };
 
 export function SiteHeaderBar() {
   const pathname = usePathname();

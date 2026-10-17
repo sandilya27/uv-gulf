@@ -1,15 +1,24 @@
 import { Button, Eyebrow } from "@/components/ds";
-import { PUBLISHED_TEAM } from "@/lib/team";
+import { PUBLISHED_TEAM, TEAM_PREVIEW } from "@/lib/team";
 import styles from "./TeamSection.module.css";
 
 export function TeamSection({ variant = "full" }: { variant?: "compact" | "full" }) {
-  if (!PUBLISHED_TEAM.length) return null;
   const members = variant === "compact" ? PUBLISHED_TEAM.slice(0, 3) : PUBLISHED_TEAM;
   return <section id="team" className="section anchor" aria-labelledby="team-title">
     <div className="wrap stack-24">
       <Eyebrow>Our team</Eyebrow>
       <h2 id="team-title" className="h2">The people behind UV Gulf.</h2>
-      <div className={styles.grid}>
+      {!members.length ? <>
+        <p className="body-lg">Team preview — sample descriptions for review. Individual profiles will be added once details are confirmed.</p>
+        <div className={styles.grid}>
+          {TEAM_PREVIEW.map((item, index) => <article key={item.role} className={styles.preview}>
+            <span className={styles.number} aria-hidden="true">0{index + 1}</span>
+            <h3>{item.role}</h3>
+            <p>{item.bio}</p>
+          </article>)}
+        </div>
+      </> : null}
+      {members.length ? <div className={styles.grid}>
         {members.map((member) => <article key={member.id} className={styles.profile}>
           <img className={styles.portrait} src={member.portrait.src} alt={member.portrait.alt} loading="lazy" decoding="async" />
           <div className="stack-12">
@@ -18,7 +27,7 @@ export function TeamSection({ variant = "full" }: { variant?: "compact" | "full"
             {variant === "full" ? <p>{member.bio}</p> : null}
           </div>
         </article>)}
-      </div>
+      </div> : null}
       {variant === "compact" ? <div><Button variant="ghost" arrow href="/about#team">Meet the UV Gulf team</Button></div> : null}
     </div>
   </section>;
