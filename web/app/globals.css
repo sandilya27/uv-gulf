@@ -375,6 +375,7 @@ img { max-width: none; }
   .section { padding: var(--space-16) 0; }
   .wrap.home-hero-inner { padding: var(--space-16) var(--space-4); }
   .wrap.photo-band-text { padding: var(--space-12) var(--space-4); }
+  #band-home { object-position: 65% center; }
   .page-hero { padding: var(--space-16) 0 var(--space-12); }
   .h2 { font-size: 32px; line-height: 38px; }
   .h-cta { font-size: 28px; line-height: 34px; }
