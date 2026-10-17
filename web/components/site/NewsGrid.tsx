@@ -1,3 +1,4 @@
+import { CardEntrances } from "./CardEntrances";
 import Link from "next/link";
 import { articleHref, formatArticleDate, type NewsArticle } from "@/lib/news";
 import styles from "./NewsGrid.module.css";
@@ -11,12 +12,12 @@ export function NewsGrid({ articles }: { articles: readonly NewsArticle[] }) {
     <div className="btn-row"><Link href="/inspection">Explore inspection services</Link><Link href="/training">Explore industrial training</Link></div>
   </div>;
 
-  return <div className={styles.grid}>{articles.map((article) => <article key={article.slug} className={styles.card}>
+  return <CardEntrances className={styles.grid}>{articles.map((article) => <article key={article.slug} className={styles.card}>
     {article.image ? <img className={styles.image} src={article.image.src} alt={article.image.alt} loading="lazy" decoding="async" /> : null}
     <div className={styles.copy}>
       <div className={styles.meta}><span>{article.category}</span><time dateTime={article.publishedAt}>{formatArticleDate(article.publishedAt)}</time></div>
       <h3><Link href={articleHref(article)}>{article.title}</Link></h3>
       <p>{article.summary}</p>
     </div>
-  </article>)}</div>;
+  </article>)}</CardEntrances>;
 }

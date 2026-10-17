@@ -1,3 +1,4 @@
+import { CardEntrances } from "@/components/site/CardEntrances";
 import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
 import { Divisions } from "@/components/home/Divisions";
@@ -68,7 +69,7 @@ export default function HomePage() {
             ))}
             <div className="about-credentials">
               <h3 className="counter-label">Accreditation &amp; certification</h3>
-              <dl className="about-credential-list">
+              <CardEntrances as="dl" className="about-credential-list">
                 <div>
                   <dt>ISO/IEC 17020:2012</dt>
                   <dd>Inspection-body accreditation</dd>
@@ -77,7 +78,7 @@ export default function HomePage() {
                   <dt>ISO 9001:2015</dt>
                   <dd>Quality-management system certification</dd>
                 </div>
-              </dl>
+              </CardEntrances>
             </div>
           </div>
         </div>
