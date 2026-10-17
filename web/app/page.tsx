@@ -1,5 +1,4 @@
 import { MaskedHeading } from "@/components/site/MaskedHeading";
-import { GearDrawing } from "@/components/site/GearDrawing";
 import { Button, Eyebrow } from "@/components/ds";
 import { Divisions } from "@/components/home/Divisions";
 import { HomeHero } from "@/components/home/HomeHero";
@@ -25,7 +24,6 @@ export default function HomePage() {
       <Divisions />
 
       <section className="section inspection-services-section">
-        <GearDrawing />
         <div className="wrap">
           <div className="section-head">
             <div className="stack-12">

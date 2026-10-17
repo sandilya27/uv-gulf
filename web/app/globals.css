@@ -675,8 +675,6 @@ img { max-width: none; }
 
 
 /* Full-image inspection cards, stacked on the document scroll. */
-.inspection-services-section { position: relative; overflow: clip; isolation: isolate; }
-.inspection-services-section > .wrap { position: relative; z-index: 1; }
 .inspection-services-section .section-head { margin-bottom: 8px; }
 .service-stack { position: relative; }
 .service-stack-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; }
