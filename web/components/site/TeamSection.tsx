@@ -15,7 +15,7 @@ export function TeamSection({ variant = "full" }: { variant?: "compact" | "full"
       <div className={styles.grid}>
         {members.map((member) => <article key={member.name} className={styles.profile}>
           <ProfileCard avatarUrl={member.portrait.src} avatarAlt={member.portrait.alt} name={member.name} title={member.role}
-            theme="dark" backdropColor="#092638" radius={18} holo={0.15} glare={0.18}
+            iconUrl="/assets/uvgulf-mark-reversed.png" theme="dark" backdropColor="#092638" radius={18} holo={0.3} glare={0.18}
             tiltStrength={6} parallax={3} intro={false} enableMobileTilt={false} showUserInfo={false} />
           {variant === "full" ? <p className={styles.bio}>{member.bio}</p> : null}
         </article>)}
