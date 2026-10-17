@@ -36,16 +36,17 @@ export default function HomePage() {
         <h2 className="h-band">On-site inspection, wherever your asset is.</h2>
       </PhotoBand>
 
-      <section id="about" className="section anchor">
+      <section id="about" className="section anchor about-section">
         <div className="wrap about-grid">
           <div data-reveal="1" className="stack-24">
             <div className="stack-12">
               <Eyebrow>About UV Gulf</Eyebrow>
-              <h2 className="h2">An accredited inspection body based in Khobar</h2>
+              <h2 className="h2">Inspection expertise. Across Saudi Arabia.</h2>
             </div>
-            <p className="body-lg">United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across the Kingdom of Saudi Arabia.</p>
-            <div className="chip-row">
-              {INDUSTRIES.map((ind) => <span key={ind} className="chip">{ind}</span>)}
+            <p className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
+            <p className="about-industries"><strong>Industries served</strong><span>{INDUSTRIES.join(" · ")}</span></p>
+            <div className="btn-row">
+              <Button variant="ghost" arrow href="/inspection">Explore our services</Button>
             </div>
           </div>
           <div className="counters">
@@ -56,6 +57,19 @@ export default function HomePage() {
                 <span className="counter-sub">{k.sub}</span>
               </div>
             ))}
+            <div className="about-credentials">
+              <h3 className="counter-label">Accreditation &amp; certification</h3>
+              <dl className="about-credential-list">
+                <div>
+                  <dt>ISO/IEC 17020:2012</dt>
+                  <dd>Inspection-body accreditation</dd>
+                </div>
+                <div>
+                  <dt>ISO 9001:2015</dt>
+                  <dd>Quality-management system certification</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </div>
       </section>

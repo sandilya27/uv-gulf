@@ -72,10 +72,8 @@ export const CITY_DATA: [string, number, number, "start" | "middle" | "end", num
 export const INDUSTRIES = ["Oil and gas", "Petrochemical", "Energy", "Construction"];
 
 export const COUNTERS = [
-  { n: 2, label: "Divisions", sub: "Inspection and Training" },
   { n: 9, label: "Service locations", sub: "Served from the Khobar head office" },
   { n: 8, label: "NDT methods", sub: "From visual to acoustic emission" },
-  { n: 2, label: "ISO standards", sub: "ISO/IEC 17020:2012 and ISO 9001:2015" },
 ];
 
 export const DIVISION_LINKS = {
