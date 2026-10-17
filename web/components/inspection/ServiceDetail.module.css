@@ -1,7 +1,9 @@
-.breadcrumb { padding-block: var(--space-4); font-size: .9rem; }
+.breadcrumb { margin-bottom: var(--space-4); font-family: var(--font-mono); font-size: .75rem; line-height: 1.6; letter-spacing: .03em; color: var(--on-deep); }
 .breadcrumb ol { display: flex; flex-wrap: wrap; gap: .6rem 1rem; list-style: none; padding: 0; margin: 0; }
 .breadcrumb li + li::before { content: "/"; margin-right: 1rem; opacity: .5; }
-.breadcrumb a { text-underline-offset: .25em; }
+.breadcrumb a { color: inherit; opacity: .75; text-decoration: none; text-underline-offset: .25em; }
+.breadcrumb a:hover, .breadcrumb a:focus-visible { opacity: 1; text-decoration: underline; }
+.breadcrumb li[aria-current="page"] { overflow-wrap: anywhere; }
 .breadcrumb a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--space-12); }
 .section h2 { margin-top: var(--space-4); }

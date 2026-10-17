@@ -7,10 +7,9 @@ import styles from "./ServiceDetail.module.css";
 
 export function ServiceDetail({ title, lead, children }: { title: string; lead: string; children: ReactNode }) {
   return <>
-    <nav aria-label="Breadcrumb" className={`wrap ${styles.breadcrumb}`}>
+    <PageHero title={title} lead={lead} eyebrow="Inspection services" breadcrumb={<nav aria-label="Breadcrumb" className={styles.breadcrumb}>
       <ol><li><Link href="/">Home</Link></li><li><Link href="/inspection">Inspection</Link></li><li aria-current="page">{title}</li></ol>
-    </nav>
-    <PageHero eyebrow="Inspection services" title={title} lead={lead}>
+    </nav>}>
       <Button variant="on-deep" size="lg" arrow href={enquiryHref("Inspection")}>Request an inspection</Button>
     </PageHero>
     {children}
