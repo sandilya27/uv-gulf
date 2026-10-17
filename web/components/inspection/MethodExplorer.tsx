@@ -1,10 +1,9 @@
 "use client";
 
 // NDT methods grid; selecting (click or hover) a method swaps the sticky detail panel.
-import { useId, useRef, useState } from "react";
-import { LayoutGroup, motion, useReducedMotion } from "motion/react";
+import { useId, useState } from "react";
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { Button, Eyebrow } from "@/components/ds";
-import { pop } from "@/components/site/Motion";
 import { enquiryHref, METHODS } from "@/lib/content";
 import styles from "./MethodExplorer.module.css";
 
@@ -12,11 +11,9 @@ export function MethodExplorer({ limitations }: { limitations: Record<string, st
   const [code, setCode] = useState("UT");
   const layoutGroupId = useId();
   const reduceMotion = useReducedMotion();
-  const panel = useRef<HTMLDivElement>(null);
   const select = (c: string) => {
     if (c === code) return;
     setCode(c);
-    requestAnimationFrame(() => pop(panel.current, 8));
   };
   const m = METHODS.find((x) => x.code === code)!;
 
@@ -43,7 +40,9 @@ export function MethodExplorer({ limitations }: { limitations: Record<string, st
           </LayoutGroup>
         </div>
         <div data-reveal="1" data-delay="120" className="sticky-panel">
-          <div ref={panel} className="method-panel" aria-live="polite">
+          <motion.div className="method-panel" aria-live="polite" aria-atomic="true" layout="size" transition={{ layout: { duration: reduceMotion ? 0 : 0.28, ease: "easeInOut" } }}>
+            <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={m.code} layout="position" initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }} transition={{ duration: reduceMotion ? 0 : 0.16, ease: "easeOut" }}>
             <div className={styles.visual} aria-hidden="true">
               <div className={styles.visualHeader}><span>Examination method</span><span>{String(METHODS.indexOf(m) + 1).padStart(2, "0")} / 08</span></div>
               <span className="method-panel-code">{m.code}</span>
@@ -56,7 +55,9 @@ export function MethodExplorer({ limitations }: { limitations: Record<string, st
             <div className={styles.limitation}><span>Suitability & limitations</span><p className="method-panel-text">{limitations[m.code]}</p></div>
             <div className={styles.action}><Button variant="ghost" arrow href={enquiryHref("Inspection")}>Ask about this method</Button><span>Scope agreed for your asset</span></div>
             </div>
-          </div>
+            </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </div>
       </div>
     </section>
