@@ -5,20 +5,16 @@ import { createTimeline, stagger } from "animejs";
 import { Button, Eyebrow } from "@/components/ds";
 import styles from "./PrecisionField.module.css";
 
-// Deterministic geometry keeps the server render and first client frame identical.
-const POINTS = Array.from({ length: 216 }, (_: unknown, i = 0) => {
-  const x = i % 6 - 2.5;
-  const y = Math.floor(i / 6) % 6 - 2.5;
-  const z = Math.floor(i / 36) - 2.5;
-  return {
-    cubeX: 320 + (x - z) * 35,
-    cubeY: 280 + (x + z) * 17 + y * 37,
-    fieldX: 65 + (i % 18) * 30,
-    fieldY: 100 + Math.floor(i / 18) * 31 + Math.sin(i * 2.4) * 38,
-    waveX: 45 + (i % 36) * 16,
-    waveY: 260 + Math.sin((i % 36) * 0.22) * 95 + Math.floor(i / 36) * 12,
-  };
-});
+// Open, machined frames form a sectional sculpture inspired by asset inspection.
+const PLATES = Array.from({ length: 11 }, (_, i) => ({
+  assembledY: (i - 5) * 17,
+  openX: Math.sin(i * 0.65) * 90,
+  openY: (i - 5) * 32,
+  fanX: (i - 5) * 31,
+  fanY: Math.abs(i - 5) * 13 - 30,
+}));
+
+const FRAME = "M-142-24 Q-160-34-142-44 L-16-110 Q0-119 16-110 L142-44 Q160-34 142-24 L16 42 Q0 51-16 42 Z M-96-34 L0 16 L96-34 L0-84 Z";
 
 export function PrecisionField() {
   const root = useRef<HTMLElement>(null);
@@ -32,27 +28,26 @@ export function PrecisionField() {
     let cleanup = () => {};
     const setup = () => {
       cleanup();
+      cleanup = () => {};
       if (preference.matches) return;
-      const dots = Array.from(svg.querySelectorAll(".precision-dot"));
+      const plates = Array.from(svg.querySelectorAll(".precision-plate"));
       const timeline = createTimeline({ autoplay: false })
-        .add(dots, {
-          cx: (_: unknown, i = 0) => [POINTS[i].fieldX, POINTS[i].cubeX],
-          cy: (_: unknown, i = 0) => [POINTS[i].fieldY, POINTS[i].cubeY],
-          opacity: [0.25, 0.95],
-          r: [1.5, 2.8],
-          delay: stagger(3, { from: "center" }),
+        .add(plates, {
+          x: (_: unknown, i = 0) => [PLATES[i].openX, 0],
+          y: (_: unknown, i = 0) => [PLATES[i].openY - PLATES[i].assembledY, 0],
+          rotate: (_: unknown, i = 0) => [(i - 5) * 8, 0],
+          delay: stagger(65, { from: "center" }),
           duration: 1400,
           ease: "inOutQuint",
         }, 0)
-        .add(dots, {
-          cx: (_: unknown, i = 0) => POINTS[i].waveX,
-          cy: (_: unknown, i = 0) => POINTS[i].waveY,
-          r: 2,
-          opacity: 0.65,
-          delay: stagger(2),
-          duration: 1200,
+        .add(plates, {
+          x: (_: unknown, i = 0) => PLATES[i].fanX,
+          y: (_: unknown, i = 0) => PLATES[i].fanY - PLATES[i].assembledY,
+          rotate: (_: unknown, i = 0) => (i - 5) * 12,
+          delay: stagger(45),
+          duration: 1400,
           ease: "inOutQuart",
-        }, 2400);
+        }, 2300);
       let frame = 0;
       const update = () => {
         frame = 0;
@@ -90,14 +85,29 @@ export function PrecisionField() {
             <Button variant="outline-deep" arrow href="/inspection">Explore our expertise</Button>
           </div>
           <div className={styles.visual} aria-hidden="true">
-            <div className={styles.caption}><span>UV GULF / PRECISION STUDY</span><span>01 — 03</span></div>
+            <div className={styles.caption}><span>UV GULF / SECTIONAL STUDY</span><span>01 — 03</span></div>
             <svg ref={artwork} viewBox="0 0 640 560" fill="none">
               <defs>
+                <linearGradient id="precision-metal" x1="-150" y1="-110" x2="140" y2="50" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#d2f3ff" /><stop offset=".28" stopColor="#4aa2c7" /><stop offset=".58" stopColor="#126083" /><stop offset="1" stopColor="#082f49" />
+                </linearGradient>
+                <linearGradient id="precision-edge"><stop stopColor="#bdefff" /><stop offset="1" stopColor="#279bd6" stopOpacity=".25" /></linearGradient>
+                <linearGradient id="precision-gold"><stop stopColor="#ffe4a1" /><stop offset=".5" stopColor="#f2a900" /><stop offset="1" stopColor="#895300" /></linearGradient>
                 <radialGradient id="precision-halo"><stop stopColor="#279bd6" stopOpacity=".2" /><stop offset="1" stopColor="#279bd6" stopOpacity="0" /></radialGradient>
               </defs>
               <circle cx="320" cy="280" r="270" fill="url(#precision-halo)" />
-              <g stroke="#6cc4f0" strokeOpacity=".13"><path d="M20 280H620M320 30V530" /><circle cx="320" cy="280" r="225" strokeDasharray="2 12" /><circle cx="320" cy="280" r="155" /></g>
-              {POINTS.map((point, i) => <circle className="precision-dot" key={i} cx={point.cubeX} cy={point.cubeY} r="2.8" fill={i % 7 === 0 ? "#f2a900" : "#85dcff"} />)}
+              <ellipse cx="320" cy="455" rx="170" ry="22" fill="#000" opacity=".22" />
+              <g transform="translate(320 300)">
+                {PLATES.map((plate, i) => (
+                  <g key={i} transform={`translate(0 ${plate.assembledY})`}>
+                    <g className="precision-plate" style={{ transformOrigin: "0px -34px" }}>
+                      <path d={FRAME} transform="translate(0 7)" fill={i === 5 ? "#895300" : "#072c41"} fillRule="evenodd" stroke="#062236" strokeWidth="1" />
+                      <path d={FRAME} fill={`url(#${i === 5 ? "precision-gold" : "precision-metal"})`} fillRule="evenodd" stroke="url(#precision-edge)" strokeWidth="1" />
+                      <path d="M-141-24 L-16 42 Q0 51 16 42 L141-24" stroke={i === 5 ? "#ffe4a1" : "#a2ddf3"} strokeOpacity=".7" />
+                    </g>
+                  </g>
+                ))}
+              </g>
               <g stroke="#85dcff" strokeWidth="1.5"><path d="M30 65V45H50M590 45H610V65M30 495V515H50M590 515H610V495" /></g>
             </svg>
             <div className={styles.legend}><span>Observe</span><span>Understand</span><span>Move forward</span></div>
