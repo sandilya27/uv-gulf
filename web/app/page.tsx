@@ -3,7 +3,6 @@ import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
 import { Divisions } from "@/components/home/Divisions";
 import { HomeHero } from "@/components/home/HomeHero";
-import { PrecisionField } from "@/components/home/PrecisionField";
 import { InspectionProcess } from "@/components/home/InspectionProcess";
 import { LocationsMap } from "@/components/home/LocationsMap";
 import { Marquee } from "@/components/home/Marquee";
@@ -23,7 +22,6 @@ export default function HomePage() {
     <>
       <HomeHero />
       <Marquee />
-      <PrecisionField />
       <Divisions />
 
       <section className="section inspection-services-section">
