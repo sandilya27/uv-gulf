@@ -16,7 +16,7 @@ export function ServiceExplorer() {
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compact = window.matchMedia("(max-width: 760px), (max-height: 700px)");
+    const compact = window.matchMedia("(max-width: 760px)");
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -25,12 +25,17 @@ export function ServiceExplorer() {
       // Equalize sticky boundaries so every card releases as one completed stack.
       const height = Math.max(0, ...cards.map(slot => (slot.firstElementChild as HTMLElement | null)?.offsetHeight ?? 0));
       root.current?.style.setProperty("--stack-card-height", `${height}px`);
+      // Browser chrome and zoom change the usable viewport. Keep stacking unless
+      // the actual content cannot fit below the header and exposed card edges.
+      const fits = height + pin + (cards.length - 1) * 18 + 16 <= window.innerHeight;
+      const stacking = !motion.matches && !compact.matches && fits;
+      root.current?.toggleAttribute("data-stack-static", !stacking);
       const tops = cards.map(card => card.getBoundingClientRect().top);
       cards.forEach((slot, i) => {
         const card = slot.firstElementChild as HTMLElement | null;
         if (!card) return;
         let depth = 0;
-        if (!motion.matches && !compact.matches) {
+        if (stacking) {
           for (let j = i + 1; j < cards.length; j++) {
             const span = Math.max(1, slot.offsetHeight - 18);
             depth += Math.max(0, Math.min(1, (pin + i * 18 + slot.offsetHeight - tops[j]) / span));

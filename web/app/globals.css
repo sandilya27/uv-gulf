@@ -717,7 +717,16 @@ img { max-width: none; }
   .service-stack-body { width: 78%; }
   .service-stack-card { min-height: 520px; background-position: 60% center; }
 }
-@media (max-width: 760px), (max-height: 700px) {
+/* Fit desktop cards to the usable viewport instead of disabling laptop stacking. */
+@media (min-width: 761px) and (max-height: 800px) {
+  .service-stack-card { min-height: clamp(360px, calc(100svh - 190px), 550px); }
+  .service-stack-body { padding: 28px; gap: 14px; }
+  .service-stack-body h3 { font-size: clamp(30px, 3.4vw, 44px); }
+  .service-stack-body > p { font-size: 16px; line-height: 1.5; }
+}
+.service-stack[data-stack-static] .service-stack-slot { min-height: 0; position: relative; top: auto; margin: 0; scroll-margin-top: 100px; }
+.service-stack[data-stack-static] .service-stack-cards { gap: 24px; }
+@media (max-width: 760px) {
   .service-stack-slot { min-height: 0; position: relative; top: auto; margin: 0; scroll-margin-top: 100px; }
   .service-stack-cards { gap: 24px; }
 }
