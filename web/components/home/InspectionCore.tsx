@@ -35,16 +35,49 @@ export default function InspectionCore() {
     scene.add(tilt);
     const core = new THREE.Group();
     tilt.add(core);
-    const metal = new THREE.MeshStandardMaterial({ color: 0x377b9b, metalness: 0.8, roughness: 0.28 });
+    const baseColor = new THREE.Color(0x377b9b);
+    const hoverColor = new THREE.Color(0xffb800);
+    const highlightColor = new THREE.Color();
     const glow = new THREE.MeshBasicMaterial({ color: 0x76d8ff });
+    const sphereHover = {
+      direction: { value: new THREE.Vector3(0, 0, 1) },
+      strength: { value: 0 },
+      color: { value: hoverColor },
+    };
+    // Shade a local patch on the sphere instead of tinting the entire nucleus.
+    glow.onBeforeCompile = (shader) => {
+      shader.uniforms.uHoverDirection = sphereHover.direction;
+      shader.uniforms.uHoverStrength = sphereHover.strength;
+      shader.uniforms.uHoverColor = sphereHover.color;
+      shader.vertexShader = shader.vertexShader.replace("#include <common>",
+        "#include <common>\nvarying vec3 vSphereDirection;")
+        .replace("#include <begin_vertex>",
+          "#include <begin_vertex>\nvSphereDirection = normalize(position);");
+      shader.fragmentShader = shader.fragmentShader.replace("#include <common>",
+        "#include <common>\nvarying vec3 vSphereDirection;\nuniform vec3 uHoverDirection;\nuniform float uHoverStrength;\nuniform vec3 uHoverColor;")
+        .replace("#include <color_fragment>", `#include <color_fragment>
+          float hoverPatch = smoothstep(0.35, 0.95, dot(normalize(vSphereDirection), normalize(uHoverDirection)));
+          diffuseColor.rgb = mix(diffuseColor.rgb, uHoverColor, hoverPatch * uHoverStrength);
+        `);
+    };
     const geometry = new THREE.BoxGeometry(0.47, 0.47, 0.47);
-    const pieces: THREE.Mesh[] = [];
+    const pieces: THREE.Mesh<THREE.BoxGeometry, THREE.MeshStandardMaterial>[] = [];
+    const highlights: number[] = [];
+    // Separate hover deformation from the existing assembly animation.
+    const distortions: THREE.Group[] = [];
     for (let x = -1; x <= 1; x++) for (let y = -1; y <= 1; y++) for (let z = -1; z <= 1; z++) {
       if (x === 0 && y === 0 && z === 0) continue;
-      const piece = new THREE.Mesh(geometry, metal);
+      const piece = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({
+        color: baseColor, metalness: 0.8, roughness: 0.28,
+        emissive: hoverColor, emissiveIntensity: 0,
+      }));
       piece.position.set(x * 0.53, y * 0.53, z * 0.53);
       pieces.push(piece);
-      core.add(piece);
+      highlights.push(0);
+      const distortion = new THREE.Group();
+      distortion.add(piece);
+      distortions.push(distortion);
+      core.add(distortion);
     }
     const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.36, 32, 24), glow);
     core.add(nucleus);
@@ -62,7 +95,64 @@ export default function InspectionCore() {
         }));
       });
     }
-    const render = () => renderer.render(scene, camera);
+    const pointer = new THREE.Vector2();
+    const projected = new THREE.Vector3();
+    const sphereCenter = new THREE.Vector3();
+    const sphereTarget = new THREE.Vector3();
+    const sphereFacing = new THREE.Vector3();
+    let hovering = false;
+    let previousFrame = performance.now();
+    const move = (event: PointerEvent) => {
+      if (event.pointerType === "touch" || reduced.matches) return;
+      const bounds = element.getBoundingClientRect();
+      pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1,
+        1 - (event.clientY - bounds.top) / bounds.height * 2);
+      hovering = true;
+    };
+    const leave = () => { hovering = false; };
+    element.addEventListener("pointermove", move);
+    element.addEventListener("pointerleave", leave);
+    element.addEventListener("pointercancel", leave);
+    const render = () => {
+      const now = performance.now();
+      const ease = reduced.matches ? 1 : 1 - Math.exp(-Math.min(now - previousFrame, 64) / 120);
+      previousFrame = now;
+      const active = hovering && !reduced.matches && !document.hidden;
+      tilt.rotation.x = THREE.MathUtils.lerp(tilt.rotation.x, 0.35 + (active ? -pointer.y * 0.16 : 0), ease);
+      tilt.rotation.y = THREE.MathUtils.lerp(tilt.rotation.y, active ? pointer.x * 0.22 : 0, ease);
+      scene.updateMatrixWorld(true);
+      nucleus.getWorldPosition(sphereCenter);
+      projected.copy(sphereCenter).project(camera);
+      const sphereDistance = Math.hypot((projected.x - pointer.x) * camera.aspect, projected.y - pointer.y);
+      const sphereStrength = active ? Math.max(0, 1 - sphereDistance / 1.2) : 0;
+      sphereHover.strength.value = THREE.MathUtils.lerp(sphereHover.strength.value, sphereStrength, ease);
+      if (active) {
+        // Project the pointer onto the nucleus plane, biased toward its visible face.
+        sphereTarget.set(pointer.x, pointer.y, projected.z).unproject(camera);
+        sphereFacing.copy(camera.position).sub(sphereCenter).normalize().multiplyScalar(0.3);
+        sphereTarget.add(sphereFacing);
+        nucleus.worldToLocal(sphereTarget).normalize();
+        sphereHover.direction.value.lerp(sphereTarget, ease).normalize();
+      }
+      pieces.forEach((piece, index) => {
+        piece.getWorldPosition(projected).project(camera);
+        const distance = Math.hypot((projected.x - pointer.x) * camera.aspect, projected.y - pointer.y);
+        const force = active ? Math.pow(Math.max(0, 1 - distance / 0.65), 2) : 0;
+        highlights[index] = THREE.MathUtils.lerp(highlights[index], Math.min(1, force * 1.8), ease);
+        highlightColor.copy(baseColor).lerp(hoverColor, highlights[index]);
+        piece.material.color.copy(highlightColor);
+        piece.material.emissiveIntensity = highlights[index] * 0.35;
+        const distortion = distortions[index];
+        const length = piece.position.length() || 1;
+        distortion.position.x = THREE.MathUtils.lerp(distortion.position.x, piece.position.x / length * force * 0.28, ease);
+        distortion.position.y = THREE.MathUtils.lerp(distortion.position.y, piece.position.y / length * force * 0.28, ease);
+        distortion.position.z = THREE.MathUtils.lerp(distortion.position.z, piece.position.z / length * force * 0.28, ease);
+        distortion.rotation.x = THREE.MathUtils.lerp(distortion.rotation.x, force * 0.22, ease);
+        distortion.rotation.z = THREE.MathUtils.lerp(distortion.rotation.z, -force * 0.18, ease);
+        distortion.scale.set(1 + force * 0.1, 1 - force * 0.08, 1 + force * 0.1);
+      });
+      renderer.render(scene, camera);
+    };
     const resize = new ResizeObserver(() => {
       const { width, height } = element.getBoundingClientRect();
       if (!width || !height) return;
@@ -90,6 +180,9 @@ export default function InspectionCore() {
     return () => {
       resize.disconnect(); observer.disconnect(); timer.cancel();
       animations.forEach(a => a.cancel());
+      element.removeEventListener("pointermove", move);
+      element.removeEventListener("pointerleave", leave);
+      element.removeEventListener("pointercancel", leave);
       document.removeEventListener("visibilitychange", sync);
       reduced.removeEventListener("change", sync);
       scene.traverse(object => {

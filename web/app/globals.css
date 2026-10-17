@@ -544,6 +544,9 @@ img { max-width: none; }
 .inspection-artifact { position: relative; min-width: 0; align-self: center; color: #77b4d0; }
 .artifact-canvas { position: relative; height: clamp(340px, 36vw, 490px); }
 .artifact-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (min-width: 901px) {
+  .inspection-artifact { transform: translateX(clamp(-64px, -4vw, -36px)); }
+}
 @media (max-width: 900px) {
   .wrap.home-hero-inner { grid-template-columns: minmax(0, 1fr); }
   .home-hero-copy .home-hero-title { font-size: clamp(42px, 8vw, 74px); }
