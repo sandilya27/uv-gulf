@@ -199,6 +199,19 @@ export default function InspectionCore() {
   return (
     <div className="inspection-artifact" aria-hidden="true">
       <div ref={host} className="artifact-canvas" />
+      <div className="artifact-callouts">
+        <svg className="artifact-callout-lines" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+          <path d="M 6 15 H 30 L 40 29 M 68 34 L 78 24 H 94 M 6 76 H 26 L 36 64 M 62 72 L 72 85 H 94" />
+          <circle cx="40" cy="29" r="0.65" />
+          <circle cx="68" cy="34" r="0.65" />
+          <circle cx="36" cy="64" r="0.65" />
+          <circle cx="62" cy="72" r="0.65" />
+        </svg>
+        <span className="artifact-callout artifact-callout--inspection">Inspection &amp; testing</span>
+        <span className="artifact-callout artifact-callout--training">Technical training</span>
+        <span className="artifact-callout artifact-callout--calibration">Precision calibration</span>
+        <span className="artifact-callout artifact-callout--certification">Traceable certification</span>
+      </div>
     </div>
   );
 }

@@ -545,6 +545,15 @@ img { max-width: none; }
 .inspection-artifact::before { content: ""; position: absolute; inset: -8%; pointer-events: none; background: radial-gradient(ellipse at center, rgba(48, 174, 232, 0.16) 0%, rgba(32, 147, 208, 0.08) 34%, rgba(24, 126, 190, 0.025) 52%, transparent 72%); }
 .artifact-canvas { position: relative; height: clamp(340px, 36vw, 490px); }
 .artifact-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.artifact-callouts { position: absolute; inset: 0; pointer-events: none; }
+.artifact-callout-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.artifact-callout-lines path { fill: none; stroke: rgba(119, 180, 208, 0.35); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.artifact-callout-lines circle { fill: #77b4d0; opacity: 0.65; }
+.artifact-callout { position: absolute; font-family: var(--font-mono); font-size: clamp(9px, 0.75vw, 11px); line-height: 1.5; letter-spacing: 0.04em; color: rgba(164, 207, 227, 0.8); white-space: nowrap; }
+.artifact-callout--inspection { top: 8%; left: 6%; }
+.artifact-callout--training { top: 17%; right: 6%; }
+.artifact-callout--calibration { top: 79%; left: 6%; }
+.artifact-callout--certification { bottom: 8%; right: 6%; }
 @media (min-width: 901px) {
   .inspection-artifact { transform: translate(clamp(-64px, -4vw, -36px), clamp(-88px, -6vw, -48px)) scale(1.12); }
 }
