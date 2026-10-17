@@ -14,7 +14,7 @@ const SUGGESTIONS = ["Find an inspection service", "Training courses", "Verify a
 function reply(text: string): Required<Pick<Msg, "text" | "link">> {
   const t = text.toLowerCase();
   if (/verif|certif|card|qr/.test(t)) return { text: "You can check any UV Gulf certificate by its number on the Verify page.", link: ["Verify a certificate", "/verify"] };
-  if (/train|course|rigg|scaffold|nebosh|safety/.test(t)) return { text: "We run Rigger Training, Scaffolding Training and Occupational Health & Safety (NEBOSH). Group training can be arranged on site or at our Khobar centre.", link: ["View training", "/training"] };
+  if (/train|course|rigg|scaffold|nebosh|safety/.test(t)) return { text: "We run Rigger Training, Scaffolding Training and Occupational Health & Safety awareness training. Group training can be arranged on site or at our Khobar centre.", link: ["View training", "/training"] };
   if (/inspect|ndt|ultrason|radiograph|calibrat|test|advis|weld/.test(t)) return { text: "Our Inspection division covers Third-Party Inspection, Non-Destructive Testing, Calibration and Technical Advisory.", link: ["View inspection services", "/inspection"] };
   if (/price|quote|cost|sales|contact|enquir|talk/.test(t)) return { text: "Send an enquiry with the asset, the site and the timing. Our sales team replies from sales@uvgulf.com.", link: ["Send an enquiry", "/contact"] };
   if (/where|location|city|riyadh|jeddah|jubail|dammam|khobar/.test(t)) return { text: "Our head office is in Khobar. We serve Riyadh, Dammam, Jubail, Jeddah, Yanbu, Tabuk, Taif, Medina and Mecca.", link: ["See locations", "/#where"] };
