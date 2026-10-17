@@ -6,6 +6,10 @@ import { LocationsMap } from "@/components/home/LocationsMap";
 import { Marquee } from "@/components/home/Marquee";
 import { ServiceExplorer } from "@/components/home/ServiceExplorer";
 import { CtaBand, PhotoBand } from "@/components/site/Chrome";
+import { TeamSection } from "@/components/site/TeamSection";
+import { NewsGrid } from "@/components/site/NewsGrid";
+import { NewsSection } from "@/components/site/NewsSection";
+import { getNewsArticles } from "@/lib/news";
 import { HomeVerify } from "@/components/verify/Verifier";
 import Link from "next/link";
 import { COUNTERS, enquiryHref } from "@/lib/content";
@@ -48,6 +52,7 @@ export default function HomePage() {
             <p className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
             <p className="about-industries"><strong>Industries served</strong><span>{INDUSTRY_SECTORS.map((industry, index) => <span key={industry.slug}>{index > 0 ? " · " : ""}{industry.href ? <Link href={industry.href}>{industry.title}</Link> : industry.title}</span>)}</span></p>
             <div className="btn-row">
+              <Button variant="ghost" arrow href="/about">About UV Gulf</Button>
               <Button variant="ghost" arrow href="/inspection">Explore our services</Button>
               <Button variant="ghost" arrow href="/industries">Explore industries</Button>
             </div>
@@ -77,6 +82,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <TeamSection variant="compact" />
+
       <section className="home-clients" aria-labelledby="clients-title">
         <div className="wrap">
           <h2 id="clients-title" data-reveal="1">Our Clients</h2>
@@ -100,6 +107,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <NewsSection id="home-news-title" eyebrow="From UV Gulf" title="News & Insights" action={<Button variant="ghost" arrow href="/news-insights">View all News & Insights</Button>}>
+        <NewsGrid articles={getNewsArticles().slice(0, 3)} />
+      </NewsSection>
 
       <LocationsMap />
 

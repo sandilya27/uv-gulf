@@ -6,6 +6,8 @@ export type NewsArticle = {
   summary: string;
   /** ISO calendar date: YYYY-MM-DD. */
   publishedAt: string;
+  /** Existing entries are approved; explicitly mark editorial drafts before adding them. */
+  status?: "published" | "draft";
   body: readonly { heading: string; paragraphs: readonly string[] }[];
   author?: string;
   image?: { src: string; alt: string; caption?: string };
@@ -50,12 +52,14 @@ export const NEWS_ARTICLES: readonly NewsArticle[] = [
   },
 ];
 
-export function getNewsArticles(): NewsArticle[] {
-  return [...NEWS_ARTICLES].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+export function getNewsArticles(now = new Date()): NewsArticle[] {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+  return NEWS_ARTICLES.filter((article) => article.status !== "draft" && article.publishedAt <= today)
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
 export function getNewsArticle(slug: string): NewsArticle | undefined {
-  return NEWS_ARTICLES.find((article) => article.slug === slug);
+  return getNewsArticles().find((article) => article.slug === slug);
 }
 
 export function articleHref(article: NewsArticle): `/news-insights/${string}` {

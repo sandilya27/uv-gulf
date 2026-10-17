@@ -5,6 +5,7 @@ import styles from "./TeamSection.module.css";
 
 export function TeamSection({ variant = "full" }: { variant?: "compact" | "full" }) {
   const isPreview = !PUBLISHED_TEAM.length;
+  if (variant === "compact" && isPreview) return null;
   const profiles = isPreview ? TEAM_PREVIEW : PUBLISHED_TEAM;
   const members = variant === "compact" ? profiles.slice(0, 3) : profiles;
   return <section id="team" className="section anchor" aria-labelledby="team-title">
