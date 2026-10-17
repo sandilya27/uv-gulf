@@ -3,10 +3,11 @@
 // Certificate verification. Demo buttons type a number in, a progress bar runs, then the
 // result pops in. Lookup uses CERT_RECORDS until the real verification API is connected:
 // replace `lookup` with a fetch to that service (and return "unavailable" on failure).
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Button, Field, VerifyResult, type CertificateRecord, type VerifyStatus } from "@/components/ds";
 import { pop } from "@/components/site/Motion";
 import { CERT_DEMOS, CERT_RECORDS } from "@/lib/content";
+import { CertificateCard } from "./CertificateCard";
 
 type Result = { status: VerifyStatus; record?: CertificateRecord };
 
@@ -32,7 +33,7 @@ function useVerifier() {
     if (phase === "done") pop(resultEl.current, 12);
   }, [phase]);
 
-  const run = async (raw: string) => {
+  const run = useCallback(async (raw: string) => {
     const key = raw.trim().toUpperCase();
     if (!key) return;
     const id = ++runId.current;
@@ -43,7 +44,7 @@ function useVerifier() {
     if (id !== runId.current) return;
     setResult(r);
     setPhase("done");
-  };
+  }, []);
 
   const demo = (n: string) => {
     clearInterval(typeT.current);
@@ -83,7 +84,7 @@ function VerifyPanel({ v }: { v: V }) {
         </div>
       ) : null}
       {v.phase === "done" && v.result ? (
-        <div ref={v.resultEl}><VerifyResult status={v.result.status} record={v.result.record} /></div>
+        <div ref={v.resultEl}>{v.result.record ? <CertificateCard status={v.result.status} record={v.result.record} /> : <VerifyResult status={v.result.status} />}</div>
       ) : null}
     </div>
   );
@@ -102,17 +103,22 @@ function DemoButtons({ v }: { v: V }) {
   );
 }
 
-/** Home page section: copy and demo numbers on the left, panel on the right. */
+/** Home page entry point; all verification results live on the Verify page. */
 export function HomeVerify({ intro }: { intro: React.ReactNode }) {
-  const v = useVerifier();
   return (
     <div className="wrap verify-home-grid">
       <div data-reveal="1" className="stack-16">
         {intro}
-        <span className="demo-caption">Try a demo number</span>
-        <div className="demo-row"><DemoButtons v={v} /></div>
       </div>
-      <div data-reveal="1" data-delay="120"><VerifyPanel v={v} /></div>
+      <div data-reveal="1" data-delay="120">
+        <form className="verify-panel" action="/verify" method="get">
+          <div className="verify-row">
+            <Field label="Certificate number" name="certificate" mono required placeholder="UVG-TR-2026-000000" />
+            <Button size="lg" type="submit">Verify</Button>
+          </div>
+          <span className="verify-hint">Printed under the QR code on the certificate or ID card. Results open on the verification page.</span>
+        </form>
+      </div>
     </div>
   );
 }
@@ -120,6 +126,12 @@ export function HomeVerify({ intro }: { intro: React.ReactNode }) {
 /** Verify page: panel first, demo numbers underneath. */
 export function VerifyPageForm() {
   const v = useVerifier();
+  const { run } = v;
+
+  useEffect(() => {
+    const certificate = new URLSearchParams(window.location.search).get("certificate");
+    if (certificate?.trim()) void run(certificate);
+  }, [run]);
   return (
     <>
       <div data-reveal="1"><VerifyPanel v={v} /></div>

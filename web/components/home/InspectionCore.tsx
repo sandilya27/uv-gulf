@@ -5,7 +5,7 @@ import { animate, createTimer, stagger } from "animejs";
 import "animejs/adapters/three";
 import * as THREE from "three";
 
-export default function InspectionCore() {
+export default function InspectionCore({ verification = false }: { verification?: boolean }) {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -207,9 +207,9 @@ export default function InspectionCore() {
           <circle cx="36" cy="64" r="0.65" />
           <circle cx="62" cy="72" r="0.65" />
         </svg>
-        <span className="artifact-callout artifact-callout--inspection">Inspection &amp; testing</span>
-        <span className="artifact-callout artifact-callout--training">Technical training</span>
-        <span className="artifact-callout artifact-callout--calibration">Precision calibration</span>
+        <span className="artifact-callout artifact-callout--inspection">{verification ? "Certificate number" : "Inspection & testing"}</span>
+        <span className="artifact-callout artifact-callout--training">{verification ? "Issued by UV Gulf" : "Technical training"}</span>
+        <span className="artifact-callout artifact-callout--calibration">{verification ? "Validity status" : "Precision calibration"}</span>
         <span className="artifact-callout artifact-callout--certification">Traceable certification</span>
       </div>
     </div>

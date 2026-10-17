@@ -24,27 +24,29 @@ export function SiteFooter() {
           ))}
         </div>
         <LocationList />
-        <div className="footer-gradient-wordmark" aria-hidden="true">UV GULF</div>
         <div className="site-footer-legal">
           <span>United Vetting Gulf Co. Ltd. · Khobar, Kingdom of Saudi Arabia</span>
           <a href="mailto:sales@uvgulf.com">sales@uvgulf.com</a>
         </div>
+        <div className="footer-gradient-wordmark" aria-hidden="true">UV GULF</div>
       </div>
     </footer>
   );
 }
 
 /** Navy hero band used by the inner pages: cropped spinning gear mark and a sweeping scan line. */
-export function PageHero({ eyebrow, title, lead, spin = 140000, titleMeasure = true, children }: { eyebrow: string; title: string; lead: string; spin?: number; titleMeasure?: boolean; children?: ReactNode }) {
+export function PageHero({ eyebrow, title, lead, spin = 140000, titleMeasure = true, artifact, children }: { eyebrow: string; title: string; lead: string; spin?: number; titleMeasure?: boolean; artifact?: ReactNode; children?: ReactNode }) {
   return (
     <section data-hero="1" className="uvg-deep page-hero">
-      <div className="page-hero-mark"><img data-spin={spin} src="/assets/uvgulf-mark-reversed.png" alt="" aria-hidden="true" /></div>
-      <div data-scan="1" className="scan-line" />
-      <div className="wrap page-hero-inner">
+      {!artifact ? <><div className="page-hero-mark"><img data-spin={spin} src="/assets/uvgulf-mark-reversed.png" alt="" aria-hidden="true" /></div><div data-scan="1" className="scan-line" /></> : null}
+      <div className={artifact ? "wrap page-hero-layout" : "wrap"}>
+      <div className="page-hero-inner">
         <div data-reveal="1"><Eyebrow>{eyebrow}</Eyebrow></div>
         <h1 data-reveal="1" data-delay="80" className="page-hero-title" style={titleMeasure ? undefined : { maxWidth: "none" }}>{title}</h1>
         <p data-reveal="1" data-delay="160" className="lead-deep">{lead}</p>
         {children ? <div data-reveal="1" data-delay="240" className="btn-row page-hero-actions">{children}</div> : null}
+      </div>
+      {artifact ? <div className="page-hero-artifact">{artifact}</div> : null}
       </div>
     </section>
   );

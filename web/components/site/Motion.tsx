@@ -37,6 +37,9 @@ export function Motion() {
         };
         once("[data-reveal]", (el) => {
           el.setAttribute("data-revealed", "");
+          // Keep hero copy readable through refreshes and delayed artwork mounts.
+          // Decorative artwork owns its animation; hero text never fades.
+          if (el.closest("[data-hero]")) return;
           gsap.fromTo(el, { opacity: 0, y: 28 }, {
             opacity: 1, y: 0, duration: 0.85, delay: Number(el.dataset.delay || 0) / 1000,
             ease: "power3.out", clearProps: "opacity,transform",
@@ -45,6 +48,7 @@ export function Motion() {
         });
         once("[data-words]", (el) => {
           el.setAttribute("data-revealed", "");
+          if (el.closest("[data-hero]")) return;
           gsap.fromTo(el.children, { opacity: 0, y: "0.55em", filter: "blur(6px)" }, {
             opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, stagger: 0.075,
             delay: 0.12, ease: "power3.out", clearProps: "all",
@@ -90,7 +94,6 @@ export function Motion() {
         });
       });
       setup();
-      gsap.fromTo("#main", { opacity: 0 }, { opacity: 1, duration: 0.4, clearProps: "opacity" });
       let pending = 0;
       const observer = new MutationObserver((records) => {
         if (!records.some((record) => [...record.addedNodes].some((node) => node.nodeType === Node.ELEMENT_NODE))) return;

@@ -176,7 +176,17 @@ export function Field({ label, as = "input", type = "text", name, options = [], 
 }
 
 export type VerifyStatus = "valid" | "expired" | "not-found" | "unavailable";
-export type CertificateRecord = { number: string; holder?: string; course?: string; issued?: string; expires?: string };
+export type CertificateRecord = {
+  number: string;
+  type?: "training" | "inspection";
+  holder?: string;
+  course?: string;
+  client?: string;
+  asset?: string;
+  scope?: string;
+  issued?: string;
+  expires?: string;
+};
 
 export const VERIFY_STATUS: Record<VerifyStatus, { icon: IconName; title: string; msg: string }> = {
   "valid": { icon: "check", title: "Valid certificate", msg: "This certificate was issued by United Vetting Gulf Co. Ltd. and is current." },

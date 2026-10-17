@@ -83,11 +83,13 @@ export const DIVISION_LINKS = {
 
 /** Demo records until the real verification API is connected. */
 export const CERT_RECORDS: Record<string, { status: VerifyStatus; record: CertificateRecord }> = {
-  "UVG-TR-2026-004812": { status: "valid", record: { number: "UVG-TR-2026-004812", holder: "A. Al-Harbi", course: "Rigger Training", issued: "12 Mar 2026", expires: "11 Mar 2028" } },
-  "UVG-TR-2023-001207": { status: "expired", record: { number: "UVG-TR-2023-001207", holder: "M. Rahman", course: "Scaffolding Training", issued: "04 Feb 2023", expires: "03 Feb 2025" } },
+  "UVG-TR-2026-004812": { status: "valid", record: { number: "UVG-TR-2026-004812", type: "training", holder: "A. Al-Harbi", course: "Rigger Training", issued: "12 Mar 2026", expires: "11 Mar 2028" } },
+  "UVG-TR-2023-001207": { status: "expired", record: { number: "UVG-TR-2023-001207", type: "training", holder: "M. Rahman", course: "Scaffolding Training", issued: "04 Feb 2023", expires: "03 Feb 2025" } },
+  "UVG-IN-2026-000001": { status: "valid", record: { number: "UVG-IN-2026-000001", type: "inspection", client: "Demonstration client", asset: "Mobile crane · DEMO-001", scope: "Third-party lifting equipment inspection", issued: "12 Mar 2026", expires: "11 Mar 2027" } },
 };
 
 export const CERT_DEMOS = [
+  { label: "Inspection", dot: "var(--success)", num: "UVG-IN-2026-000001" },
   { label: "Valid", dot: "var(--success)", num: "UVG-TR-2026-004812" },
   { label: "Expired", dot: "var(--warning)", num: "UVG-TR-2023-001207" },
   { label: "Not found", dot: "var(--danger)", num: "UVG-TR-2026-999999" },
