@@ -48,11 +48,11 @@ export const COURSES: { title: string; cat: CourseCategory; body?: string; summa
 ];
 
 export const STEPS = [
-  { title: "Enquiry", text: "You send the asset, the site and the timing. We confirm the scope and the code or standard that applies." },
-  { title: "Inspection plan", text: "We assign qualified inspectors and agree methods, hold points and site access with you." },
-  { title: "On-site inspection", text: "Inspection and testing on-shore or off-shore, recorded against the agreed plan." },
-  { title: "Report", text: "Findings are written up with the method, the location and the acceptance criteria used." },
-  { title: "Certificate", text: "Certificates are issued with a reference number that anyone can check on the Verify page." },
+  { title: "Enquiry", text: "Share the asset, site and timing so we can confirm the applicable standard.", deliverable: "Confirmed inspection scope" },
+  { title: "Inspection plan", text: "We assign qualified inspectors and agree methods, hold points and site access.", deliverable: "Agreed inspection plan" },
+  { title: "On-site inspection", text: "Our inspectors examine and test the asset against the agreed plan.", deliverable: "Recorded measurements and test results" },
+  { title: "Report", text: "We assess the findings against the applicable acceptance criteria.", deliverable: "Inspection report with documented findings" },
+  { title: "Certificate", text: "We issue the certificate with a reference you can check on the Verify page.", deliverable: "Certificate with a verifiable reference number" },
 ];
 
 /** [name, longitude, latitude, label anchor, label dx, label dy, tag] */
