@@ -1,0 +1,8 @@
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
+.profile { min-width: 0; display: grid; align-content: start; gap: var(--space-6); }
+.profile h3, .profile p { margin: 0; }
+.profile p { color: var(--ink-muted); line-height: 1.6; overflow-wrap: anywhere; }
+.portrait { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); background: var(--surface-alt); }
+.profile .role { color: var(--ink); font-weight: 600; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } }
