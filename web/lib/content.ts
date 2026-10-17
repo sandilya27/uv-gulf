@@ -25,7 +25,7 @@ export const NAV_ITEMS = [
 export const SERVICES = [
   { title: "Third-Party Inspection", href: "/inspection/third-party-inspection", summary: "Independent inspection of equipment, materials and construction against code and contract.", items: ["Vendor and shop inspection", "Lifting equipment inspection", "Pressure equipment"] },
   { title: "Non-Destructive Testing", href: "/inspection/non-destructive-testing", code: "NDT", summary: "Examine welds, pipework and vessels using methods selected for the material, access and service conditions.", items: ["Ultrasonic testing (UT)", "Radiography testing (RT)", "Magnetic particle testing (MT)", "Dye penetrant testing (PT)"] },
-  { title: "Calibration", summary: "Calibration and overhaul of field instruments, on-shore and off-shore.", items: ["Pressure and temperature", "Flow meters and gas detectors", "Pressure relief valves", "Dimensional and electrical"] },
+  { title: "Calibration", href: "/inspection/calibration", summary: "Instrument calibration scoped to your measurement and site requirements, with pressure relief valve work agreed separately.", items: ["Pressure and temperature", "Flow meters and gas detectors", "Pressure relief valve enquiries", "Dimensional and electrical"] },
   { title: "Technical Advisory", summary: "Advice on standards, materials, lifting equipment and site risk.", items: ["Regulations and standards", "Risk and hazard assessment", "On-site consultation"] },
 ];
 
@@ -96,7 +96,7 @@ export const CERT_DEMOS = [
 ];
 
 export const FOOTER_COLS = [
-  { title: "Inspection", links: [["Third-party inspection", "/inspection/third-party-inspection"], ["Non-destructive testing", "/inspection/non-destructive-testing"], ["Calibration", "/inspection"], ["Technical advisory", "/inspection"]] },
+  { title: "Inspection", links: [["Third-party inspection", "/inspection/third-party-inspection"], ["Non-destructive testing", "/inspection/non-destructive-testing"], ["Calibration", "/inspection/calibration"], ["Technical advisory", "/inspection"]] },
   { title: "Training", links: [["All courses", "/training"], ["Training enquiry", enquiryHref("Training")], ["Verify a certificate", "/verify"]] },
   { title: "Company", links: [["About", "/#about"], ["Industries", "/#where"], ["Contact", "/contact"]] },
 ];
