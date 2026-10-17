@@ -1,46 +1,88 @@
 "use client";
 
-// Inspection | Training split. The hovered side widens and lightens; the other side's links dim.
-import { useState } from "react";
+// Equal-width division panels share content rows for consistent alignment.
+import { useEffect, useId, useRef, useState } from "react";
 import { Button, Eyebrow } from "@/components/ds";
 import { DIVISION_LINKS } from "@/lib/content";
 
 type Side = "i" | "t";
 
 const PANELS: { key: Side; num: string; eyebrow: string; title: string; text: string; links: string[]; cta: string; href: string }[] = [
-  { key: "i", num: "01", eyebrow: "Inspection", title: "Inspection & testing", text: "Third-party inspection, NDT, calibration and technical advisory for oil and gas, petrochemical, energy and construction projects.", links: DIVISION_LINKS.inspection, cta: "Explore inspection", href: "/inspection" },
-  { key: "t", num: "02", eyebrow: "Training", title: "Training & certification", text: "Industrial skills, safety and operator certification for individuals and workforces across the Kingdom.", links: DIVISION_LINKS.training, cta: "Explore training", href: "/training" },
+  { key: "i", num: "01", eyebrow: "Inspection", title: "Inspection & testing", text: "Independent inspection, testing and calibration for industrial projects across the Kingdom.", links: DIVISION_LINKS.inspection, cta: "Explore inspection", href: "/inspection" },
+  { key: "t", num: "02", eyebrow: "Training", title: "Training & certification", text: "Practical safety training and operator certification for individuals and industrial teams.", links: DIVISION_LINKS.training, cta: "Explore training", href: "/training" },
 ];
 
 export function Divisions() {
-  const [hover, setHover] = useState<Side | null>(null);
+  const section = useRef<HTMLElement>(null);
+  const stampId = useId().replace(/:/g, "");
+  const [stamped, setStamped] = useState<string[]>([]);
+  const [revealed, setRevealed] = useState<string[]>([]);
+
+  useEffect(() => {
+    const cards = section.current?.querySelectorAll<HTMLElement>(".division");
+    if (!cards) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const key = (entry.target as HTMLElement).dataset.division!;
+        const visible = entry.isIntersecting && entry.intersectionRatio >= 0.15;
+        setRevealed((previous) => visible
+          ? previous.includes(key) ? previous : [...previous, key]
+          : previous.filter((value) => value !== key));
+        if (!visible) setStamped((previous) => previous.filter((value) => value !== key));
+      });
+    }, { threshold: 0.15 });
+    const stampObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.8) return;
+        const key = (entry.target.closest(".division") as HTMLElement).dataset.division!;
+        setStamped((previous) => previous.includes(key) ? previous : [...previous, key]);
+      });
+    }, { threshold: 0.8 });
+    cards.forEach((card) => observer.observe(card));
+    cards.forEach((card) => {
+      const cta = card.querySelector(".division-cta");
+      if (cta) stampObserver.observe(cta);
+    });
+    return () => {
+      observer.disconnect();
+      stampObserver.disconnect();
+    };
+  }, []);
+
   return (
-    <section className="uvg-deep divisions">
-      <div className="divisions-row" onMouseLeave={() => setHover(null)}>
-        {PANELS.map((p) => {
-          const active = hover === p.key;
-          const dimmed = hover !== null && !active;
-          return (
+    <section ref={section} className="uvg-deep divisions">
+      <div className="divisions-row">
+        {PANELS.map((p) => (
             <div
               key={p.key}
-              className="division"
-              onMouseEnter={() => setHover(p.key)}
-              style={{ flexGrow: active ? 1.7 : 1, background: active ? "var(--navy-800)" : "var(--navy-900)" }}
+              className={`division${revealed.includes(p.key) ? " is-visible" : ""}${stamped.includes(p.key) ? " is-stamped" : ""}`}
+              data-division={p.key}
             >
               <img className="division-photo" src={`/assets/images/${p.key === "i" ? "inspection" : "training"}.webp`} alt="" loading="lazy" decoding="async" aria-hidden="true" />
-              <span aria-hidden="true" className="division-num">{p.num}</span>
+              <svg className={`division-stamp division-stamp--${p.key}`} viewBox="0 0 120 120" role="img" aria-label={p.key === "i" ? "UV Gulf: inspection, testing and calibration" : "UV Gulf: industrial skills and safety training"}>
+                <defs>
+                  <path id={`${stampId}-${p.key}`} d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0" />
+                </defs>
+                <circle cx="60" cy="60" r="56" />
+                <circle cx="60" cy="60" r="51" className="division-stamp-dashed" />
+                <circle cx="60" cy="60" r="33" />
+                <text className="division-stamp-ring" textLength="264" lengthAdjust="spacing">
+                  <textPath href={`#${stampId}-${p.key}`} startOffset="0">{p.key === "i" ? "INSPECTION · TESTING · CALIBRATION · " : "INDUSTRIAL SKILLS · SAFETY TRAINING · "}</textPath>
+                </text>
+                <text x="60" y="57" className="division-stamp-brand">UV GULF</text>
+                <path d="m49 68 7 7 15-16" className="division-stamp-check" />
+              </svg>
               <Eyebrow>{p.eyebrow}</Eyebrow>
               <h2 className="division-title">{p.title}</h2>
               <p className="division-text">{p.text}</p>
-              <div className="division-links" style={{ opacity: dimmed ? 0.35 : 1, transform: active ? "translateY(0)" : "translateY(4px)" }}>
-                {p.links.map((l) => <span key={l}><span className="sq" />{l}</span>)}
-              </div>
-              <div style={{ marginTop: "var(--space-4)" }}>
+              <ul className="division-links">
+                {p.links.map((l) => <li key={l}><span className="sq" aria-hidden="true" />{l}</li>)}
+              </ul>
+              <div className="division-cta">
                 <Button variant="on-deep" arrow href={p.href}>{p.cta}</Button>
               </div>
             </div>
-          );
-        })}
+        ))}
       </div>
     </section>
   );
