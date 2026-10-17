@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Button, Eyebrow } from "@/components/ds";
 import { CtaBand, PageHero, PhotoSlot } from "@/components/site/Chrome";
+import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { CourseGrid } from "@/components/training/CourseGrid";
 import { enquiryHref } from "@/lib/content";
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = { title: "Training & certification" };
 export default function TrainingPage() {
   return (
     <>
-      <PageHero eyebrow="Training division" title="Training & certification" lead="Industrial skills, safety and operator certification for individuals and workforces across the Kingdom." spin={-140000}>
+      <PageHero eyebrow="Training division" title="Training & certification" lead="Industrial skills, safety and operator certification for individuals and workforces across the Kingdom." artifact={<DivisionArtifact division="training" />}>
         <Button variant="on-deep" size="lg" arrow href={enquiryHref("Training")}>Ask about group training</Button>
         <Button variant="outline-deep" size="lg" href="/verify">Verify a certificate</Button>
       </PageHero>

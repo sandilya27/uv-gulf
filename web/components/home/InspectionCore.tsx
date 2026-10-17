@@ -5,7 +5,7 @@ import { animate, createTimer, stagger } from "animejs";
 import "animejs/adapters/three";
 import * as THREE from "three";
 
-export default function InspectionCore({ verification = false }: { verification?: boolean }) {
+export default function InspectionCore({ verification = false, callouts }: { verification?: boolean; callouts?: readonly [string, string, string, string] }) {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -207,10 +207,10 @@ export default function InspectionCore({ verification = false }: { verification?
           <circle cx="36" cy="64" r="0.65" />
           <circle cx="62" cy="72" r="0.65" />
         </svg>
-        <span className="artifact-callout artifact-callout--inspection">{verification ? "Certificate number" : "Inspection & testing"}</span>
-        <span className="artifact-callout artifact-callout--training">{verification ? "Issued by UV Gulf" : "Technical training"}</span>
-        <span className="artifact-callout artifact-callout--calibration">{verification ? "Validity status" : "Precision calibration"}</span>
-        <span className="artifact-callout artifact-callout--certification">Traceable certification</span>
+        <span className="artifact-callout artifact-callout--inspection">{callouts?.[0] ?? (verification ? "Certificate number" : "Inspection & testing")}</span>
+        <span className="artifact-callout artifact-callout--training">{callouts?.[1] ?? (verification ? "Issued by UV Gulf" : "Technical training")}</span>
+        <span className="artifact-callout artifact-callout--calibration">{callouts?.[2] ?? (verification ? "Validity status" : "Precision calibration")}</span>
+        <span className="artifact-callout artifact-callout--certification">{callouts?.[3] ?? "Traceable certification"}</span>
       </div>
     </div>
   );
