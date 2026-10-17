@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ServiceDetail, ServiceDetailSection } from "@/components/inspection/ServiceDetail";
-import { METHODS } from "@/lib/content";
+import { MethodExplorer } from "@/components/inspection/MethodExplorer";
 
 export const metadata: Metadata = {
   title: "Non-Destructive Testing",
@@ -26,12 +26,7 @@ export default function NonDestructiveTestingPage() {
       <article><h3>Pipework and vessels</h3><p>Provide drawings, inspection history and areas of concern, such as corrosion or leakage. Insulation, coatings, internal access and operating conditions affect the examination coverage.</p></article>
       <p>Non-destructive testing does not mean equipment can always remain in service. Shutdown, isolation, cleaning or removal of coatings may be needed. Method availability and suitability are confirmed during scope review.</p>
     </ServiceDetailSection>
-    <ServiceDetailSection id="methods" eyebrow="Methods & limitations" title="Different methods answer different questions.">
-      {METHODS.map(method => <article key={method.code}>
-        <h3>{method.label} testing ({method.code})</h3>
-        <p>{method.desc} {limitations[method.code]}</p>
-      </article>)}
-    </ServiceDetailSection>
+    <MethodExplorer limitations={limitations} />
     <ServiceDetailSection id="selection" eyebrow="Method selection" title="Match the method to the inspection objective.">
       <ol>
         <li><strong>Define the question.</strong> Specify whether the examination concerns surface cracking, internal discontinuities, remaining wall thickness or leakage.</li>

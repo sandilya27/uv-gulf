@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Button, Eyebrow, ServiceCard } from "@/components/ds";
-import { MethodExplorer } from "@/components/inspection/MethodExplorer";
 import { PageHero, PhotoBand } from "@/components/site/Chrome";
 import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { enquiryHref, SERVICES } from "@/lib/content";
@@ -27,8 +26,6 @@ export default function InspectionPage() {
           </div>
         </div>
       </section>
-
-      <MethodExplorer />
 
       <PhotoBand slotId="band-inspection" src="/assets/images/calibration.webp" placeholder="Illustrative image of pressure gauges and precision calibration equipment on a laboratory bench" height="clamp(380px,60vh,560px)">
         <Eyebrow>Calibration</Eyebrow>
