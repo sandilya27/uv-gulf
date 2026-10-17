@@ -57,7 +57,12 @@ img { max-width: none; }
 .site-menu a { padding: 12px 8px; font-size: 17px; font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); }
 .site-menu a[aria-current="page"] { color: var(--primary); box-shadow: inset 3px 0 0 var(--accent); padding-left: 14px; }
 .site-menu .site-menu-verify { display: flex; align-items: center; gap: 8px; color: var(--link); border-bottom: 0; }
-@media (max-width: 1200px) {
+@media (min-width: 1001px) and (max-width: 1200px) {
+  .uvg-header { padding-inline: var(--space-4); gap: var(--space-4); }
+  .uvg-header .uvg-nav a { padding-inline: 8px; white-space: nowrap; }
+  .uvg-header .uvg-header-verify { display: none; }
+}
+@media (max-width: 1000px) {
   .uvg-header .uvg-nav, .uvg-header .uvg-header-verify { display: none; }
   .uvg-header { justify-content: space-between; }
   .site-menu-btn { display: inline-flex; }

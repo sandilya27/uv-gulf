@@ -1,14 +1,14 @@
 "use client";
 
 // Sticky SiteHeader. Uses the on-deep variant while the page's navy hero is under it,
-// and gains shadow-sm once scrolled past it. Below 1200px the nav collapses into a menu.
+// and gains shadow-sm once scrolled past it. Below 1000px the nav collapses into a menu.
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button, Icon } from "@/components/ds";
 import { NAV_ITEMS } from "@/lib/content";
 
-const CURRENT: Record<string, string> = { "/inspection": "Inspection", "/training": "Training", "/industries": "Industries", "/about": "About", "/news-insights": "News & Insights", "/contact": "Contact" };
+const CURRENT: Record<string, string> = { "/inspection": "Inspection", "/training": "Training", "/industries": "Industries", "/about": "About", "/news-insights": "Insights", "/contact": "Contact" };
 
 export function SiteHeaderBar() {
   const pathname = usePathname();
