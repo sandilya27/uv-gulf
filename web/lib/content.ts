@@ -19,6 +19,7 @@ export const NAV_ITEMS = [
   { label: "Training", href: "/training" },
   { label: "Industries", href: "/industries" },
   { label: "About", href: "/about" },
+  { label: "News & Insights", href: "/news-insights" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -98,5 +99,5 @@ export const CERT_DEMOS = [
 export const FOOTER_COLS = [
   { title: "Inspection", links: [["Third-party inspection", "/inspection/third-party-inspection"], ["Non-destructive testing", "/inspection/non-destructive-testing"], ["Calibration", "/inspection/calibration"], ["Technical advisory", "/inspection/technical-advisory"]] },
   { title: "Training", links: [["All courses", "/training"], ["Rigger Training", "/training/rigger-training"], ["Scaffolding Training", "/training/scaffolding-training"], ["Occupational Health & Safety", "/training/occupational-health-safety"], ["Training enquiry", enquiryHref("Training")], ["Verify a certificate", "/verify"]] },
-  { title: "Company", links: [["About", "/about"], ["Industries", "/industries"], ["Contact", "/contact"]] },
+  { title: "Company", links: [["About", "/about"], ["Industries", "/industries"], ["News & Insights", "/news-insights"], ["Contact", "/contact"]] },
 ];

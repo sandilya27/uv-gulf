@@ -1,0 +1,11 @@
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
+.card { min-width: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.copy, .empty { padding: var(--space-8); }
+.empty { border-left: 3px solid var(--logo-navy); background: var(--surface-alt); }
+.copy h3, .empty h3 { margin: 0 0 var(--space-4); font-family: var(--font-display); }
+.copy p, .empty p { color: var(--ink-muted); line-height: 1.7; margin: 0 0 var(--space-6); }
+.meta { display: flex; flex-wrap: wrap; gap: var(--space-3); color: var(--ink-muted); font-size: 14px; margin-bottom: var(--space-4); }
+.image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.card a, .empty a { color: var(--logo-navy); text-underline-offset: 4px; overflow-wrap: anywhere; }
+.card a:focus-visible, .empty a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+@media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } .copy, .empty { padding: var(--space-6); } }
