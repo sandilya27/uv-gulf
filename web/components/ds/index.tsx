@@ -2,6 +2,7 @@
 // (_ds/uv-gulf-design-system-…/_ds_bundle.js). Markup and class names are
 // unchanged so components.css styles them exactly as in the design.
 import Link from "next/link";
+import { KickerText } from "@/components/site/KickerText";
 import { Fragment, useId, type ChangeEventHandler, type MouseEventHandler, type ReactNode } from "react";
 
 const cx = (...a: (string | false | null | undefined)[]) => a.filter(Boolean).join(" ");
@@ -29,7 +30,7 @@ export function Icon({ name, strokeWidth = 1.75, className, size }: { name: Icon
 }
 
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
-  return <p className={cx("uvg-eyebrow", className)}>{children}</p>;
+  return <p className={cx("uvg-eyebrow", className)}>{typeof children === "string" ? <KickerText text={children} /> : children}</p>;
 }
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "on-deep" | "outline-deep";

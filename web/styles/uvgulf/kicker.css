@@ -1,0 +1,7 @@
+/* Animated eyebrow labels preserve their natural wrapping and character widths. */
+.kicker-text { position: relative; min-width: 0; }
+.kicker-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.kicker-char { display: inline-grid; }
+.kicker-char-size, .kicker-char-glyph { grid-area: 1 / 1; }
+.kicker-char-size { visibility: hidden; }
+.kicker-char-glyph { width: 0; min-width: 100%; overflow: clip; text-align: center; }

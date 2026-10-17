@@ -5,6 +5,7 @@
 @import "../styles/uvgulf/effects.css";
 @import "../styles/uvgulf/base.css";
 @import "../styles/uvgulf/components.css";
+@import "../styles/uvgulf/kicker.css";
 
 /* Fonts are self-hosted through next/font; point the tokens at them. */
 :root {
@@ -80,11 +81,21 @@ img { max-width: none; }
 .page-hero-actions { margin-top: var(--space-4); }
 
 /* ---------- Home hero ---------- */
-.home-hero { position: relative; overflow: hidden; background: var(--surface-deep); color: var(--on-deep); min-height: calc(100vh - var(--header-height)); display: flex; align-items: center; }
+.home-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--surface-deep); color: var(--on-deep); min-height: calc(100vh - var(--header-height)); display: flex; align-items: center; }
 .home-hero-mark-lg { position: absolute; right: -200px; top: 50%; width: 820px; height: 820px; margin-top: -410px; pointer-events: none; }
 .home-hero-mark-lg img { opacity: 0.08; }
-.home-hero-mark-sm { position: absolute; left: -140px; bottom: -160px; width: 360px; height: 360px; pointer-events: none; }
-.home-hero-mark-sm img { opacity: 0.05; }
+.hero-gears { position: absolute; z-index: 0; width: clamp(640px, 65vw, 1080px); pointer-events: none; user-select: none; opacity: 0.055; }
+.hero-gears svg { display: block; width: 100%; overflow: visible; }
+.hero-gears--bottom-left { left: -240px; bottom: -300px; }
+.hero-gears--top-right, .hero-gears--bottom-right { width: clamp(320px, 33vw, 544px); right: 0; transform: translateX(50%); }
+.hero-gears--top-right { top: 0; transform: translate(50%, -50%); }
+.hero-gears--bottom-right { bottom: 0; transform: translate(50%, 50%); }
+.hero-gear-rotor { transform-box: view-box; transform-origin: 0 0; }
+@media (max-width: 600px) {
+  .hero-gears { width: 620px; opacity: 0.045; }
+  .hero-gears--bottom-left { left: -290px; bottom: -170px; }
+  .hero-gears--top-right, .hero-gears--bottom-right { width: 310px; }
+}
 .fill { width: 100%; height: 100%; }
 .wrap.home-hero-inner { position: relative; width: 100%; padding: var(--space-24) var(--space-8); display: grid; gap: var(--space-6); }
 .home-hero-title { font-family: var(--font-display); font-size: clamp(42px,6.4vw,84px); line-height: 1.02; font-weight: 700; letter-spacing: -0.015em; margin: 0; max-width: 15ch; text-wrap: balance; color: var(--on-deep); }
@@ -96,6 +107,11 @@ img { max-width: none; }
 .crosshair-h { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(255,255,255,0.12); }
 .crosshair-reticle { position: absolute; left: 0; top: 0; width: 28px; height: 28px; border: 1px solid var(--sky-300); border-radius: 2px; box-sizing: border-box; }
 .crosshair-reticle span { position: absolute; left: 36px; top: 6px; white-space: nowrap; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--sky-300); }
+.crosshair-reticle { transition: width 180ms ease, height 180ms ease; }
+.crosshair.is-targeting .crosshair-reticle { transition: transform 180ms ease, width 180ms ease, height 180ms ease; border: 0; border-radius: 0; background: linear-gradient(var(--sky-300), var(--sky-300)) left top / 12px 1px, linear-gradient(var(--sky-300), var(--sky-300)) left top / 1px 12px, linear-gradient(var(--sky-300), var(--sky-300)) right top / 12px 1px, linear-gradient(var(--sky-300), var(--sky-300)) right top / 1px 12px, linear-gradient(var(--sky-300), var(--sky-300)) left bottom / 12px 1px, linear-gradient(var(--sky-300), var(--sky-300)) left bottom / 1px 12px, linear-gradient(var(--sky-300), var(--sky-300)) right bottom / 12px 1px, linear-gradient(var(--sky-300), var(--sky-300)) right bottom / 1px 12px; background-repeat: no-repeat; }
+.crosshair.is-targeting .crosshair-reticle span { left: 50%; top: calc(100% + 8px); transform: translateX(-50%); }
+.crosshair.is-targeting .crosshair-v, .crosshair.is-targeting .crosshair-h { opacity: .4; }
+@media (prefers-reduced-motion: reduce) { .crosshair, .crosshair-reticle, .crosshair.is-targeting .crosshair-reticle { transition: none; } }
 @media (hover: none) { .crosshair { display: none; } }
 
 /* ---------- Marquee ---------- */
