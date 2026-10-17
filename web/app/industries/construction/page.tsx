@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Eyebrow, ServiceCard } from "@/components/ds";
 import { IndustryDetail, IndustryDetailSection } from "@/components/industries/IndustryDetail";
@@ -36,13 +37,13 @@ export default function ConstructionPage() {
     </IndustryDetailSection>
     <section className="section" aria-labelledby="related-services">
       <div className="wrap stack-24">
-        <Eyebrow>Relevant services</Eyebrow><h2 id="related-services" className="h2">Explore support for your construction scope.</h2>
+        <Eyebrow>Relevant services</Eyebrow><MaskedHeading id="related-services" className="h2">Explore support for your construction scope.</MaskedHeading>
         <div className="service-grid">{SERVICES.map((service) => <ServiceCard key={service.href} title={service.title} summary={service.summary} href={service.href} cta={`Explore ${service.title.toLowerCase()}`} />)}</div>
       </div>
     </section>
     <section className="section" aria-labelledby="related-training">
       <div className="wrap stack-24">
-        <Eyebrow>Relevant training</Eyebrow><h2 id="related-training" className="h2">Prepare people for the planned site activities.</h2>
+        <Eyebrow>Relevant training</Eyebrow><MaskedHeading id="related-training" className="h2">Prepare people for the planned site activities.</MaskedHeading>
         <div className="service-grid">{COURSES.map((course) => <ServiceCard key={course.slug} title={course.title} summary={course.summary} href={course.href} cta={`Explore ${course.title.toLowerCase()}`} />)}</div>
       </div>
     </section>

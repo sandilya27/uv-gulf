@@ -1,4 +1,6 @@
 "use client";
+
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Button, Eyebrow } from "@/components/ds";
 import { CITY_DATA } from "@/lib/content";
@@ -11,7 +13,7 @@ export function LocationsMap() {
  const ref=useRef<HTMLElement>(null),city=cities[selected];
  useEffect(()=>{const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){setEntered(true);observer.disconnect();}},{threshold:.15});if(ref.current)observer.observe(ref.current);return ()=>observer.disconnect();},[]);
  return <section ref={ref} id="where" aria-labelledby="atlas-title" className={`section anchor coverage-atlas${entered?" is-visible":""}`}><div className="wrap">
- <header className="atlas-heading" data-reveal="1"><div><Eyebrow>Where we work</Eyebrow><h2 id="atlas-title">One home base.<br/><span>Across the Kingdom.</span></h2></div><p>From our home in Khobar to your site.<br/>Inspection, testing and technical expertise,<br/>wherever your operations take you.</p></header>
+ <header className="atlas-heading"><div><Eyebrow>Where we work</Eyebrow><MaskedHeading id="atlas-title" className="">One home base.<br/><span>Across the Kingdom.</span></MaskedHeading></div><p data-reveal="1">From our home in Khobar to your site.<br/>Inspection, testing and technical expertise,<br/>wherever your operations take you.</p></header>
  <div className="atlas-stage"><div className="atlas-map"><div className="atlas-caption"><span>Kingdom of Saudi Arabia</span><span>26°16′ N / 50°12′ E · HQ</span></div>
  <svg viewBox="-40 -25 700 560" role="img" aria-label={`Saudi Arabia service network. ${city.name} selected.`}><defs><pattern id="atlas-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="var(--border-strong)" opacity=".25"/></pattern><linearGradient id="atlas-land" x1="0" y1="0" x2="1" y2="1"><stop stopColor="var(--sky-100)"/><stop offset="1" stopColor="var(--surface)"/></linearGradient></defs>
  <rect x="-40" y="-25" width="700" height="560" fill="url(#atlas-dots)"/><path d={SAUDI_PATH} className="atlas-land"/><text x="275" y="335" className="atlas-country" textAnchor="middle">SAUDI ARABIA</text><text x="60" y="335" className="atlas-sea" transform="rotate(58 60 335)">RED SEA</text>

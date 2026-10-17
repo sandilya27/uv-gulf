@@ -4,6 +4,7 @@
 // Submission is client-only for now: wire `submit` to the sales@uvgulf.com mail/CRM endpoint.
 import { useRef, useState } from "react";
 import { Button, Field, VerifyResult } from "@/components/ds";
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { pop } from "@/components/site/Motion";
 import { COURSES, SERVICES, type EnquiryType } from "@/lib/content";
 
@@ -41,8 +42,8 @@ export function EnquiryForm({ initialType }: { initialType: EnquiryType }) {
 
   return (
     <div className="enquiry-card">
-      <div className="enquiry-heading"><div><span className="contact-kicker">YOUR NEXT STEP</span><h2>How can we help?</h2></div><span className="enquiry-heading-mark" aria-hidden="true">↗</span></div>
-      <p className="enquiry-intro">Choose an enquiry type and tell us a little about what you need.</p>
+      <div className="enquiry-heading"><div><span className="contact-kicker">YOUR NEXT STEP</span><MaskedHeading className="">How can we help?</MaskedHeading></div><span className="enquiry-heading-mark" aria-hidden="true">↗</span></div>
+      <p data-reveal="1" className="enquiry-intro">Choose an enquiry type and tell us a little about what you need.</p>
       <div className="enquiry-options" role="group" aria-label="Enquiry type">
         {TABS.map((t) => (
           <button key={t} type="button" aria-pressed={t === type} className={t === type ? "is-active" : undefined} onClick={() => { setType(t); setEmailErr(null); }}><span className="enquiry-option-top"><strong>{t}</strong><span className="enquiry-radio" aria-hidden="true" /></span><span>{TAB_DETAILS[t]}</span></button>

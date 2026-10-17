@@ -40,7 +40,7 @@ export default function HomePage() {
 
       <PhotoBand slotId="band-home" src="/assets/images/inspection.webp" placeholder="Illustrative image of a technician performing ultrasonic inspection on a pipeline" height="clamp(380px,62vh,580px)">
         <Eyebrow>Onshore and offshore</Eyebrow>
-        <h2 className="h-band">On-site inspection, wherever your asset is.</h2>
+        <MaskedHeading className="h-band">On-site inspection, wherever your asset is.</MaskedHeading>
       </PhotoBand>
 
       <section id="about" className="section anchor about-section">
@@ -87,7 +87,7 @@ export default function HomePage() {
 
       <section className="home-clients" aria-labelledby="clients-title">
         <div className="wrap">
-          <h2 id="clients-title" data-reveal="1">Our Clients</h2>
+          <MaskedHeading id="clients-title" className="">Our Clients</MaskedHeading>
           <div className="client-marquee">
           <div className="client-marquee-track">
           {[0, 1, 2].map((copy) => <ul className="home-client-grid" key={copy} aria-hidden={copy > 0 ? true : undefined}>
@@ -120,8 +120,8 @@ export default function HomePage() {
           intro={
             <>
               <Eyebrow>Certificate verification</Eyebrow>
-              <h2 className="h2">Check a UV Gulf certificate</h2>
-              <p className="body-lg" style={{ maxWidth: "48ch" }}>Enter the number printed on the certificate or ID card to confirm it was issued by UV Gulf.</p>
+              <MaskedHeading className="h2">Check a UV Gulf certificate</MaskedHeading>
+              <p data-reveal="1" className="body-lg" style={{ maxWidth: "48ch" }}>Enter the number printed on the certificate or ID card to confirm it was issued by UV Gulf.</p>
             </>
           }
         />

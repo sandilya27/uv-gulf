@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { LocationList } from "@/components/ds";
 import { EnquiryForm } from "@/components/contact/EnquiryForm";
@@ -19,13 +20,13 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
       <section className="section-contact">
         <div className="wrap contact-grid">
-          <div data-reveal="1" className="contact-main">
+          <div className="contact-main">
             <EnquiryForm key={initialType} initialType={initialType} />
           </div>
-          <aside data-reveal="1" data-delay="120" className="contact-aside">
+          <aside className="contact-aside">
             <span className="contact-kicker">LET’S CONNECT</span>
-            <h2>Good projects start with a conversation.</h2>
-            <p>From your first question to the next step, our inspection and training team is here to help.</p>
+            <MaskedHeading className="">Good projects start with a conversation.</MaskedHeading>
+            <p data-reveal="1">From your first question to the next step, our inspection and training team is here to help.</p>
             <a href="mailto:sales@uvgulf.com" className="contact-direct"><span>Email our team</span><strong>sales@uvgulf.com <span aria-hidden="true">↗</span></strong></a>
             <div className="contact-locations">
             <LocationList />

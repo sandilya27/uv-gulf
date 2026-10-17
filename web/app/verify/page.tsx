@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Icon, VERIFY_STATUS, type VerifyStatus } from "@/components/ds";
 import { PageHero } from "@/components/site/Chrome";
@@ -21,7 +22,7 @@ export default function VerifyPage() {
       <section className="section-verify">
         <div className="verify-col">
           <VerifyPageForm />
-          <h2 data-reveal="1" className="h-outcomes">What each result means</h2>
+          <MaskedHeading className="h-outcomes">What each result means</MaskedHeading>
           <div className="outcomes">
             {(Object.keys(VERIFY_STATUS) as VerifyStatus[]).map((k, i) => (
               <div key={k} data-reveal="1" data-delay={i * 80} className="outcome">

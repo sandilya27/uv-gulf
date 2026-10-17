@@ -1,5 +1,7 @@
 "use client";
 
+import { MaskedHeading } from "@/components/site/MaskedHeading";
+
 // NDT methods grid; selecting (click or hover) a method swaps the sticky detail panel.
 import { useId, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "motion/react";
@@ -20,15 +22,15 @@ export function MethodExplorer({ limitations }: { limitations: Record<string, st
   return (
     <section className={`section bg-alt ${styles.explorer}`} aria-labelledby="methods">
       <div className="wrap method-grid">
-        <div data-reveal="1" className="stack-24">
+        <div className="stack-24">
           <div className="stack-12">
             <Eyebrow>Methods & limitations</Eyebrow>
-            <h2 id="methods" className="h2">Different methods answer different questions.</h2>
-            <p className="body-muted">Select a method to see what it finds and where its limitations apply.</p>
+            <MaskedHeading id="methods" className="h2">Different methods answer different questions.</MaskedHeading>
+            <p data-reveal="1" className="body-muted">Select a method to see what it finds and where its limitations apply.</p>
           </div>
           <div className={styles.selectorHeading}><span>Explore the methods</span><span>01 — 08</span></div>
           <LayoutGroup id={layoutGroupId}>
-          <div className="method-btns">
+          <div data-reveal="1" className="method-btns">
             {METHODS.map((x, index) => (
               <button key={x.code} type="button" className={"method-btn" + (x.code === code ? " is-active" : "")} aria-pressed={x.code === code} onClick={() => select(x.code)} onMouseEnter={() => select(x.code)} onFocus={() => select(x.code)}>
                 {x.code === code && <motion.span aria-hidden="true" className={styles.activeCell} layoutId="active-method" initial={false} style={{ borderRadius: 12 }} transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 36 }} />}

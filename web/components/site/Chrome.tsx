@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 // Server-rendered building blocks shared across pages.
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -59,7 +60,7 @@ export function PhotoBand({ slotId, placeholder, src, height, children }: { slot
       <div data-parallax="0.18" className="photo-band-img"><PhotoSlot id={slotId} placeholder={placeholder} src={src} /></div>
       <div className="photo-band-overlay" />
       <div className="uvg-deep photo-band-copy">
-        <div data-reveal="1" className="wrap photo-band-text">{children}</div>
+        <div className="wrap photo-band-text">{children}</div>
       </div>
     </section>
   );
@@ -78,9 +79,9 @@ export function PhotoSlot({ id, placeholder, src }: { id: string; placeholder: s
 export function CtaBand({ title, titleMeasure, children }: { title: string; titleMeasure?: string; children: ReactNode }) {
   return (
     <section className="cta-band">
-      <div data-reveal="1" className="wrap cta-band-inner">
-        <h2 className="h-cta" style={titleMeasure ? { maxWidth: titleMeasure } : undefined}>{title}</h2>
-        <div className="btn-row">{children}</div>
+      <div className="wrap cta-band-inner">
+        <MaskedHeading className="h-cta" style={titleMeasure ? { maxWidth: titleMeasure } : undefined}>{title}</MaskedHeading>
+        <div data-reveal="1" className="btn-row">{children}</div>
       </div>
     </section>
   );

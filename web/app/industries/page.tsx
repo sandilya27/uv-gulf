@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Button, Eyebrow, ServiceCard } from "@/components/ds";
 import { ServiceDetailSection } from "@/components/inspection/ServiceDetail";
@@ -18,7 +19,7 @@ export default function IndustriesPage() {
     <section className="section" aria-labelledby="sectors">
       <div className="wrap stack-24">
         <Eyebrow>Industry contexts</Eyebrow>
-        <h2 id="sectors" className="h2">Four sectors. A scope built around your site.</h2>
+        <MaskedHeading id="sectors" className="h2">Four sectors. A scope built around your site.</MaskedHeading>
         <p className="body-lg">Use these common considerations to prepare your enquiry. The methods, deliverables and site arrangements are agreed for each assignment.</p>
         <div className="service-grid">
           {INDUSTRY_SECTORS.map((industry) => <ServiceCard key={industry.slug} title={industry.title} summary={industry.summary} items={industry.challenges} href={industry.href ?? enquiryHref("General")} cta={industry.href ? `Explore ${industry.title.toLowerCase()}` : `Discuss ${industry.title.toLowerCase()} requirements`} />)}
@@ -32,13 +33,13 @@ export default function IndustriesPage() {
     </ServiceDetailSection>
     <section className="section" aria-labelledby="industry-services">
       <div className="wrap stack-24">
-        <Eyebrow>Relevant services</Eyebrow><h2 id="industry-services" className="h2">Choose a starting point for your asset.</h2>
+        <Eyebrow>Relevant services</Eyebrow><MaskedHeading id="industry-services" className="h2">Choose a starting point for your asset.</MaskedHeading>
         <div className="service-grid">{SERVICES.map((service) => <ServiceCard key={service.title} title={service.title} summary={service.summary} href={service.href} cta={`Explore ${service.title.toLowerCase()}`} />)}</div>
       </div>
     </section>
     <section className="section" aria-labelledby="industry-training">
       <div className="wrap stack-24">
-        <Eyebrow>Workforce training</Eyebrow><h2 id="industry-training" className="h2">Connect training with the work ahead.</h2>
+        <Eyebrow>Workforce training</Eyebrow><MaskedHeading id="industry-training" className="h2">Connect training with the work ahead.</MaskedHeading>
         <p className="body-lg">Discuss the team’s roles, experience and site activities to identify relevant training requirements.</p>
         <div className="service-grid">{COURSES.map((course) => <ServiceCard key={course.slug} title={course.title} summary={course.summary} href={course.href} cta={`Explore ${course.title.toLowerCase()}`} />)}</div>
       </div>

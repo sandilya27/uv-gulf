@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Eyebrow, ServiceCard } from "@/components/ds";
 import { IndustryDetail, IndustryDetailSection } from "@/components/industries/IndustryDetail";
@@ -36,13 +37,13 @@ export default function EnergyPage() {
     </IndustryDetailSection>
     <section className="section" aria-labelledby="related-services">
       <div className="wrap stack-24">
-        <Eyebrow>Related services</Eyebrow><h2 id="related-services" className="h2">Explore support for your equipment requirements.</h2>
+        <Eyebrow>Related services</Eyebrow><MaskedHeading id="related-services" className="h2">Explore support for your equipment requirements.</MaskedHeading>
         <div className="service-grid">{SERVICES.map((service) => <ServiceCard key={service.href} title={service.title} summary={service.summary} href={service.href} cta={`Explore ${service.title.toLowerCase()}`} />)}</div>
       </div>
     </section>
     <section className="section" aria-labelledby="related-training">
       <div className="wrap stack-24">
-        <Eyebrow>Related training</Eyebrow><h2 id="related-training" className="h2">Connect team preparation with maintenance activities.</h2>
+        <Eyebrow>Related training</Eyebrow><MaskedHeading id="related-training" className="h2">Connect team preparation with maintenance activities.</MaskedHeading>
         <p className="body-lg">Discuss rigging, scaffolding access and workplace safety requirements in relation to the team’s roles, experience and planned site work.</p>
         <div className="service-grid">{COURSES.map((course) => <ServiceCard key={course.slug} title={course.title} summary={course.summary} href={course.href} cta={`Explore ${course.title.toLowerCase()}`} />)}</div>
       </div>

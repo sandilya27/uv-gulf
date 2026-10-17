@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import Link from "next/link";
 import { Button } from "@/components/ds";
 import { NewsSection } from "@/components/site/NewsSection";
@@ -15,7 +16,7 @@ export function NewsArticleDetail({ article, related }: { article: NewsArticle; 
         <div className={styles.meta}><time dateTime={article.publishedAt}>{formatArticleDate(article.publishedAt)}</time>{article.author ? <span>By {article.author}</span> : null}</div>
         {article.image ? <figure className={styles.figure}><img src={article.image.src} alt={article.image.alt} />{article.image.caption ? <figcaption>{article.image.caption}</figcaption> : null}</figure> : null}
         {article.body.map((section, index) => <section key={section.heading} aria-labelledby={`article-section-${index}`}>
-          <h2 id={`article-section-${index}`}>{section.heading}</h2>
+          <MaskedHeading id={`article-section-${index}`} className="">{section.heading}</MaskedHeading>
           {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </section>)}
         <Link href="/news-insights">Back to News & Insights</Link>

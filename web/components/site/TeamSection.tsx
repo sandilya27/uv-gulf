@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
 import { PUBLISHED_TEAM, TEAM_PREVIEW } from "@/lib/team";
 import ProfileCard from "./profile-card/ProfileCard";
@@ -10,7 +11,7 @@ export function TeamSection({ variant = "full" }: { variant?: "compact" | "full"
   return <section id="team" className="section anchor" aria-labelledby="team-title">
     <div className="wrap stack-24">
       <Eyebrow>Our team</Eyebrow>
-      <h2 id="team-title" className="h2">The people behind UV Gulf.</h2>
+      <MaskedHeading id="team-title" className="h2">The people behind UV Gulf.</MaskedHeading>
       {isPreview ? <p className={styles.notice}>Sample profiles — fictional names, bios and AI-generated portraits for layout review.</p> : null}
       <div className={styles.grid}>
         {members.map((member) => <article key={member.name} className={styles.profile}>

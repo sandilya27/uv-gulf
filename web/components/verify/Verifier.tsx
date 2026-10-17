@@ -107,7 +107,7 @@ function DemoButtons({ v }: { v: V }) {
 export function HomeVerify({ intro }: { intro: React.ReactNode }) {
   return (
     <div className="wrap verify-home-grid">
-      <div data-reveal="1" className="stack-16">
+      <div className="stack-16">
         {intro}
       </div>
       <div data-reveal="1" data-delay="120">

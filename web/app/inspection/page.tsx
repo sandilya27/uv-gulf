@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Button, Eyebrow, ServiceCard } from "@/components/ds";
 import { PageHero, PhotoBand } from "@/components/site/Chrome";
@@ -16,7 +17,7 @@ export default function InspectionPage() {
 
       <section className="section">
         <div className="wrap">
-          <h2 data-reveal="1" className="h2" style={{ marginBottom: "var(--space-8)" }}>Services</h2>
+          <MaskedHeading className="h2" style={{ marginBottom: "var(--space-8)" }}>Services</MaskedHeading>
           <div className="service-grid">
             {SERVICES.map((s, i) => (
               <div key={s.title} data-reveal="1" data-delay={i * 90} className="grid-cell">
