@@ -4,14 +4,14 @@ import { CtaBand, PageHero } from "@/components/site/Chrome";
 import { enquiryHref } from "@/lib/content";
 import styles from "./ServiceDetail.module.css";
 
-export function ServiceDetail({ title, lead, children }: { title: string; lead: string; children: ReactNode }) {
+export function ServiceDetail({ title, lead, children, ctaLabel = "Request an inspection", ctaTitle = "Tell us what needs inspecting." }: { title: string; lead: string; children: ReactNode; ctaLabel?: string; ctaTitle?: string }) {
   return <>
     <PageHero title={title} lead={lead} eyebrow="Inspection services">
-      <Button variant="on-deep" size="lg" arrow href={enquiryHref("Inspection")}>Request an inspection</Button>
+      <Button variant="on-deep" size="lg" arrow href={enquiryHref("Inspection")}>{ctaLabel}</Button>
     </PageHero>
     {children}
-    <CtaBand title="Tell us what needs inspecting.">
-      <Button arrow href={enquiryHref("Inspection")}>Request an inspection</Button>
+    <CtaBand title={ctaTitle}>
+      <Button arrow href={enquiryHref("Inspection")}>{ctaLabel}</Button>
       <Button variant="secondary" href="/inspection">Explore inspection services</Button>
     </CtaBand>
   </>;
