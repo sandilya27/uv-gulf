@@ -1,0 +1,12 @@
+/* Negative margins retain the original line box while giving descenders room. */
+.heading .mask {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+  padding-block: 0.15em;
+  margin-block: -0.15em;
+}
+
+.word {
+  display: inline-block;
+}

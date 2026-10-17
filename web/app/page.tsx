@@ -1,3 +1,4 @@
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
 import { Divisions } from "@/components/home/Divisions";
 import { HomeHero } from "@/components/home/HomeHero";
@@ -24,12 +25,12 @@ export default function HomePage() {
 
       <section className="section inspection-services-section">
         <div className="wrap">
-          <div data-reveal="1" className="section-head">
+          <div className="section-head">
             <div className="stack-12">
               <Eyebrow>Inspection division</Eyebrow>
-              <h2 className="h2">What we inspect, test and calibrate</h2>
+              <MaskedHeading>What we inspect, test and calibrate</MaskedHeading>
             </div>
-            <Button variant="ghost" arrow href="/inspection">All inspection services</Button>
+            <div data-reveal="1"><Button variant="ghost" arrow href="/inspection">All inspection services</Button></div>
           </div>
           <ServiceExplorer />
         </div>
@@ -44,14 +45,14 @@ export default function HomePage() {
 
       <section id="about" className="section anchor about-section">
         <div className="wrap about-grid">
-          <div data-reveal="1" className="stack-24">
+          <div className="stack-24">
             <div className="stack-12">
               <Eyebrow>About UV Gulf</Eyebrow>
-              <h2 className="h2">Inspection expertise. Across Saudi Arabia.</h2>
+              <MaskedHeading>Inspection expertise. Across Saudi Arabia.</MaskedHeading>
             </div>
-            <p className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
-            <p className="about-industries"><strong>Industries served</strong><span>{INDUSTRY_SECTORS.map((industry, index) => <span key={industry.slug}>{index > 0 ? " · " : ""}{industry.href ? <Link href={industry.href}>{industry.title}</Link> : industry.title}</span>)}</span></p>
-            <div className="btn-row">
+            <p data-reveal="1" className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
+            <p data-reveal="1" className="about-industries"><strong>Industries served</strong><span>{INDUSTRY_SECTORS.map((industry, index) => <span key={industry.slug}>{index > 0 ? " · " : ""}{industry.href ? <Link href={industry.href}>{industry.title}</Link> : industry.title}</span>)}</span></p>
+            <div data-reveal="1" className="btn-row">
               <Button variant="ghost" arrow href="/about">About UV Gulf</Button>
               <Button variant="ghost" arrow href="/inspection">Explore our services</Button>
               <Button variant="ghost" arrow href="/industries">Explore industries</Button>

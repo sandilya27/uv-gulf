@@ -3,6 +3,7 @@
 // The step crossing 55% of the viewport drives the photo and active timeline card.
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow, Icon } from "@/components/ds";
 import { enquiryHref, STEPS } from "@/lib/content";
 
@@ -101,7 +102,7 @@ export function InspectionProcess() {
         <div className="process-aside">
           <div className="stack-12">
             <Eyebrow>How an inspection runs</Eyebrow>
-            <h2 className="h2">From enquiry to verified certificate.</h2>
+            <MaskedHeading>From enquiry to verified certificate.</MaskedHeading>
           </div>
           <div ref={visual} className="process-visual">
             {IMAGES.map((image, i) => (
