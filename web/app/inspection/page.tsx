@@ -21,7 +21,7 @@ export default function InspectionPage() {
           <div className="service-grid">
             {SERVICES.map((s, i) => (
               <div key={s.title} data-reveal="1" data-delay={i * 90} className="grid-cell">
-                <ServiceCard title={s.title} summary={s.summary} items={s.items} code={s.code} href={enquiryHref("Inspection")} cta="Request this service" />
+                <ServiceCard title={s.title} summary={s.summary} items={s.items} code={s.code} href={s.href ?? enquiryHref("Inspection")} cta={s.href ? "Explore third-party inspection" : "Request this service"} />
               </div>
             ))}
           </div>

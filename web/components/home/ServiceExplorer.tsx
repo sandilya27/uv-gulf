@@ -74,7 +74,7 @@ export function ServiceExplorer() {
                 <h3 id={`inspection-service-title-${i}`}>{service.title}</h3>
                 <p>{service.summary}</p>
                 <ul className="uvg-list">{service.items.map(item => <li key={item}>{item}</li>)}</ul>
-                <div className="service-stack-action"><Button arrow href={enquiryHref("Inspection")}>Request this service<span className="sr-only">: {service.title}</span></Button></div>
+                <div className="service-stack-action"><Button arrow href={service.href ?? enquiryHref("Inspection")}>{service.href ? "Explore service" : "Request this service"}<span className="sr-only">: {service.title}</span></Button></div>
               </div>
             </div>
           </article>
