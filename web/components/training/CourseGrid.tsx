@@ -2,7 +2,7 @@
 
 // Course list with category filter; cards stagger back in after each filter change.
 import { useRef, useState } from "react";
-import { Button, CourseCard } from "@/components/ds";
+import { CourseCard } from "@/components/ds";
 import { COURSES, enquiryHref, type CourseCategory } from "@/lib/content";
 
 const FILTERS: ("All" | CourseCategory)[] = ["All", "Lifting", "Scaffolding", "Safety"];
@@ -40,7 +40,6 @@ export function CourseGrid() {
           {shown.map((c) => (
             <div key={c.slug} className="grid-cell">
               <CourseCard title={c.title} body={c.body} summary={c.summary} audience={c.audience} duration={c.duration} format={c.format} href={c.href ?? enquiryHref("Training")} cta={c.href ? `Explore ${c.title}` : "Enquire about this course"} />
-              {c.slug === "scaffolding-training" && <div style={{ marginTop: "var(--space-4)" }}><Button variant="secondary" href={enquiryHref("Training")}>Enquire about Scaffolding Training</Button></div>}
             </div>
           ))}
         </div>
