@@ -21,7 +21,7 @@ function gearOutline(teeth: number) {
 
 export function HeroGears() {
   return <>
-    {(["bottom-left", "top-right", "bottom-right"] as const).map((corner) => (
+    {(["bottom-left"] as const).map((corner) => (
       <div key={corner} className={`hero-gears hero-gears--${corner}`} aria-hidden="true">
         <svg viewBox={corner === "bottom-left" ? "0 0 270 255" : "-68 -68 136 136"} fill="none">
           {(corner === "bottom-left" ? GEARS : [{ ...GEARS[0], x: 0, y: 0 }]).map(({ x, y, teeth, phase, duration, color }) => (

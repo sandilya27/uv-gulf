@@ -6,6 +6,7 @@ import { Button, CredentialSeal, Eyebrow } from "@/components/ds";
 import { enquiryHref, SITE_CONFIG } from "@/lib/content";
 import dynamic from "next/dynamic";
 import { HeroGears } from "./HeroGears";
+import { HeroTextLoop } from "./HeroTextLoop";
 
 const InspectionCore = dynamic(() => import("./InspectionCore"), { ssr: false });
 
@@ -69,15 +70,7 @@ export function HomeHero() {
         </div>
         <div className="home-hero-visual">
           <InspectionCore />
-          <div className="hero-service-strip">
-            <p className="hero-service-steps">
-              <span>Inspect</span><span aria-hidden="true">→</span>
-              <span>Test</span><span aria-hidden="true">→</span>
-              <span>Calibrate</span><span aria-hidden="true">→</span>
-              <span>Certify</span>
-            </p>
-            <p className="hero-service-caption">Technical assurance across the Kingdom.</p>
-          </div>
+          <HeroTextLoop />
         </div>
       </div>
     </section>
