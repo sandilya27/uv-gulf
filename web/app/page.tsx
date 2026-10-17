@@ -16,7 +16,7 @@ export default function HomePage() {
       <Marquee />
       <Divisions />
 
-      <section className="section">
+      <section className="section inspection-services-section">
         <div className="wrap">
           <div data-reveal="1" className="section-head">
             <div className="stack-12">

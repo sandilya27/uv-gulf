@@ -619,3 +619,73 @@ img { max-width: none; }
   .artifact-canvas { height: 380px; }
 }
 @media (max-width: 480px) { .artifact-canvas { height: 310px; } }
+
+
+/* Full-image inspection cards, stacked on the document scroll. */
+.inspection-services-section .section-head { margin-bottom: 8px; }
+.service-stack { position: relative; }
+.service-stack-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; }
+.service-stack-caption, .service-stack-progress { margin: 0; font: 12px/1.6 var(--font-mono); letter-spacing: .07em; }
+.service-stack-toolbar { color: var(--ink-muted); }
+/* Grid gaps provide travel without changing each sticky card's release boundary. */
+.service-stack-cards { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 100px; }
+.service-stack-slot { min-height: calc(var(--stack-card-height, 550px) + (var(--stack-count) - 1 - var(--stack-index)) * 18px); position: sticky; top: calc(116px + var(--stack-index) * 18px); z-index: calc(var(--stack-index) + 1); margin: 0; scroll-margin-top: calc(116px + var(--stack-index) * 18px); }
+
+.service-stack-card { position: relative; isolation: isolate; display: flex; align-items: flex-end; min-height: 550px; overflow: hidden; border: 1px solid #82b4ca; border-radius: 18px; background-color: #062b3d; background-size: cover; background-position: center; background-clip: padding-box; color: #fff; transform-origin: top center; box-shadow: 0 24px 64px -32px #002a3f80; }
+.service-stack-card::before { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, #021a29f5 0%, #021a29dc 30%, #021a2970 54%, #021a291a 72%, transparent 100%); }
+.service-stack-card::after { content: ""; position: absolute; inset: 0; background: #002a3f; opacity: var(--stack-dim, 0); pointer-events: none; }
+.service-stack-counter { position: absolute; isolation: isolate; right: 28px; top: 24px; padding: 12px 18px; }
+.service-stack-counter::before { content: ""; position: absolute; z-index: -1; inset: -24px -30px; pointer-events: none; background: radial-gradient(ellipse at center, #e5f5ffcc 0%, #d2edff99 28%, #c5e8ff40 50%, transparent 74%); filter: blur(10px); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); mask-image: radial-gradient(ellipse, #000 35%, transparent 76%); -webkit-mask-image: radial-gradient(ellipse, #000 35%, transparent 76%); }
+.service-stack-card-number { display: block; font: 48px/1 var(--font-display); font-weight: 500; letter-spacing: -.04em; color: #00679a; }
+.service-stack-card-number > span { font: 14px var(--font-mono); letter-spacing: 0; color: inherit; }
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .service-stack-card-number { background-image: var(--gradient-brand-text); background-clip: text; -webkit-background-clip: text; color: transparent; }
+}
+@media (forced-colors: active) {
+  .service-stack-card-number { background: none; color: CanvasText; }
+}
+.service-stack-body { width: min(640px, 64%); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: clamp(28px, 4vw, 56px); }
+.service-stack-body > .service-stack-caption { color: #97d8f6; padding-left: 28px; position: relative; }
+.service-stack-body > .service-stack-caption::before { content: ""; position: absolute; left: 0; top: 9px; height: 2px; width: 16px; background: #65caff; }
+.service-stack-body h3 { margin: 0; color: #fff; font: 600 clamp(30px, 3.8vw, 52px)/1.1 var(--font-display); letter-spacing: -.025em; text-wrap: balance; }
+.service-stack-body > p { margin: 0; color: #d6e4eb; font-size: 17px; line-height: 1.65; max-width: 45ch; }
+.service-stack-body .uvg-list { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.service-stack-body .uvg-list li { padding: 7px 11px; border: 1px solid #ffffff30; border-radius: 4px; background: #0c354b80; color: #e2eef5; font-size: 12px; line-height: 1.5; backdrop-filter: blur(8px); }
+.service-stack-body .uvg-list li::before { display: none; }
+.service-stack-action { margin-top: 6px; }
+.service-stack-action .uvg-btn { background: #fff; color: #003d59; border-color: #fff; }
+.service-stack-action .uvg-btn:hover { background: #d9f1ff; border-color: #d9f1ff; }
+.service-stack-action .uvg-btn:focus-visible { outline: 2px solid #8cd9ff; outline-offset: 5px; }
+.service-stack .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 960px) {
+  .service-stack-body { width: 78%; }
+  .service-stack-card { min-height: 520px; background-position: 60% center; }
+}
+@media (max-width: 760px), (max-height: 700px) {
+  .service-stack-slot { min-height: 0; position: relative; top: auto; margin: 0; scroll-margin-top: 100px; }
+  .service-stack-cards { gap: 24px; }
+}
+@media (max-width: 600px) {
+  .service-stack-toolbar { align-items: flex-start; gap: 16px; }
+  .service-stack-toolbar .service-stack-caption { max-width: 23ch; }
+  .service-stack-progress { font-size: 10px; text-align: right; }
+  .service-stack-card { min-height: 560px; border-radius: 12px; background-position: 65% center; }
+  .service-stack-card::before { background: linear-gradient(0deg, #021a29fa 0%, #021a29e8 38%, #021a2980 75%, #021a2940 100%); }
+  .service-stack-counter { top: 20px; right: 20px; padding: 10px 14px; }
+  .service-stack-card-number { font-size: 36px; }
+  .service-stack-body { width: 100%; padding: 88px 24px 28px; gap: 18px; }
+  .service-stack-body h3 { font-size: 32px; }
+  .service-stack-body > p { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-stack-cards { gap: 24px; }
+  .service-stack-slot { min-height: 0; position: relative; top: auto; margin: 0; }
+}
+
+/* The light navbar uses the same dark brand gradient as the service counters. */
+.uvg-header .uvg-btn-primary { background: linear-gradient(120deg, #007dad 0%, #00679a 48%, #004363 100%) border-box; color: #fff; border-color: transparent; box-shadow: none; }
+.uvg-header .uvg-btn-primary:hover { background: linear-gradient(120deg, #0089bb 0%, #0075a8 48%, #005073 100%) border-box; }
+@media (forced-colors: active) {
+  .service-stack-counter { background: Canvas; border-color: CanvasText; box-shadow: none; }
+  .uvg-header .uvg-btn-primary { background: ButtonFace; color: ButtonText; border: 1px solid ButtonText; }
+}
