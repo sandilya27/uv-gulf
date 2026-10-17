@@ -1,7 +1,8 @@
 "use client";
 
 // NDT methods grid; selecting (click or hover) a method swaps the sticky detail panel.
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
+import { LayoutGroup, motion, useReducedMotion } from "motion/react";
 import { Button, Eyebrow } from "@/components/ds";
 import { pop } from "@/components/site/Motion";
 import { enquiryHref, METHODS } from "@/lib/content";
@@ -9,6 +10,8 @@ import styles from "./MethodExplorer.module.css";
 
 export function MethodExplorer({ limitations }: { limitations: Record<string, string> }) {
   const [code, setCode] = useState("UT");
+  const layoutGroupId = useId();
+  const reduceMotion = useReducedMotion();
   const panel = useRef<HTMLDivElement>(null);
   const select = (c: string) => {
     if (c === code) return;
@@ -27,14 +30,17 @@ export function MethodExplorer({ limitations }: { limitations: Record<string, st
             <p className="body-muted">Select a method to see what it finds and where its limitations apply.</p>
           </div>
           <div className={styles.selectorHeading}><span>Explore the methods</span><span>01 — 08</span></div>
+          <LayoutGroup id={layoutGroupId}>
           <div className="method-btns">
             {METHODS.map((x, index) => (
-              <button key={x.code} type="button" className={"method-btn" + (x.code === code ? " is-active" : "")} aria-pressed={x.code === code} onClick={() => select(x.code)} onMouseEnter={() => select(x.code)}>
+              <button key={x.code} type="button" className={"method-btn" + (x.code === code ? " is-active" : "")} aria-pressed={x.code === code} onClick={() => select(x.code)} onMouseEnter={() => select(x.code)} onFocus={() => select(x.code)}>
+                {x.code === code && <motion.span aria-hidden="true" className={styles.activeCell} layoutId="active-method" initial={false} style={{ borderRadius: 12 }} transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 36 }} />}
                 <span className={styles.buttonTop}><span className="method-btn-code">{x.code}</span><span className={styles.buttonIndex}>{String(index + 1).padStart(2, "0")}</span></span>
                 <span className="method-btn-label">{x.label}</span>
               </button>
             ))}
           </div>
+          </LayoutGroup>
         </div>
         <div data-reveal="1" data-delay="120" className="sticky-panel">
           <div ref={panel} className="method-panel" aria-live="polite">

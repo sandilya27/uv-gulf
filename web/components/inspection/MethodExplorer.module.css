@@ -4,9 +4,10 @@
 .explorer :global(.body-muted) { max-width: 43ch; line-height: 1.7; }
 .selectorHeading { display: flex; justify-content: space-between; gap: 16px; font: 11px var(--font-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-muted); padding-top: var(--space-6); border-top: 1px solid var(--border); }
 .explorer :global(.method-btns) { gap: 10px; }
-.explorer :global(.method-btn) { min-height: 112px; padding: 18px 14px; border-radius: 12px; transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
-.explorer :global(.method-btn:hover) { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px color-mix(in srgb, var(--primary) 8%, transparent); }
-.explorer :global(.method-btn.is-active) { background: var(--primary); border-color: var(--primary); box-shadow: inset 0 3px 0 var(--accent), 0 8px 24px color-mix(in srgb, var(--primary) 16%, transparent); }
+.explorer :global(.method-btn) { position: relative; isolation: isolate; min-height: 112px; padding: 18px 14px; border-radius: 12px; transition: border-color 180ms ease; }
+.explorer :global(.method-btn:hover) { border-color: var(--primary); }
+.explorer :global(.method-btn.is-active) { background: var(--surface-raised); border-color: transparent; box-shadow: none; }
+.activeCell { position: absolute; inset: -1px; z-index: -1; pointer-events: none; background: var(--primary); box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 16%, transparent); }
 .buttonTop { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .buttonIndex { font: 10px var(--font-mono); color: var(--ink-muted); opacity: .65; }
 .explorer :global(.is-active) .buttonIndex { color: var(--on-primary); }
