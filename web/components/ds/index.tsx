@@ -3,6 +3,7 @@
 // unchanged so components.css styles them exactly as in the design.
 import Link from "next/link";
 import { KickerText } from "@/components/site/KickerText";
+import { TechnicalDrawing } from "@/components/site/TechnicalDrawing";
 import { Fragment, useId, type ChangeEventHandler, type MouseEventHandler, type ReactNode } from "react";
 
 const cx = (...a: (string | false | null | undefined)[]) => a.filter(Boolean).join(" ");
@@ -77,7 +78,12 @@ export function MethodTag({ code, label }: { code: string; label?: string }) {
 export function CredentialSeal({ standard, label }: { standard: string; label?: string }) {
   return (
     <span className="uvg-seal">
-      <span className="uvg-seal-dot"><Icon name="shield" strokeWidth={2} /></span>
+      <TechnicalDrawing className="uvg-seal-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path data-technical-stroke d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z" />
+          <path data-technical-stroke d="M9 12l2 2 4-4" />
+        </svg>
+      </TechnicalDrawing>
       <span>
         <span className="uvg-seal-std">{standard}</span>
         {label ? <span className="uvg-seal-label">{label}</span> : null}
