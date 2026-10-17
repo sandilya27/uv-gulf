@@ -38,8 +38,8 @@ export function CourseGrid() {
         </div>
         <div ref={grid} className="course-grid">
           {shown.map((c) => (
-            <div key={c.title} className="grid-cell">
-              <CourseCard title={c.title} body={c.body} summary={c.summary} audience={c.audience} duration={c.duration} format={c.format} href={enquiryHref("Training")} cta="Enquire about this course" />
+            <div key={c.slug} className="grid-cell">
+              <CourseCard title={c.title} body={c.body} summary={c.summary} audience={c.audience} duration={c.duration} format={c.format} href={c.href ?? enquiryHref("Training")} cta={c.href ? `Explore ${c.title}` : "Enquire about this course"} />
             </div>
           ))}
         </div>

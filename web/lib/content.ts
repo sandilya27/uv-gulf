@@ -41,10 +41,10 @@ export const METHODS = [
 ];
 
 export type CourseCategory = "Lifting" | "Scaffolding" | "Safety";
-export const COURSES: { title: string; cat: CourseCategory; body?: string; summary: string; audience: string; duration?: string; format: string }[] = [
-  { title: "Rigger Training", cat: "Lifting", summary: "Safe slinging, load calculation and signalling for lifting operations.", audience: "Riggers, lifting supervisors", duration: "On request", format: "Classroom + practical" },
-  { title: "Scaffolding Training", cat: "Scaffolding", summary: "Erection, inspection and dismantling of tube-and-fitting and system scaffolds.", audience: "Scaffolders, inspectors", duration: "On request", format: "On-site or Khobar centre" },
-  { title: "Occupational Health & Safety", cat: "Safety", body: "NEBOSH", summary: "Internationally recognised safety qualification for supervisors and managers.", audience: "Supervisors, HSE staff", format: "Classroom" },
+export const COURSES: { slug: string; href?: string; title: string; cat: CourseCategory; body?: string; summary: string; audience: string; duration?: string; format: string }[] = [
+  { slug: "rigger-training", href: "/training/rigger-training", title: "Rigger Training", cat: "Lifting", summary: "Safe slinging, load calculation and signalling for lifting operations.", audience: "Riggers, lifting supervisors", duration: "On request", format: "Classroom + practical" },
+  { slug: "scaffolding-training", title: "Scaffolding Training", cat: "Scaffolding", summary: "Erection, inspection and dismantling of tube-and-fitting and system scaffolds.", audience: "Scaffolders, inspectors", duration: "On request", format: "On-site or Khobar centre" },
+  { slug: "occupational-health-safety", title: "Occupational Health & Safety", cat: "Safety", body: "NEBOSH", summary: "Internationally recognised safety qualification for supervisors and managers.", audience: "Supervisors, HSE staff", format: "Classroom" },
 ];
 
 export const STEPS = [
@@ -97,6 +97,6 @@ export const CERT_DEMOS = [
 
 export const FOOTER_COLS = [
   { title: "Inspection", links: [["Third-party inspection", "/inspection/third-party-inspection"], ["Non-destructive testing", "/inspection/non-destructive-testing"], ["Calibration", "/inspection/calibration"], ["Technical advisory", "/inspection/technical-advisory"]] },
-  { title: "Training", links: [["All courses", "/training"], ["Training enquiry", enquiryHref("Training")], ["Verify a certificate", "/verify"]] },
+  { title: "Training", links: [["All courses", "/training"], ["Rigger Training", "/training/rigger-training"], ["Training enquiry", enquiryHref("Training")], ["Verify a certificate", "/verify"]] },
   { title: "Company", links: [["About", "/#about"], ["Industries", "/#where"], ["Contact", "/contact"]] },
 ];
