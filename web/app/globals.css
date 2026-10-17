@@ -542,6 +542,7 @@ img { max-width: none; }
 .home-hero-copy .home-hero-seals { margin-top: 8px; gap: 16px 24px; }
 .home-hero-copy .lead-deep { max-width: 42ch; }
 .inspection-artifact { position: relative; min-width: 0; align-self: center; color: #77b4d0; }
+.inspection-artifact::before { content: ""; position: absolute; inset: -8%; pointer-events: none; background: radial-gradient(ellipse at center, rgba(48, 174, 232, 0.16) 0%, rgba(32, 147, 208, 0.08) 34%, rgba(24, 126, 190, 0.025) 52%, transparent 72%); }
 .artifact-canvas { position: relative; height: clamp(340px, 36vw, 490px); }
 .artifact-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 @media (min-width: 901px) {
