@@ -7,7 +7,9 @@ import { Marquee } from "@/components/home/Marquee";
 import { ServiceExplorer } from "@/components/home/ServiceExplorer";
 import { CtaBand, PhotoBand } from "@/components/site/Chrome";
 import { HomeVerify } from "@/components/verify/Verifier";
-import { COUNTERS, enquiryHref, INDUSTRIES } from "@/lib/content";
+import Link from "next/link";
+import { COUNTERS, enquiryHref } from "@/lib/content";
+import { INDUSTRY_SECTORS } from "@/lib/industries";
 
 export default function HomePage() {
   return (
@@ -44,9 +46,10 @@ export default function HomePage() {
               <h2 className="h2">Inspection expertise. Across Saudi Arabia.</h2>
             </div>
             <p className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
-            <p className="about-industries"><strong>Industries served</strong><span>{INDUSTRIES.join(" · ")}</span></p>
+            <p className="about-industries"><strong>Industries served</strong><span>{INDUSTRY_SECTORS.map((industry, index) => <span key={industry.slug}>{index > 0 ? " · " : ""}{industry.href ? <Link href={industry.href}>{industry.title}</Link> : industry.title}</span>)}</span></p>
             <div className="btn-row">
               <Button variant="ghost" arrow href="/inspection">Explore our services</Button>
+              <Button variant="ghost" arrow href="/industries">Explore industries</Button>
             </div>
           </div>
           <div className="counters">
