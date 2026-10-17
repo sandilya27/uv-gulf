@@ -31,7 +31,7 @@ export default function HomePage() {
 
       <InspectionProcess />
 
-      <PhotoBand slotId="band-home" placeholder="Site photo: inspector at work on a pipeline or plant" height="clamp(380px,62vh,580px)">
+      <PhotoBand slotId="band-home" src="/assets/images/inspection.webp" placeholder="Illustrative image of a technician performing ultrasonic inspection on a pipeline" height="clamp(380px,62vh,580px)">
         <Eyebrow>On-shore and off-shore</Eyebrow>
         <h2 className="h-band">Inspection on site, wherever the asset is.</h2>
       </PhotoBand>

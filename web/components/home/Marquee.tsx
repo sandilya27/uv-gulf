@@ -2,6 +2,7 @@
 
 // Standards / NDT methods / industries strip. Scrolls continuously; slows on hover.
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { MethodTag } from "@/components/ds";
 import { METHODS } from "@/lib/content";
 
@@ -22,16 +23,19 @@ function Run({ hidden }: { hidden?: boolean }) {
 
 export function Marquee() {
   const track = useRef<HTMLDivElement>(null);
-  const anim = useRef<Animation | null>(null);
+  const anim = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
-    if (!track.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    anim.current = track.current.animate([{ transform: "translateX(0)" }, { transform: "translateX(-50%)" }], { duration: 45000, iterations: Infinity });
-    return () => anim.current?.cancel();
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      anim.current = gsap.fromTo(track.current, { xPercent: 0 }, { xPercent: -50, duration: 45, repeat: -1, ease: "none" });
+      return () => { anim.current = null; };
+    });
+    return () => media.revert();
   }, []);
 
   return (
-    <section className="marquee" onMouseEnter={() => anim.current?.updatePlaybackRate(0.15)} onMouseLeave={() => anim.current?.updatePlaybackRate(1)}>
+    <section className="marquee" onMouseEnter={() => anim.current?.timeScale(0.15)} onMouseLeave={() => anim.current?.timeScale(1)}>
       <div ref={track} className="marquee-track">
         <Run />
         <Run hidden />

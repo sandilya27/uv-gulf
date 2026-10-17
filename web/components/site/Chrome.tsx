@@ -24,6 +24,7 @@ export function SiteFooter() {
           ))}
         </div>
         <LocationList />
+        <div className="footer-gradient-wordmark" aria-hidden="true">UV GULF</div>
         <div className="site-footer-legal">
           <span>United Vetting Gulf Co. Ltd. · Khobar, Kingdom of Saudi Arabia</span>
           <a href="mailto:sales@uvgulf.com">sales@uvgulf.com</a>
@@ -62,12 +63,9 @@ export function PhotoBand({ slotId, placeholder, src, height, children }: { slot
   );
 }
 
-/**
- * Photo placeholder. No photography has been supplied yet: pass `src` (a file in
- * /public) once UV Gulf provides its own site photos.
- */
+/** Shared photography slot; descriptions are also used as accessible alt text. */
 export function PhotoSlot({ id, placeholder, src }: { id: string; placeholder: string; src?: string }) {
-  if (src) return <img id={id} src={src} alt="" className="photo-slot-img" />;
+  if (src) return <img id={id} src={src} alt={placeholder} loading="lazy" decoding="async" className="photo-slot-img" />;
   return (
     <div id={id} className="photo-slot" role="img" aria-label={placeholder}>
       <span>{placeholder}</span>
