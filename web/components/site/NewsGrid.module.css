@@ -1,4 +1,4 @@
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
 .card { min-width: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
 .copy, .empty { padding: var(--space-8); }
 .empty { border-left: 3px solid var(--logo-navy); background: var(--surface-alt); }
@@ -8,4 +8,5 @@
 .image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .card a, .empty a { color: var(--logo-navy); text-underline-offset: 4px; overflow-wrap: anywhere; }
 .card a:focus-visible, .empty a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } .copy, .empty { padding: var(--space-6); } }
