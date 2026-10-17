@@ -1,7 +1,8 @@
 import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Button, Eyebrow } from "@/components/ds";
-import { CtaBand, PageHero, PhotoSlot } from "@/components/site/Chrome";
+import { CtaBand, PageHero } from "@/components/site/Chrome";
+import { LayeredPhotography } from "@/components/site/LayeredPhotography";
 import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { CourseGrid } from "@/components/training/CourseGrid";
 import { enquiryHref } from "@/lib/content";
@@ -20,9 +21,10 @@ export default function TrainingPage() {
 
       <section className="section bg-alt">
         <div className="wrap delivery-grid">
-          <div data-reveal="1" className="delivery-photo">
-            <div data-parallax="0.08" className="delivery-photo-img"><PhotoSlot id="training-photo" src="/assets/images/training.webp" placeholder="Illustrative image of an instructor demonstrating pipe inspection to industrial trainees" /></div>
-          </div>
+          <LayeredPhotography photos={[
+            { src: "/assets/images/training.webp", alt: "Illustrative image of an instructor demonstrating pipe inspection to industrial trainees" },
+            { src: "/assets/images/calibration.webp", alt: "Illustrative image of a technician adjusting pressure calibration instruments" },
+          ]} />
           <div className="stack-16">
             <Eyebrow>Delivery</Eyebrow>
             <MaskedHeading>On site or at our Khobar centre</MaskedHeading>

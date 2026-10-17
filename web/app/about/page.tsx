@@ -3,6 +3,7 @@ import { Button } from "@/components/ds";
 import { ServiceDetailSection } from "@/components/inspection/ServiceDetail";
 import { CtaBand, PageHero } from "@/components/site/Chrome";
 import { TeamSection } from "@/components/site/TeamSection";
+import { LayeredPhotography } from "@/components/site/LayeredPhotography";
 import { enquiryHref } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function AboutPage() {
     <PageHero eyebrow="About UV Gulf" title="Inspection and training. A clear way forward." lead="Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.">
       <Button variant="on-deep" size="lg" arrow href={enquiryHref("General")}>Talk to UV Gulf</Button>
     </PageHero>
-    <ServiceDetailSection id="company" eyebrow="United Vetting Gulf" title="Support for assets and the people who work with them.">
+    <ServiceDetailSection id="company" eyebrow="United Vetting Gulf" title="Support for assets and the people who work with them." media={<LayeredPhotography photos={[
+      { src: "/assets/images/inspection.webp", alt: "Illustrative image of a technician inspecting a pipeline weld" },
+      { src: "/assets/images/training.webp", alt: "Illustrative image of an instructor demonstrating pipe inspection to industrial trainees" },
+    ]} />}>
       <p>UV Gulf brings inspection services and industrial training together for oil and gas, petrochemical, energy and construction enquiries. Start with your equipment, site activities and workforce requirements so the scope can be discussed in context.</p>
       <div className="btn-row"><Button variant="ghost" arrow href="/inspection">Explore inspection services</Button><Button variant="ghost" arrow href="/training">Explore industrial training</Button></div>
     </ServiceDetailSection>
