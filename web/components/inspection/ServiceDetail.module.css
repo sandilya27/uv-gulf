@@ -2,7 +2,6 @@
 .section h2 { margin-top: var(--space-4); }
 .section h3 { font-family: var(--font-display); font-size: 1.35rem; margin: 0 0 .6rem; }
 .content { display: grid; gap: var(--space-6); }
-.withMedia { align-content: start; }
 .content p { margin: 0; line-height: 1.7; }
 .content ul, .content ol { margin: 0; padding-left: 1.25rem; }
 .content li { padding-left: .3rem; margin-bottom: .75rem; line-height: 1.7; }
