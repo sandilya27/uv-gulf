@@ -35,13 +35,12 @@ export function SiteFooter() {
   );
 }
 
-/** Shared cube hero for inner pages, with optional contextual breadcrumbs. */
-export function PageHero({ eyebrow, title, lead, titleMeasure = true, artifact = <DivisionArtifact division="inspection" />, breadcrumb, children }: { eyebrow: string; title: string; lead: string; titleMeasure?: boolean; artifact?: ReactNode; breadcrumb?: ReactNode; children?: ReactNode }) {
+/** Shared cube hero for inner pages, with a consistent layout. */
+export function PageHero({ eyebrow, title, lead, titleMeasure = true, artifact = <DivisionArtifact division="inspection" />, children }: { eyebrow: string; title: string; lead: string; titleMeasure?: boolean; artifact?: ReactNode; children?: ReactNode }) {
   return (
     <section data-hero="1" className="uvg-deep page-hero">
       <div className={artifact ? "wrap page-hero-layout" : "wrap"}>
       <div className="page-hero-inner">
-        {breadcrumb}
         <div data-reveal="1"><Eyebrow>{eyebrow}</Eyebrow></div>
         <h1 data-reveal="1" data-delay="80" className="page-hero-title" style={titleMeasure ? undefined : { maxWidth: "none" }}>{title}</h1>
         <p data-reveal="1" data-delay="160" className="lead-deep">{lead}</p>
