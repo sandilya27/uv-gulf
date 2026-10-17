@@ -74,6 +74,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="home-clients" aria-labelledby="clients-title">
+        <div className="wrap">
+          <h2 id="clients-title" data-reveal="1">Our Clients</h2>
+          <div className="client-marquee">
+          <div className="client-marquee-track">
+          {[0, 1, 2].map((copy) => <ul className="home-client-grid" key={copy} aria-hidden={copy > 0 ? true : undefined}>
+            {[
+              ["SABIC", "sabic"],
+              ["Saudi Aramco", "aramco"],
+              ["Yasref", "yasref"],
+              ["Saudi Electricity Company", "saudi-electricity"],
+              ["Marafiq", "marafiq"],
+              ["Ma’aden", "maaden"],
+            ].map(([name, logo]) => (
+              <li key={name}>
+                <img src={`/assets/clients/${logo}.jpeg`} alt={name} className="home-client-logo" width={370} height={202} loading="lazy" />
+              </li>
+            ))}
+          </ul>)}
+          </div>
+          </div>
+        </div>
+      </section>
+
       <LocationsMap />
 
       <section className="section">

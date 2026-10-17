@@ -8,6 +8,7 @@ import { pop } from "@/components/site/Motion";
 import { COURSES, SERVICES, type EnquiryType } from "@/lib/content";
 
 const TABS: EnquiryType[] = ["Inspection", "Training", "General"];
+const TAB_DETAILS = { Inspection: "Assets, sites & technical services", Training: "Courses, teams & certification", General: "Questions & other enquiries" };
 
 export function EnquiryForm({ initialType }: { initialType: EnquiryType }) {
   const [type, setType] = useState<EnquiryType>(initialType);
@@ -39,19 +40,22 @@ export function EnquiryForm({ initialType }: { initialType: EnquiryType }) {
   }
 
   return (
-    <>
-      <div className="tabs" role="group" aria-label="Enquiry type">
-        <div className="tabs-indicator" style={{ transform: "translateX(" + TABS.indexOf(type) * 100 + "%)" }} />
+    <div className="enquiry-card">
+      <div className="enquiry-heading"><div><span className="contact-kicker">YOUR NEXT STEP</span><h2>How can we help?</h2></div><span className="enquiry-heading-mark" aria-hidden="true">↗</span></div>
+      <p className="enquiry-intro">Choose an enquiry type and tell us a little about what you need.</p>
+      <div className="enquiry-options" role="group" aria-label="Enquiry type">
         {TABS.map((t) => (
-          <button key={t} type="button" aria-pressed={t === type} className={t === type ? "is-active" : undefined} onClick={() => { setType(t); setEmailErr(null); }}>{t} enquiry</button>
+          <button key={t} type="button" aria-pressed={t === type} className={t === type ? "is-active" : undefined} onClick={() => { setType(t); setEmailErr(null); }}><span className="enquiry-option-top"><strong>{t}</strong><span className="enquiry-radio" aria-hidden="true" /></span><span>{TAB_DETAILS[t]}</span></button>
         ))}
       </div>
       <form ref={form} className="enq-form" onSubmit={submit} noValidate>
         <input type="hidden" name="type" value={type} />
-        <Field label="Full name" name="name" required />
-        <Field label="Company" name="company" required />
-        <Field label="Work email" name="email" type="email" required error={emailErr} />
-        <Field label="Phone" name="phone" type="tel" hint="Optional." />
+        <div className="enquiry-section-title span-all"><span>01</span><h3>Your details</h3><small>* Required fields</small></div>
+        <Field label="Full name" name="name" placeholder="Your full name" required />
+        <Field label="Company" name="company" placeholder="Company or organisation" required />
+        <Field label="Work email" name="email" type="email" placeholder="you@company.com" required error={emailErr} />
+        <Field label="Phone (optional)" name="phone" type="tel" placeholder="Include country code" />
+        <div className="enquiry-section-title enquiry-section-title--project span-all"><span>02</span><h3>{type === "Training" ? "Your training needs" : type === "Inspection" ? "Your project" : "Your enquiry"}</h3></div>
         {type === "Inspection" ? (
           <>
             <Field label="Service" as="select" name="service" options={SERVICES.map((s) => s.title)} />
@@ -73,8 +77,8 @@ export function EnquiryForm({ initialType }: { initialType: EnquiryType }) {
             <Field className="span-all" label="Message" as="textarea" name="message" />
           </>
         )}
-        <div className="span-all"><Button type="submit" size="lg" arrow>Send enquiry</Button></div>
+        <div className="enquiry-submit span-all"><p>Your enquiry goes to our sales team.<br />We’ll follow up at the email you provide.</p><Button type="submit" size="lg" arrow>Send enquiry</Button></div>
       </form>
-    </>
+    </div>
   );
 }

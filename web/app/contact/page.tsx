@@ -22,13 +22,16 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
           <div data-reveal="1" className="contact-main">
             <EnquiryForm key={initialType} initialType={initialType} />
           </div>
-          <div data-reveal="1" data-delay="120" className="stack-24">
+          <aside data-reveal="1" data-delay="120" className="contact-aside">
+            <span className="contact-kicker">LET’S CONNECT</span>
+            <h2>Good projects start with a conversation.</h2>
+            <p>From your first question to the next step, our inspection and training team is here to help.</p>
+            <a href="mailto:sales@uvgulf.com" className="contact-direct"><span>Email our team</span><strong>sales@uvgulf.com <span aria-hidden="true">↗</span></strong></a>
+            <div className="contact-locations">
             <LocationList />
-            <div className="stack-4">
-              <span className="uvg-label">Email</span>
-              <a href="mailto:sales@uvgulf.com" className="contact-email">sales@uvgulf.com</a>
             </div>
-          </div>
+            <div className="contact-aside-foot"><span aria-hidden="true" />Local knowledge. International standards.</div>
+          </aside>
         </div>
       </section>
     </>
