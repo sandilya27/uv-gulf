@@ -1,6 +1,6 @@
 "use client";
 
-// Home hero: word-by-word headline, inspection core, and cursor crosshair.
+// Home hero: word-by-word headline, pipe spool scan, and cursor crosshair.
 import { useRef, type MouseEvent } from "react";
 import { Button, CredentialSeal, Eyebrow } from "@/components/ds";
 import { enquiryHref, SITE_CONFIG } from "@/lib/content";
@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { HeroGears } from "./HeroGears";
 import { HeroTextLoop } from "./HeroTextLoop";
 
-const InspectionCore = dynamic(() => import("./InspectionCore"), { ssr: false });
+const SpoolScan = dynamic(() => import("./SpoolScan"), { ssr: false });
 
 const WORDS = ["Third-party", "inspection,", "testing", "and", "calibration", "you", "can"];
 
@@ -69,7 +69,7 @@ export function HomeHero() {
         </div>
         </div>
         <div className="home-hero-visual">
-          <InspectionCore />
+          <SpoolScan />
           <HeroTextLoop />
         </div>
       </div>

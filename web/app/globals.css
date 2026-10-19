@@ -664,6 +664,9 @@ img { max-width: none; }
 .artifact-callout--training { top: 17%; right: 6%; }
 .artifact-callout--calibration { top: 79%; left: 6%; }
 .artifact-callout--certification { bottom: 8%; right: 6%; }
+.artifact-callout { transition: color 300ms ease; }
+.artifact-callout.is-active { color: var(--signal); }
+.spool-scan .artifact-callout--calibration { top: 91%; }
 @media (min-width: 901px) {
   .inspection-artifact { transform: translate(clamp(-64px, -4vw, -36px), clamp(-88px, -6vw, -48px)) scale(1.12); }
 }
