@@ -21,9 +21,15 @@ const SWEEP = 5.4;
 const HOLD_END = 8.8;
 const CYCLE = 9.8;
 
-const CALLOUTS = ["Ultrasonic testing", "Girth weld inspection", "Certified & traceable", "Wall-thickness mapping"] as const;
+// Spool drawing tags: service on the first line, illustrative spool spec on the second.
+const CALLOUTS = [
+  ["Ultrasonic testing", "Phased-array ring scan"],
+  ["Girth weld W-01", "Butt weld · 100% UT"],
+  ["Weld-neck flange", "WN · RF · Class 150"],
+  ["Wall-thickness map", "NPS 12 · SCH 40"],
+] as const;
 // Label-side start of each leader line in the 0–100 callout box: [x, y, elbow x].
-const LEADERS = [[6, 15, 28], [94, 24, 76], [6, 89, 24], [94, 85, 72]] as const;
+const LEADERS = [[6, 17, 28], [94, 21, 76], [6, 89, 24], [94, 82, 72]] as const;
 
 const ease = (t: number) => 0.5 - Math.cos(Math.PI * Math.min(1, Math.max(0, t))) / 2;
 const smooth = (a: number, b: number, v: number) => {
@@ -182,7 +188,7 @@ export default function SpoolScan() {
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(OUTER + 0.03, OUTER + 0.03, 0.05, 120, 1, true).rotateX(Math.PI / 2), beamMaterial);
     scanner.add(beam);
 
-    // Points the callout leaders track: ring, weld (side facing its label), left flange rim (where the tag goes), scanned band.
+    // Points the callout leaders track: ring, weld (side facing its label), left flange rim, scanned band.
     const anchors = [new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D()];
     anchors[0].position.set(0, OUTER + 0.23, 0);
     scanner.add(anchors[0]);
@@ -313,7 +319,7 @@ export default function SpoolScan() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio * element.getBoundingClientRect().width / width, 2));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
-      camera.zoom = 1.2 * Math.min(1, camera.aspect);
+      camera.zoom = 1.2 * Math.min(1, camera.aspect) * (width < 480 ? 0.88 : 1);
       camera.updateProjectionMatrix();
       render();
     });
@@ -355,11 +361,13 @@ export default function SpoolScan() {
       <div ref={host} className="artifact-canvas" />
       <div className="artifact-callouts">
         <svg className="artifact-callout-lines" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-          {CALLOUTS.map((label, i) => <path key={label} ref={(el) => { lines.current[i] = el; }} />)}
-          {CALLOUTS.map((label, i) => <circle key={label} ref={(el) => { dots.current[i] = el; }} r="0.65" />)}
+          {CALLOUTS.map(([label], i) => <path key={label} ref={(el) => { lines.current[i] = el; }} />)}
+          {CALLOUTS.map(([label], i) => <circle key={label} ref={(el) => { dots.current[i] = el; }} r="0.65" />)}
         </svg>
-        {CALLOUTS.map((label, i) => (
-          <span key={label} className={`artifact-callout artifact-callout--${["inspection", "training", "calibration", "certification"][i]}`}>{label}</span>
+        {CALLOUTS.map(([label, spec], i) => (
+          <span key={label} className={`artifact-callout artifact-callout--${["inspection", "training", "calibration", "certification"][i]}`}>
+            {label}<span className="artifact-callout-spec">{spec}</span>
+          </span>
         ))}
       </div>
     </div>

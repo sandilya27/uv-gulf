@@ -664,7 +664,10 @@ img { max-width: none; }
 .artifact-callout--training { top: 17%; right: 6%; }
 .artifact-callout--calibration { top: 79%; left: 6%; }
 .artifact-callout--certification { bottom: 8%; right: 6%; }
-.spool-scan .artifact-callout--calibration { top: 91%; }
+.spool-scan .artifact-callout--calibration { top: 90%; }
+.spool-scan .artifact-callout--training { top: 11%; }
+.spool-scan .artifact-callout--training, .spool-scan .artifact-callout--certification { text-align: right; }
+.artifact-callout-spec { display: block; font-size: 0.9em; color: rgba(164, 207, 227, 0.52); }
 @media (min-width: 901px) {
   .inspection-artifact { transform: translate(clamp(-64px, -4vw, -36px), clamp(-88px, -6vw, -48px)) scale(1.12); }
 }
