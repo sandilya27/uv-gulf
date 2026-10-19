@@ -188,7 +188,7 @@ export default function SpoolScan() {
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(OUTER + 0.03, OUTER + 0.03, 0.05, 120, 1, true).rotateX(Math.PI / 2), beamMaterial);
     scanner.add(beam);
 
-    // Points the callout leaders track: ring, weld (side facing its label), left flange rim, scanned band.
+    // Points the callout leaders track: ring, weld (side facing its label), left flange rim, pipe wall between weld and right flange.
     const anchors = [new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D()];
     anchors[0].position.set(0, OUTER + 0.23, 0);
     scanner.add(anchors[0]);
@@ -218,7 +218,6 @@ export default function SpoolScan() {
       }
       return best;
     };
-    let mapZ = -SCAN_END;
     const facing = new THREE.Vector3();
 
     const move = (event: PointerEvent) => {
@@ -268,8 +267,6 @@ export default function SpoolScan() {
       tilt.rotation.y = THREE.MathUtils.lerp(tilt.rotation.y, active ? pointer.x * 0.22 : 0, follow);
       scene.updateMatrixWorld(true);
 
-      // Map anchor sits on the lower silhouette edge, nudged toward the camera, and glides along the scanned band.
-      mapZ = still ? SCAN_END * 0.45 : THREE.MathUtils.lerp(mapZ, (scan.uFrom.value + scan.uTo.value) / 2, 1 - Math.exp(-delta / 260));
       axis.worldToLocal(facing.copy(camera.position));
       facing.z = 0;
       facing.normalize();
@@ -279,11 +276,7 @@ export default function SpoolScan() {
       // Left flange is whichever end projects further left on screen.
       const leftEnd = rimPoint.set(0, 0, 1).applyMatrix4(axis.matrixWorld).project(camera).x < projected.set(0, 0, -1).applyMatrix4(axis.matrixWorld).project(camera).x ? 1 : -1;
       anchors[2].position.lerp(pickRim(leftEnd * (LENGTH / 2 - FLANGE_DEPTH / 2), FLANGE, -1, -1, facing), anchorFollow);
-      // Lower silhouette edge (perpendicular to the view), nudged onto the camera-facing side.
-      projected.set(-facing.y, facing.x, 0);
-      if (projected.y > 0) projected.negate();
-      facing.multiplyScalar(0.45).add(projected).normalize();
-      anchors[3].position.set(facing.x * (OUTER + 0.01), facing.y * (OUTER + 0.01), mapZ);
+      anchors[3].position.lerp(pickRim(-leftEnd * SCAN_END * 0.5, OUTER + 0.01, 1, -1, facing), anchorFollow);
       anchors.forEach(anchor => anchor.updateMatrixWorld());
 
       // Pointer acts as a hand-held probe: an amber spot that follows the cursor across the wall.
