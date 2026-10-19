@@ -43,7 +43,6 @@ export default function SpoolScan() {
   const host = useRef<HTMLDivElement>(null);
   const lines = useRef<(SVGPathElement | null)[]>([]);
   const dots = useRef<(SVGCircleElement | null)[]>([]);
-  const labels = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
     const element = host.current;
@@ -183,11 +182,10 @@ export default function SpoolScan() {
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(OUTER + 0.03, OUTER + 0.03, 0.05, 120, 1, true).rotateX(Math.PI / 2), beamMaterial);
     scanner.add(beam);
 
-    // Points the callout leaders track: ring, weld crown, front flange rim (where the tag goes), scanned band.
+    // Points the callout leaders track: ring, weld (side facing its label), left flange rim (where the tag goes), scanned band.
     const anchors = [new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D()];
     anchors[0].position.set(0, OUTER + 0.23, 0);
     scanner.add(anchors[0]);
-    anchors[1].position.set(0, OUTER + 0.05, 0);
     axis.add(anchors[1], anchors[2], anchors[3]);
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -198,7 +196,22 @@ export default function SpoolScan() {
     let hovering = false;
     let clock = 0;
     let previousFrame = performance.now();
-    let stages = "";
+    let settled = false;
+    const rimPoint = new THREE.Vector3();
+    const best = new THREE.Vector3();
+    // Visible rimPoint point (in axis space) whose screen position leans furthest toward a label corner.
+    const pickRim = (z: number, radius: number, towardX: number, towardY: number, camera2d: THREE.Vector3) => {
+      let score = -Infinity;
+      for (let k = 0; k < 48; k++) {
+        const a = k / 48 * Math.PI * 2;
+        if (Math.cos(a) * camera2d.x + Math.sin(a) * camera2d.y < 0.2) continue;
+        rimPoint.set(Math.cos(a) * radius, Math.sin(a) * radius, z);
+        axis.localToWorld(rimPoint).project(camera);
+        const s = rimPoint.x * towardX + rimPoint.y * towardY;
+        if (s > score) { score = s; best.set(Math.cos(a) * radius, Math.sin(a) * radius, z); }
+      }
+      return best;
+    };
     let mapZ = -SCAN_END;
     const facing = new THREE.Vector3();
 
@@ -241,13 +254,6 @@ export default function SpoolScan() {
       const done = phase > REST + SWEEP && phase < HOLD_END ? 1 : 0;
       weldMaterial.emissiveIntensity = tag * (0.55 + (still ? 0 : 0.15 * Math.sin(time * 3.2) * done));
       weldMaterial.color.setHex(0x4a7c92).lerp(amber, tag * 0.55);
-      // Callouts turn amber stage by stage: scan started, map building, weld passed, pass certified.
-      const live = phase < HOLD_END;
-      const next = [progress > 0.02, progress > 0.5, done === 1, progress > 0.25].map(on => on && live ? 1 : 0).join("");
-      if (next !== stages) {
-        stages = next;
-        [...next].forEach((on, i) => [labels.current[i], lines.current[i], dots.current[i]].forEach(el => el?.classList.toggle("is-active", on === "1")));
-      }
 
       roll.rotation.z = still ? 0.4 : time * 0.11;
       axis.rotation.y = -0.98 + (still ? 0 : Math.sin(time * 0.23) * 0.09);
@@ -256,19 +262,23 @@ export default function SpoolScan() {
       tilt.rotation.y = THREE.MathUtils.lerp(tilt.rotation.y, active ? pointer.x * 0.22 : 0, follow);
       scene.updateMatrixWorld(true);
 
-      // Flange and map anchors sit on the lower silhouette edge, nudged toward the camera; the map one glides along the band.
+      // Map anchor sits on the lower silhouette edge, nudged toward the camera, and glides along the scanned band.
       mapZ = still ? SCAN_END * 0.45 : THREE.MathUtils.lerp(mapZ, (scan.uFrom.value + scan.uTo.value) / 2, 1 - Math.exp(-delta / 260));
       axis.worldToLocal(facing.copy(camera.position));
       facing.z = 0;
       facing.normalize();
+      const anchorFollow = settled ? 1 - Math.exp(-delta / 200) : 1;
+      settled = true;
+      anchors[1].position.lerp(pickRim(0, OUTER + 0.05, 1, 1, facing), anchorFollow);
+      // Left flange is whichever end projects further left on screen.
+      const leftEnd = rimPoint.set(0, 0, 1).applyMatrix4(axis.matrixWorld).project(camera).x < projected.set(0, 0, -1).applyMatrix4(axis.matrixWorld).project(camera).x ? 1 : -1;
+      anchors[2].position.lerp(pickRim(leftEnd * (LENGTH / 2 - FLANGE_DEPTH / 2), FLANGE, -1, -1, facing), anchorFollow);
       // Lower silhouette edge (perpendicular to the view), nudged onto the camera-facing side.
       projected.set(-facing.y, facing.x, 0);
       if (projected.y > 0) projected.negate();
       facing.multiplyScalar(0.45).add(projected).normalize();
-      anchors[2].position.set(facing.x * FLANGE, facing.y * FLANGE, LENGTH / 2 - FLANGE_DEPTH / 2);
       anchors[3].position.set(facing.x * (OUTER + 0.01), facing.y * (OUTER + 0.01), mapZ);
-      anchors[2].updateMatrixWorld();
-      anchors[3].updateMatrixWorld();
+      anchors.forEach(anchor => anchor.updateMatrixWorld());
 
       // Pointer acts as a hand-held probe: an amber spot that follows the cursor across the wall.
       let probe = 0;
@@ -349,7 +359,7 @@ export default function SpoolScan() {
           {CALLOUTS.map((label, i) => <circle key={label} ref={(el) => { dots.current[i] = el; }} r="0.65" />)}
         </svg>
         {CALLOUTS.map((label, i) => (
-          <span key={label} ref={(el) => { labels.current[i] = el; }} className={`artifact-callout artifact-callout--${["inspection", "training", "calibration", "certification"][i]}`}>{label}</span>
+          <span key={label} className={`artifact-callout artifact-callout--${["inspection", "training", "calibration", "certification"][i]}`}>{label}</span>
         ))}
       </div>
     </div>
