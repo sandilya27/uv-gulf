@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { DURATION, EASE } from "@/lib/motion";
 
 // GSAP owns scroll choreography; Anime.js owns the technical graphic details.
 export function Motion() {
@@ -79,18 +80,35 @@ export function Motion() {
             onUpdate: () => { el.textContent = String(Math.round(value.n)); },
           });
         });
+        // Draw: strokes inside the element draw on when it scrolls into view.
         once("[data-draw]", (el) => {
-          ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => {
-            const lines = el.querySelectorAll("line");
-            lines.forEach((line, index) => {
-              const length = line.getTotalLength();
-              line.style.strokeDasharray = String(length);
-              details.push(animate(line, {
-                strokeDashoffset: [length, 0], duration: 1100,
-                delay: 200 + index * 110, ease: "outCubic",
-              }));
-            });
-          } });
+          const strokes = el.querySelectorAll<SVGGeometryElement>("line, path, polyline, polygon, circle, rect");
+          if (!strokes.length) return;
+          strokes.forEach((stroke) => {
+            const length = stroke.getTotalLength();
+            gsap.set(stroke, { strokeDasharray: length, strokeDashoffset: length });
+          });
+          gsap.to(strokes, {
+            strokeDashoffset: 0, duration: DURATION.hero, ease: EASE.enter,
+            delay: Number(el.dataset.delay || 0) / 1000, stagger: 0.11,
+            scrollTrigger: { trigger: el, start: "top 90%", once: true },
+          });
+        });
+        // Stamp: a quick press-in with a small overshoot settle.
+        once("[data-stamp]", (el) => {
+          gsap.fromTo(el, { opacity: 0, scale: 1.06 }, {
+            opacity: 1, scale: 1, duration: DURATION.stamp, ease: EASE.stamp,
+            delay: Number(el.dataset.delay || 0) / 1000, clearProps: "opacity,transform",
+            scrollTrigger: { trigger: el, start: "top 92%", once: true },
+          });
+        });
+        // Header ruler: ticks fill left to right with whole-document scroll progress.
+        once(".uvg-gauge-fill", (el) => {
+          const set = gsap.quickSetter(el, "scaleX");
+          ScrollTrigger.create({
+            start: 0, end: "max", onUpdate: (self) => set(self.progress),
+            onRefresh: (self) => set(self.progress),
+          });
         });
       });
       setup();

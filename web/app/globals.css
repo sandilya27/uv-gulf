@@ -1010,3 +1010,29 @@ img { max-width: none; }
   .uvg-header.is-floating { --tick: color-mix(in srgb, var(--accent) 55%, transparent); }
   .uvg-header.is-floating.uvg-deep { --tick: var(--sky-300); }
 }
+
+/* Header ruler as a scroll gauge: a sky fill, masked by the tick pattern, scaled by page progress (Motion.tsx). */
+.uvg-gauge {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 9px; overflow: hidden; pointer-events: none;
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 48px) bottom / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 12px) bottom / 100% 4px no-repeat;
+  mask: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 48px) bottom / 100% 9px no-repeat,
+    repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 12px) bottom / 100% 4px no-repeat;
+}
+.uvg-gauge-fill { position: absolute; inset: 0; background: var(--sky-600); transform: scaleX(0); transform-origin: 0 50%; }
+.uvg-header.uvg-deep .uvg-gauge-fill, :root[data-theme="dark"] .uvg-gauge-fill { background: var(--sky-300); }
+.uvg-header.is-floating .uvg-gauge { display: none; }
+@media (max-width: 1000px) { .uvg-gauge { display: none; } }
+@media (forced-colors: active) { .uvg-gauge { display: none; } }
+@media (min-width: 1001px) {
+  .uvg-header.is-floating .uvg-gauge { display: block; left: 34px; right: 34px; bottom: 5px; height: 7px; }
+}
+
+/* Motion tokens; the TS counterparts are in lib/motion.ts. */
+:root {
+  --ease-enter: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-stamp: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-micro: 180ms;
+  --dur-standard: 600ms;
+  --dur-hero: 1000ms;
+}

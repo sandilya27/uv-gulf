@@ -179,6 +179,7 @@ export function SiteHeaderBar() {
             <Icon name={menuOpen ? "x" : "menu"} size={24} />
           </button>
         </div>
+        <span className="uvg-gauge" aria-hidden="true"><span className="uvg-gauge-fill" /></span>
       </header>
       {menuMounted ? (
         <nav ref={panelRef} id="site-menu" className="site-menu" data-lenis-prevent aria-label="Main" inert={!menuOpen} aria-hidden={!menuOpen}>
