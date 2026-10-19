@@ -666,6 +666,10 @@ img { max-width: none; }
 .artifact-callout--certification { bottom: 8%; right: 6%; }
 .artifact-callout { transition: color 300ms ease; }
 .artifact-callout.is-active { color: var(--signal); }
+.artifact-callout-lines path { transition: stroke 300ms ease; }
+.artifact-callout-lines circle { transition: fill 300ms ease, opacity 300ms ease; }
+.artifact-callout-lines path.is-active { stroke: rgba(255, 184, 0, 0.5); }
+.artifact-callout-lines circle.is-active { fill: var(--signal); opacity: 1; }
 .spool-scan .artifact-callout--calibration { top: 91%; }
 @media (min-width: 901px) {
   .inspection-artifact { transform: translate(clamp(-64px, -4vw, -36px), clamp(-88px, -6vw, -48px)) scale(1.12); }

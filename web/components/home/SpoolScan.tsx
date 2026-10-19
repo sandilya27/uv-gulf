@@ -21,7 +21,7 @@ const SWEEP = 5.4;
 const HOLD_END = 8.8;
 const CYCLE = 9.8;
 
-const CALLOUTS = ["Ultrasonic testing", "Girth weld inspection", "Wall-thickness mapping", "Certified & traceable"] as const;
+const CALLOUTS = ["Ultrasonic testing", "Girth weld inspection", "Certified & traceable", "Wall-thickness mapping"] as const;
 // Label-side start of each leader line in the 0–100 callout box: [x, y, elbow x].
 const LEADERS = [[6, 15, 28], [94, 24, 76], [6, 89, 24], [94, 85, 72]] as const;
 
@@ -183,12 +183,11 @@ export default function SpoolScan() {
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(OUTER + 0.03, OUTER + 0.03, 0.05, 120, 1, true).rotateX(Math.PI / 2), beamMaterial);
     scanner.add(beam);
 
-    // Points the callout leaders track; the map anchor follows the scanned band.
+    // Points the callout leaders track: ring, weld crown, front flange rim (where the tag goes), scanned band.
     const anchors = [new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D()];
     anchors[0].position.set(0, OUTER + 0.23, 0);
     scanner.add(anchors[0]);
     anchors[1].position.set(0, OUTER + 0.05, 0);
-    anchors[3].position.set(OUTER * 0.72, -OUTER * 0.72, 0);
     axis.add(anchors[1], anchors[2], anchors[3]);
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -199,7 +198,9 @@ export default function SpoolScan() {
     let hovering = false;
     let clock = 0;
     let previousFrame = performance.now();
-    let certified = -1;
+    let stages = "";
+    let mapZ = -SCAN_END;
+    const facing = new THREE.Vector3();
 
     const move = (event: PointerEvent) => {
       if (event.pointerType === "touch" || reduced.matches) return;
@@ -240,12 +241,13 @@ export default function SpoolScan() {
       const done = phase > REST + SWEEP && phase < HOLD_END ? 1 : 0;
       weldMaterial.emissiveIntensity = tag * (0.55 + (still ? 0 : 0.15 * Math.sin(time * 3.2) * done));
       weldMaterial.color.setHex(0x4a7c92).lerp(amber, tag * 0.55);
-      if (done !== certified) {
-        certified = done;
-        labels.current[3]?.classList.toggle("is-active", !!done);
-        labels.current[1]?.classList.toggle("is-active", !!done);
+      // Callouts turn amber stage by stage: scan started, map building, weld passed, pass certified.
+      const live = phase < HOLD_END;
+      const next = [progress > 0.02, progress > 0.5, done === 1, progress > 0.25].map(on => on && live ? 1 : 0).join("");
+      if (next !== stages) {
+        stages = next;
+        [...next].forEach((on, i) => [labels.current[i], lines.current[i], dots.current[i]].forEach(el => el?.classList.toggle("is-active", on === "1")));
       }
-      anchors[2].position.set(OUTER * 0.72, -OUTER * 0.72, start + (ringZ - start) * 0.3);
 
       roll.rotation.z = still ? 0.4 : time * 0.11;
       axis.rotation.y = -0.98 + (still ? 0 : Math.sin(time * 0.23) * 0.09);
@@ -253,6 +255,20 @@ export default function SpoolScan() {
       tilt.rotation.x = THREE.MathUtils.lerp(tilt.rotation.x, 0.32 + (active ? -pointer.y * 0.16 : 0), follow);
       tilt.rotation.y = THREE.MathUtils.lerp(tilt.rotation.y, active ? pointer.x * 0.22 : 0, follow);
       scene.updateMatrixWorld(true);
+
+      // Flange and map anchors sit on the lower silhouette edge, nudged toward the camera; the map one glides along the band.
+      mapZ = still ? SCAN_END * 0.45 : THREE.MathUtils.lerp(mapZ, (scan.uFrom.value + scan.uTo.value) / 2, 1 - Math.exp(-delta / 260));
+      axis.worldToLocal(facing.copy(camera.position));
+      facing.z = 0;
+      facing.normalize();
+      // Lower silhouette edge (perpendicular to the view), nudged onto the camera-facing side.
+      projected.set(-facing.y, facing.x, 0);
+      if (projected.y > 0) projected.negate();
+      facing.multiplyScalar(0.45).add(projected).normalize();
+      anchors[2].position.set(facing.x * FLANGE, facing.y * FLANGE, LENGTH / 2 - FLANGE_DEPTH / 2);
+      anchors[3].position.set(facing.x * (OUTER + 0.01), facing.y * (OUTER + 0.01), mapZ);
+      anchors[2].updateMatrixWorld();
+      anchors[3].updateMatrixWorld();
 
       // Pointer acts as a hand-held probe: an amber spot that follows the cursor across the wall.
       let probe = 0;
