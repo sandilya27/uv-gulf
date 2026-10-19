@@ -21,6 +21,8 @@ export function SiteHeaderBar() {
   const panelRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
   const prepared = useRef(false);
 
   // Ordinary disclosure: no focus trap, inert background or scroll lock.
@@ -123,23 +125,51 @@ export function SiteHeaderBar() {
 
   const current = CURRENT[pathname];
   const deep = overHero && !menuMounted;
+  const floating = scrolled && !menuMounted;
+
+  // Sliding highlight: rests on the current page, follows hover and keyboard focus.
+  const movePill = (target: HTMLElement | null) => {
+    const pill = pillRef.current;
+    const nav = navRef.current;
+    const header = headerRef.current;
+    if (!pill || !nav) return;
+    const el = target ?? nav.querySelector<HTMLElement>('a[aria-current="page"]');
+    // The ruler along the resting bar glows under the highlighted link; off-screen when none.
+    header?.style.setProperty("--nx", el ? `${nav.offsetLeft + el.offsetLeft + el.offsetWidth / 2}px` : "-300px");
+    if (!el) { pill.style.opacity = "0"; return; }
+    pill.style.opacity = "1";
+    pill.style.width = `${el.offsetWidth}px`;
+    pill.style.transform = `translateX(${el.offsetLeft}px)`;
+  };
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    movePill(null);
+    const observer = new ResizeObserver(() => movePill(null));
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, [pathname, current]);
 
   return (
-    <div className="site-header" style={{ boxShadow: scrolled && !overHero ? "var(--shadow-sm)" : "none" }}>
+    <div className={"site-header" + (scrolled && !overHero ? " has-shadow" : "")}>
       <noscript><style>{`@media (max-width: 1000px) {
         .uvg-header { flex-wrap: wrap; }
         .uvg-header .uvg-nav { display: flex; flex-wrap: wrap; order: 3; width: 100%; }
         .uvg-header .uvg-header-verify { display: inline-flex; }
         .site-menu-btn { display: none; }
       }`}</style></noscript>
-      <header ref={headerRef} className={"uvg-header" + (deep ? " uvg-deep" : "")}>
+      <header ref={headerRef} className={"uvg-header" + (deep ? " uvg-deep" : "") + (floating ? " is-floating" : "")}>
         <Link className="uvg-header-logo" href="/" aria-label="UV Gulf home" onClick={() => close()}>
           <img className="uvg-logo-full" src="/assets/uvgulf-logo.png" alt="UV Gulf Inspection & Training" />
           <img className="uvg-logo-rev" src="/assets/uvgulf-logo-reversed.png" alt="UV Gulf Inspection & Training" />
         </Link>
-        <nav className="uvg-nav" aria-label="Main">
+        <nav ref={navRef} className="uvg-nav" aria-label="Main" onMouseOver={(e) => { const a = (e.target as HTMLElement).closest("a"); if (a) movePill(a); }} onMouseLeave={() => movePill(null)} onFocus={(e) => movePill(e.target as HTMLElement)} onBlur={() => movePill(null)}>
+          <span ref={pillRef} className="uvg-nav-pill" aria-hidden="true" />
           {NAV_ITEMS.map((it) => (
-            <Link key={it.label} href={it.href} aria-current={it.label === current ? "page" : undefined}>{it.label}</Link>
+            <Link key={it.label} href={it.href} aria-current={it.label === current ? "page" : undefined}>
+              <span className="uvg-nav-label"><span className="uvg-nav-roll"><span>{it.label}</span><span aria-hidden="true">{it.label}</span></span></span>
+            </Link>
           ))}
         </nav>
         <div className="uvg-header-actions">
