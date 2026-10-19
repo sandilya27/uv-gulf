@@ -188,7 +188,7 @@ export default function SpoolScan() {
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(OUTER + 0.03, OUTER + 0.03, 0.05, 120, 1, true).rotateX(Math.PI / 2), beamMaterial);
     scanner.add(beam);
 
-    // Points the callout leaders track: ring, weld (side facing its label), left flange rim, pipe wall between weld and right flange.
+    // Points the callout leaders track: scanner ring, right flange rim, left flange rim, middle weld ring.
     const anchors = [new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D(), new THREE.Object3D()];
     anchors[0].position.set(0, OUTER + 0.23, 0);
     scanner.add(anchors[0]);
@@ -272,11 +272,11 @@ export default function SpoolScan() {
       facing.normalize();
       const anchorFollow = settled ? 1 - Math.exp(-delta / 200) : 1;
       settled = true;
-      anchors[1].position.lerp(pickRim(0, OUTER + 0.05, 1, 1, facing), anchorFollow);
       // Left flange is whichever end projects further left on screen.
       const leftEnd = rimPoint.set(0, 0, 1).applyMatrix4(axis.matrixWorld).project(camera).x < projected.set(0, 0, -1).applyMatrix4(axis.matrixWorld).project(camera).x ? 1 : -1;
       anchors[2].position.lerp(pickRim(leftEnd * (LENGTH / 2 - FLANGE_DEPTH / 2), FLANGE, -1, -1, facing), anchorFollow);
-      anchors[3].position.lerp(pickRim(-leftEnd * SCAN_END * 0.5, OUTER + 0.01, 1, -1, facing), anchorFollow);
+      anchors[1].position.lerp(pickRim(-leftEnd * (LENGTH / 2 - FLANGE_DEPTH / 2), FLANGE, 1, 1, facing), anchorFollow);
+      anchors[3].position.lerp(pickRim(0, OUTER + 0.05, 1, -1, facing), anchorFollow);
       anchors.forEach(anchor => anchor.updateMatrixWorld());
 
       // Pointer acts as a hand-held probe: an amber spot that follows the cursor across the wall.
