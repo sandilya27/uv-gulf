@@ -103,26 +103,6 @@ function DemoButtons({ v }: { v: V }) {
   );
 }
 
-/** Home page entry point; all verification results live on the Verify page. */
-export function HomeVerify({ intro }: { intro: React.ReactNode }) {
-  return (
-    <div className="wrap verify-home-grid">
-      <div className="stack-16">
-        {intro}
-      </div>
-      <div data-reveal="1" data-delay="120">
-        <form className="verify-panel" action="/verify" method="get">
-          <div className="verify-row">
-            <Field label="Certificate number" name="certificate" mono required placeholder="UVG-TR-2026-000000" />
-            <Button size="lg" type="submit">Verify</Button>
-          </div>
-          <span className="verify-hint">Printed under the QR code on the certificate or ID card. Results open on the verification page.</span>
-        </form>
-      </div>
-    </div>
-  );
-}
-
 /** Verify page: panel first, demo numbers underneath. */
 export function VerifyPageForm() {
   const v = useVerifier();

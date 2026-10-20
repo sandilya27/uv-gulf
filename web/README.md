@@ -13,7 +13,7 @@ npm run build && npm start
 - `app/` — routes: `/`, `/inspection`, `/training`, `/verify`, `/contact` (`?type=inspection|training|general` preselects the enquiry tab). "Industries" and "About" are the `#where` / `#about` sections of the home page.
 - `components/ds/` — UV Gulf design-system components (Button, Eyebrow, Field, VerifyResult, …), ported 1:1 from the design-system bundle.
 - `styles/uvgulf/` — design-system tokens and component CSS, copied verbatim. `app/globals.css` holds the site layout.
-- `components/site/Motion.tsx` — all declarative motion (`data-reveal`, `data-words`, `data-spin`, `data-scan`, `data-parallax`, `data-count`, `data-draw`, `data-pulse`). Disabled under `prefers-reduced-motion`.
+- `components/site/Motion.tsx` — all declarative motion (`data-reveal`, `data-words`, `data-spin`, `data-scan`, `data-parallax`, `data-count`, `data-draw`, `data-stamp`, `data-pulse`). Disabled under `prefers-reduced-motion`.
 - `lib/content.ts` — copy and data, plus `SITE_CONFIG` (theme, hero crosshair, chatbot).
 - `lib/saudi-path.ts` — the map outline, pre-projected (no runtime fetch).
 

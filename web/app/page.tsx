@@ -7,12 +7,12 @@ import { InspectionProcess } from "@/components/home/InspectionProcess";
 import { LocationsMap } from "@/components/home/LocationsMap";
 import { Marquee } from "@/components/home/Marquee";
 import { ServiceExplorer } from "@/components/home/ServiceExplorer";
-import { CtaBand, PhotoBand } from "@/components/site/Chrome";
+import { PhotoBand } from "@/components/site/Chrome";
 import { TeamSection } from "@/components/site/TeamSection";
 import { NewsGrid } from "@/components/site/NewsGrid";
 import { NewsSection } from "@/components/site/NewsSection";
 import { getNewsArticles } from "@/lib/news";
-import { HomeVerify } from "@/components/verify/Verifier";
+import { HomeVerify } from "@/components/verify/HomeVerify";
 import Link from "next/link";
 import { enquiryHref } from "@/lib/content";
 import { INDUSTRY_SECTORS } from "@/lib/industries";
@@ -104,13 +104,17 @@ export default function HomePage() {
               <p data-reveal="1" className="body-lg" style={{ maxWidth: "48ch" }}>Enter the number printed on the certificate or ID card to confirm it was issued by UV Gulf.</p>
             </>
           }
+          closing={
+            <>
+              <MaskedHeading className="h-cta" style={{ maxWidth: "22ch" }}>Tell us about the asset, the site and the timing.</MaskedHeading>
+              <div data-reveal="1" className="btn-row">
+                <Button size="lg" arrow href={enquiryHref("Inspection")}>Send an enquiry</Button>
+                <Button variant="secondary" size="lg" href="/training">View training</Button>
+              </div>
+            </>
+          }
         />
       </section>
-
-      <CtaBand title="Tell us about the asset, the site and the timing." titleMeasure="22ch">
-        <Button size="lg" arrow href={enquiryHref("Inspection")}>Send an enquiry</Button>
-        <Button variant="secondary" size="lg" href="/training">View training</Button>
-      </CtaBand>
     </>
   );
 }

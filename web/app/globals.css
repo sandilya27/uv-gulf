@@ -303,6 +303,35 @@ img { max-width: none; }
 .verify-panel { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-8); display: grid; gap: var(--space-4); }
 .verify-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: end; }
 .verify-hint { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+/* Certificate being checked: blueprint border, title block, decorative QR area, reference line. */
+.verify-cert { --cert-line: color-mix(in srgb, var(--accent) 70%, transparent); position: relative; overflow: hidden; display: grid; gap: var(--space-6); padding: clamp(22px, 3vw, 36px); border-radius: 6px; background-color: var(--surface); background-image: linear-gradient(color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, transparent) 1px, transparent 1px); background-size: 24px 24px; box-shadow: 0 20px 44px -28px #021a2980; }
+.verify-cert-edge { position: absolute; background: var(--cert-line); pointer-events: none; }
+.verify-cert-edge--t, .verify-cert-edge--b { left: 0; right: 0; height: 2px; transform-origin: 0 50%; }
+.verify-cert-edge--t { top: 0; } .verify-cert-edge--b { bottom: 0; transform-origin: 100% 50%; }
+.verify-cert-edge--l, .verify-cert-edge--r { top: 0; bottom: 0; width: 2px; transform-origin: 50% 0; }
+.verify-cert-edge--l { left: 0; transform-origin: 50% 100%; } .verify-cert-edge--r { right: 0; }
+.verify-cert::before { content: ""; position: absolute; inset: 7px; border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent); border-radius: 3px; pointer-events: none; }
+.verify-cert-sweep { position: absolute; left: 0; right: 0; top: 0; height: 3px; opacity: 0; pointer-events: none; z-index: 2; background: var(--accent); box-shadow: 0 0 18px 6px color-mix(in srgb, var(--accent) 45%, transparent); }
+.verify-cert-head { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.verify-cert-title { display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border: 1px solid var(--cert-line); background: var(--surface); }
+.verify-cert-title > span { display: grid; gap: 2px; font: 500 11px/1.4 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+.verify-cert-title b { font: 700 14px/1.2 var(--font-display); letter-spacing: .04em; color: var(--ink); }
+.verify-cert-mark { width: 34px; height: 34px; object-fit: contain; }
+.verify-cert-mark--dark, [data-theme="dark"] .verify-cert-mark--light { display: none; }
+[data-theme="dark"] .verify-cert-mark--dark { display: block; }
+.verify-cert-qr { display: grid; justify-items: end; gap: 4px; font: 500 10px/1.2 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); }
+.verify-cert-qr-grid { display: grid; grid-template-columns: repeat(11, 1fr); width: 77px; height: 77px; padding: 4px; border: 1px dashed var(--cert-line); background: var(--surface); }
+.verify-cert-qr-cell { display: block; }
+.verify-cert-qr-cell.is-on { background: color-mix(in srgb, var(--accent) 55%, transparent); }
+.verify-cert-ref { position: relative; padding-top: var(--space-2); }
+.verify-cert .verify-row { position: relative; align-items: end; }
+.verify-cert .uvg-input { background: var(--surface); }
+.verify-cert-track { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; pointer-events: none; overflow: hidden; }
+.verify-cert-scan { position: absolute; left: 0; top: 0; width: 72px; height: 2px; opacity: 0; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+.verify-cert-hint { position: relative; }
+.verify-closing { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: var(--space-16); padding-top: var(--space-12); border-top: 1px solid var(--border); }
+@media (max-width: 600px) { .verify-cert-head { flex-direction: column; } .verify-cert-qr { justify-items: start; } }
+@media (forced-colors: active) { .verify-cert { border: 1px solid CanvasText; } .verify-cert-edge, .verify-cert-sweep { display: none; } }
 .verify-checking { display: grid; gap: 8px; }
 .verify-checking > span { font-family: var(--font-mono); font-size: 13px; color: var(--ink-muted); }
 .verify-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
@@ -613,13 +642,13 @@ img { max-width: none; }
 .footer-gradient-wordmark { font-family: var(--font-display); font-weight: 700; font-size: clamp(88px,20vw,290px); line-height: .85; letter-spacing: -.055em; text-align: center; white-space: nowrap; user-select: none; color: #14516c; padding-top: 12px; transform: translateY(.12em); }
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .gradient-text-light, .page-hero-title { background-image: var(--gradient-brand-light); }
-  .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
-  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .footer-gradient-wordmark { background-clip: text; -webkit-background-clip: text; color: transparent; }
+  .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
+  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word], .footer-gradient-wordmark { background-clip: text; -webkit-background-clip: text; color: transparent; }
   .coverage-copy .h2 > span { display: inline-block; }
   .footer-gradient-wordmark { background-image: linear-gradient(180deg, #279bd699 0%, #004e7280 45%, #031b2900 100%); }
 }
 @media (forced-colors: active) {
-  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word] { background: none; color: CanvasText; }
+  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background: none; color: CanvasText; }
   .footer-gradient-wordmark { display: none; }
 }
 
