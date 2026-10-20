@@ -506,7 +506,7 @@ img { max-width: none; }
 .process-sheet-name { color: var(--ink); font-weight: 600; }
 .process-timeline { position: relative; padding-left: 44px; }
 .process-timeline::before { content: ""; position: absolute; left: 16px; top: var(--track-start, 42px); height: var(--track-length, 0px); width: 2px; background: var(--border-strong); }
-.process-track-fill { position: absolute; left: 16px; top: var(--track-start, 42px); width: 2px; height: var(--track-progress, 0px); background: var(--primary); transition: height 120ms linear; }
+.process-track-fill { position: absolute; left: 16px; top: var(--track-start, 42px); width: 2px; height: var(--track-length, 0px); background: var(--primary); transform: scaleY(var(--track-ratio, 0)); transform-origin: top; transition: transform 120ms linear; }
 @media (prefers-reduced-motion: reduce) { .process-track-fill { transition: none; } }
 .inspection-process .process-step { position: relative; padding: 24px 24px 22px 0; margin: 0; gap: 10px; border: 0; background: transparent; }
 .process-step-rule { position: absolute; top: 0; left: -68px; right: -24px; height: 1px; background: var(--border-strong); transform-origin: left; }
@@ -1116,7 +1116,9 @@ img { max-width: none; }
 .scan-zoom { transform-origin: center; }
 .scan-zoom .photo-slot-img, .scan-color .photo-slot-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .scan-base { filter: grayscale(1); }
-.scan-color { z-index: 1; }
+.scan-color { z-index: 1; overflow: hidden; }
+.scan-color-inner { position: absolute; inset: 0; }
+.photo-band--scan.is-scanning :is(.scan-zoom, .scan-color, .scan-color-inner, .scan-bar) { will-change: transform; }
 .scan-shade { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent 35%, rgba(0,30,48,.78)); }
 .scan-bar { position: absolute; top: 0; bottom: 0; left: 0; z-index: 3; width: 2px; opacity: 0; pointer-events: none; background: var(--sky-300); box-shadow: 0 0 22px 5px rgba(113,210,243,.5); }
 .scan-wave { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; width: 100%; height: 56px; pointer-events: none; overflow: visible; }

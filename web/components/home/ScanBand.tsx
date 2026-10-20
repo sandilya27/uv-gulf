@@ -18,6 +18,7 @@ export function ScanBand({ slotId, src, placeholder, height, title, children }: 
     if (!band) return;
     gsap.registerPlugin(ScrollTrigger);
     const color = band.querySelector<HTMLElement>(".scan-color")!;
+    const inner = band.querySelector<HTMLElement>(".scan-color-inner")!;
     const zoom = band.querySelector<HTMLElement>(".scan-zoom")!;
     const bar = band.querySelector<HTMLElement>(".scan-bar")!;
     const wave = band.querySelector<SVGPathElement>(".scan-wave path")!;
@@ -35,7 +36,9 @@ export function ScanBand({ slotId, src, placeholder, height, title, children }: 
       const x = p * width;
       bar.style.transform = `translate3d(${x}px,0,0)`;
       bar.style.opacity = p > 0 && p < 1 ? "1" : "0";
-      color.style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`;
+      // Reveal by sliding a clipping window and counter-sliding its image: compositor-only, no repaint.
+      color.style.transform = `translate3d(${-(1 - p) * 100}%,0,0)`;
+      inner.style.transform = `translate3d(${(1 - p) * 100}%,0,0)`;
       zoom.style.transform = `scale(${1.1 - 0.1 * p})`;
       wave.style.strokeDashoffset = String(1 - p);
       words.forEach((word, i) => { word.style.opacity = String(0.18 + 0.82 * clamp((x - offsets[i]) / 60 + 0.5)); });
@@ -67,7 +70,7 @@ export function ScanBand({ slotId, src, placeholder, height, title, children }: 
     });
     return () => {
       media.revert();
-      [color, zoom, bar, wave, ...words].forEach((el) => el.removeAttribute("style"));
+      [color, inner, zoom, bar, wave, ...words].forEach((el) => el.removeAttribute("style"));
     };
   }, []);
 
@@ -76,7 +79,7 @@ export function ScanBand({ slotId, src, placeholder, height, title, children }: 
       <div className="scan-zoom">
         <img id={slotId} src={src} alt={placeholder} loading="lazy" decoding="async" className="photo-slot-img scan-base" />
         <div className="photo-band-overlay" />
-        <div className="scan-color"><img src={src} alt="" aria-hidden="true" loading="lazy" decoding="async" className="photo-slot-img" /></div>
+        <div className="scan-color"><div className="scan-color-inner"><img src={src} alt="" aria-hidden="true" loading="lazy" decoding="async" className="photo-slot-img" /></div></div>
       </div>
       <div className="scan-shade" aria-hidden="true" />
       <div className="scan-bar" aria-hidden="true" />

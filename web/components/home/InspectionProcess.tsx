@@ -82,7 +82,7 @@ export function InspectionProcess() {
       const position = Math.max(first, Math.min(last, window.innerHeight * 0.55 - bounds.top));
       root.style.setProperty("--track-start", `${first}px`);
       root.style.setProperty("--track-length", `${last - first}px`);
-      root.style.setProperty("--track-progress", `${position - first}px`);
+      root.style.setProperty("--track-ratio", String((position - first) / Math.max(1, last - first)));
       let active = 0;
       centers.forEach((center, i) => { if (position >= center - 1) active = i; });
       setStep(active);
