@@ -3,6 +3,7 @@ import { MaskedHeading } from "@/components/site/MaskedHeading";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CredentialSeal, Eyebrow, LocationList } from "@/components/ds";
+import { ScanBand } from "@/components/home/ScanBand";
 import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { FOOTER_COLS } from "@/lib/content";
 
@@ -54,7 +55,9 @@ export function PageHero({ eyebrow, title, lead, titleMeasure = true, artifact =
 }
 
 /** Full-bleed parallax photo band with navy overlay and on-deep copy. */
-export function PhotoBand({ slotId, placeholder, src, height, children }: { slotId: string; placeholder: string; src?: string; height: string; children: ReactNode }) {
+export function PhotoBand({ slotId, placeholder, src, height, children, variant = "default", title }: { slotId: string; placeholder: string; src?: string; height: string; children?: ReactNode; variant?: "default" | "scan"; title?: string }) {
+  // Homepage-only pinned scan sweep; the heading is passed as a string so its words can be revealed.
+  if (variant === "scan" && src && title) return <ScanBand slotId={slotId} src={src} placeholder={placeholder} height={height} title={title}>{children}</ScanBand>;
   return (
     <section className="photo-band" style={{ height }}>
       <div data-parallax="0.18" className="photo-band-img"><PhotoSlot id={slotId} placeholder={placeholder} src={src} /></div>

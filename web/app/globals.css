@@ -1109,3 +1109,20 @@ img { max-width: none; }
   --dur-standard: 600ms;
   --dur-hero: 1000ms;
 }
+
+/* Homepage pinned scan band (components/home/ScanBand.tsx). Final state is the CSS default. */
+.photo-band--scan { min-height: 480px; }
+.scan-zoom, .scan-color { position: absolute; inset: 0; }
+.scan-zoom { transform-origin: center; }
+.scan-zoom .photo-slot-img, .scan-color .photo-slot-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.scan-base { filter: grayscale(1); }
+.scan-color { z-index: 1; }
+.scan-shade { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent 35%, rgba(0,30,48,.78)); }
+.scan-bar { position: absolute; top: 0; bottom: 0; left: 0; z-index: 3; width: 2px; opacity: 0; pointer-events: none; background: var(--sky-300); box-shadow: 0 0 22px 5px rgba(113,210,243,.5); }
+.scan-wave { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; width: 100%; height: 56px; pointer-events: none; overflow: visible; }
+.scan-wave path { fill: none; stroke: var(--sky-300); stroke-width: 1.5; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .85; }
+.photo-band--scan .photo-band-copy { z-index: 4; }
+.photo-band--scan .wrap.photo-band-text { padding-bottom: calc(var(--space-16) + 40px); }
+.photo-band--scan .photo-band-overlay { z-index: 0; }
+@media (prefers-reduced-motion: reduce) { .scan-bar { display: none; } .photo-band--scan { height: clamp(380px, 62vh, 580px) !important; min-height: 0; } }
+@media (max-width: 759px) { .photo-band--scan { height: clamp(380px, 62vh, 580px) !important; min-height: 0; } .scan-wave { height: 36px; } .photo-band--scan .wrap.photo-band-text { padding-bottom: calc(var(--space-12) + 24px); } }
