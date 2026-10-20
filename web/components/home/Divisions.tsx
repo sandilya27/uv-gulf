@@ -21,15 +21,12 @@ export function Divisions() {
   useEffect(() => {
     const cards = section.current?.querySelectorAll<HTMLElement>(".division");
     if (!cards) return;
+    // Observe the row, not the panels: a clip-path on the target itself zeroes its intersection area.
+    const row = section.current?.querySelector(".divisions-row");
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const key = (entry.target as HTMLElement).dataset.division!;
-        const visible = entry.isIntersecting && entry.intersectionRatio >= 0.15;
-        setRevealed((previous) => visible
-          ? previous.includes(key) ? previous : [...previous, key]
-          : previous.filter((value) => value !== key));
-        if (!visible) setStamped((previous) => previous.filter((value) => value !== key));
-      });
+      const visible = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.15);
+      setRevealed(visible ? PANELS.map((panel) => panel.key) : []);
+      if (!visible) setStamped([]);
     }, { threshold: 0.15 });
     const stampObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -38,7 +35,7 @@ export function Divisions() {
         setStamped((previous) => previous.includes(key) ? previous : [...previous, key]);
       });
     }, { threshold: 0.8 });
-    cards.forEach((card) => observer.observe(card));
+    if (row) observer.observe(row);
     cards.forEach((card) => {
       const cta = card.querySelector(".division-cta");
       if (cta) stampObserver.observe(cta);
@@ -58,7 +55,7 @@ export function Divisions() {
               className={`division${revealed.includes(p.key) ? " is-visible" : ""}${stamped.includes(p.key) ? " is-stamped" : ""}`}
               data-division={p.key}
             >
-              <img className="division-photo" src={`/assets/images/${p.key === "i" ? "inspection" : "training"}.webp`} alt="" loading="lazy" decoding="async" aria-hidden="true" />
+              <img className="division-photo" data-parallax="0.06" src={`/assets/images/${p.key === "i" ? "inspection" : "training"}.webp`} alt="" loading="lazy" decoding="async" aria-hidden="true" />
               <svg className={`division-stamp division-stamp--${p.key}`} viewBox="0 0 120 120" role="img" aria-label={p.key === "i" ? "UV Gulf: inspection, testing and calibration" : "UV Gulf: industrial skills and safety training"}>
                 <defs>
                   <path id={`${stampId}-${p.key}`} d="M60,60 m-43,0 a43,43 0 1,1 86,0 a43,43 0 1,1 -86,0" />

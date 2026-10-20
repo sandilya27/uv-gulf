@@ -151,10 +151,21 @@ img { max-width: none; }
 .divisions-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; align-content: start; }
 .division { min-width: 0; position: relative; overflow: hidden; background: var(--navy-900); padding: clamp(56px, 4vw, 72px) clamp(28px, 4.3vw, 80px) clamp(32px, 3vw, 48px); display: grid; grid-row: span 5; grid-template-rows: subgrid; align-content: start; }
 .division + .division { border-left: 1px solid rgba(255,255,255,0.12); }
-.division { opacity: 0; transform: translateX(-56px); transition: opacity 1200ms cubic-bezier(0.23, 1, 0.32, 1), transform 1600ms cubic-bezier(0.23, 1, 0.32, 1); }
-.division[data-division="t"] { transform: translateX(56px); }
-.division[data-division="t"].is-visible { transition-delay: 200ms; }
-.division.is-visible, .division:focus-within { opacity: 1; transform: none; }
+/* Panels open from the centre seam like doors, then the text rows rise in sequence. */
+.division { clip-path: inset(0 0 0 100%); transition: clip-path var(--dur-hero, 900ms) cubic-bezier(0.23, 1, 0.32, 1); }
+.division[data-division="t"] { clip-path: inset(0 100% 0 0); }
+.division.is-visible, .division:focus-within { clip-path: inset(0); }
+.division[data-division="t"].is-visible { transition-delay: 120ms; }
+.division > :is(.division-title, .division-text, .division-links, .division-cta) { opacity: 0; transform: translateY(24px); transition: opacity 600ms cubic-bezier(0.23, 1, 0.32, 1), transform 600ms cubic-bezier(0.23, 1, 0.32, 1); }
+.division.is-visible > :is(.division-title, .division-text, .division-links, .division-cta), .division:focus-within > :is(.division-title, .division-text, .division-links, .division-cta) { opacity: 1; transform: none; }
+.division.is-visible > .division-title { transition-delay: 500ms; }
+.division.is-visible > .division-text { transition-delay: 600ms; }
+.division.is-visible > .division-links { transition-delay: 700ms; }
+.division.is-visible > .division-cta { transition-delay: 800ms; }
+.division[data-division="t"].is-visible > .division-title { transition-delay: 620ms; }
+.division[data-division="t"].is-visible > .division-text { transition-delay: 720ms; }
+.division[data-division="t"].is-visible > .division-links { transition-delay: 820ms; }
+.division[data-division="t"].is-visible > .division-cta { transition-delay: 920ms; }
 .division-num { position: absolute; top: 28px; right: 32px; font-family: var(--font-display); font-weight: 700; font-size: clamp(64px, 6vw, 96px); line-height: 1; color: rgba(255,255,255,0.06); opacity: 0.45; }
 .division-title { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(32px,3.6vw,48px); line-height: 1.08; color: var(--on-deep); text-wrap: balance; }
 .division-text { margin: 0; max-width: 46ch; font-size: 17px; line-height: 26px; color: var(--on-deep-muted); }
@@ -183,7 +194,8 @@ img { max-width: none; }
 }
 @media (max-width: 360px) { .division-stamp { width: 72px; right: 8px; } .division-cta { padding-right: 64px; } }
 @media (prefers-reduced-motion: reduce) {
-  .division, .division[data-division="t"] { opacity: 1; transform: none; transition: none; }
+  .division, .division[data-division="t"] { clip-path: none; transition: none; }
+  .division > :is(.division-title, .division-text, .division-links, .division-cta) { opacity: 1; transform: none; transition: none; }
   .division-stamp { transform: rotate(-10deg); }
   .division-stamp, .is-stamped .division-stamp { animation: none; transition: opacity 200ms ease; transform: rotate(-10deg); }
 }
@@ -463,6 +475,9 @@ img { max-width: none; }
   .h-cta { font-size: 28px; line-height: 34px; }
   .divisions-row { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
   .division { grid-row: auto; grid-template-rows: auto; gap: 16px; padding: 56px var(--space-6) 32px; }
+  .division, .division[data-division="t"] { clip-path: none; opacity: 0; transform: translateY(24px); transition: opacity 600ms cubic-bezier(0.23, 1, 0.32, 1), transform 600ms cubic-bezier(0.23, 1, 0.32, 1); }
+  .division.is-visible, .division:focus-within { opacity: 1; transform: none; }
+  .division > :is(.division-title, .division-text, .division-links, .division-cta), .division.is-visible > :is(.division-title, .division-text, .division-links, .division-cta) { opacity: 1; transform: none; transition: none; }
   .division-num { font-size: 64px; right: 24px; top: 20px; }
   .division + .division { border-left: 0; border-top: 1px solid rgba(255,255,255,0.12); }
   .svc-row { grid-template-columns: 40px minmax(0,1fr) 24px; padding: 22px 8px; }
@@ -477,19 +492,22 @@ img { max-width: none; }
 }
 
 /* Generated industrial photography keeps the established navy treatment. */
-.division-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1); pointer-events: none; }
+/* Photos are oversized (individual scale property) so scroll parallax never exposes an edge. */
+.division-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; scale: 1.2; transition: scale 700ms cubic-bezier(0.23, 1, 0.32, 1), opacity 500ms ease; pointer-events: none; }
 .division::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,30,48,0.08), rgba(0,30,48,0.72) 32%, rgba(0,30,48,0.96) 88%); pointer-events: none; }
 .division > :not(.division-photo) { z-index: 1; }
 .division-cta svg { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), color 160ms ease; }
 @media (hover: hover) and (pointer: fine) {
-  .division:hover .division-photo { transform: scale(1.035); }
+  .division:hover .division-photo, .division:focus-within .division-photo { scale: 1.25; opacity: 0.9; }
+  .divisions-row:is(:hover, :focus-within) .division:not(:hover, :focus-within) .division-photo { opacity: 0.3; }
   .division-cta a:hover svg { transform: translateX(4px); color: var(--sky-300); }
 }
 .division-cta a:focus-visible svg { transform: translateX(4px); color: var(--sky-300); }
 @media (max-width: 400px) { .division-links { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) {
   .division-photo, .division-cta svg { transition: none; }
-  .division:hover .division-photo, .division-cta a:hover svg, .division-cta a:focus-visible svg { transform: none; }
+  .division:hover .division-photo, .division:focus-within .division-photo { scale: 1.2; }
+  .division-cta a:hover svg, .division-cta a:focus-visible svg { transform: none; }
 }
 .wrap.home-hero-inner { z-index: 2; }
 
