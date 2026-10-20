@@ -8,5 +8,18 @@
 .image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .card a, .empty a { color: var(--logo-navy); text-underline-offset: 4px; overflow-wrap: anywhere; }
 .card a:focus-visible, .empty a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+/* Homepage bulletin variant: blueprint-grid header band, hairline that draws under the title. */
+.head { position: relative; padding: var(--space-4) var(--space-8); border-bottom: 1px solid var(--border); background: var(--surface-alt); overflow: hidden; }
+.blueprint { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(#279bd61f 1px, transparent 1px) 0 0 / 16px 16px, linear-gradient(90deg, #279bd61f 1px, transparent 1px) 0 0 / 16px 16px,
+    linear-gradient(#279bd633 1px, transparent 1px) 0 0 / 80px 80px, linear-gradient(90deg, #279bd633 1px, transparent 1px) 0 0 / 80px 80px; }
+.head .meta { position: relative; margin: 0; font-family: var(--font-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.bulletin h3 a { position: relative; text-decoration: none; display: inline-block; }
+.bulletin h3 a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1); }
+@media (prefers-reduced-motion: no-preference) { .bulletin { transition: box-shadow 300ms ease, translate 200ms cubic-bezier(0.23, 1, 0.32, 1); } }
+.bulletin:hover h3 a::after, .bulletin:focus-within h3 a::after { transform: scaleX(1); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .bulletin:hover, .bulletin:focus-within { translate: 0 -2px; box-shadow: 0 10px 24px -14px #092638aa; } }
+@media (prefers-reduced-motion: reduce) { .bulletin h3 a::after { transition: none; } }
+@media (max-width: 600px) { .head { padding: var(--space-4) var(--space-6); } }
 @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .grid { grid-template-columns: minmax(0, 1fr); } .copy, .empty { padding: var(--space-6); } }

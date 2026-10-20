@@ -69,7 +69,7 @@ export default function HomePage() {
       </section>
 
       <NewsSection id="home-news-title" title="News & Insights" action={<Button variant="ghost" arrow href="/news-insights">View all News & Insights</Button>}>
-        <NewsGrid articles={getNewsArticles().slice(0, 3)} />
+        <NewsGrid variant="bulletin" articles={getNewsArticles().slice(0, 3)} />
       </NewsSection>
 
       <LocationsMap />
