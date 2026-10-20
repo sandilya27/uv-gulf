@@ -114,7 +114,9 @@ export function Motion() {
       setup();
       let pending = 0;
       const observer = new MutationObserver((records) => {
-        if (!records.some((record) => [...record.addedNodes].some((node) => node.nodeType === Node.ELEMENT_NODE))) return;
+        // ScrollTrigger's own pin spacers are mutations too; reacting to them would refresh in a loop.
+        const content = (node: Node) => node.nodeType === Node.ELEMENT_NODE && !(node as Element).classList.contains("pin-spacer") && !(node as Element).parentElement?.classList.contains("pin-spacer");
+        if (!records.some((record) => [...record.addedNodes].some(content))) return;
         if (!pending) pending = requestAnimationFrame(() => {
           pending = 0;
           setup();

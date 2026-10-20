@@ -37,12 +37,12 @@ export function ServiceExplorer() {
       const pin = 116;
       // Equalize sticky boundaries so every card releases as one completed stack.
       const height = Math.max(0, ...cards.map(slot => (slot.firstElementChild as HTMLElement | null)?.offsetHeight ?? 0));
-      root.current?.style.setProperty("--stack-card-height", `${height}px`);
+      if (root.current?.style.getPropertyValue("--stack-card-height") !== `${height}px`) root.current?.style.setProperty("--stack-card-height", `${height}px`);
       // Browser chrome and zoom change the usable viewport. Keep stacking unless
       // the actual content cannot fit below the header and exposed card edges.
       const fits = height + pin + (cards.length - 1) * 18 + 16 <= window.innerHeight;
       const stacking = !motion.matches && !compact.matches && fits;
-      root.current?.toggleAttribute("data-stack-static", !stacking);
+      if (root.current?.hasAttribute("data-stack-static") === stacking) root.current.toggleAttribute("data-stack-static", !stacking);
       const tops = cards.map(card => card.getBoundingClientRect().top);
       cards.forEach((slot, i) => {
         const card = slot.firstElementChild as HTMLElement | null;
@@ -59,10 +59,15 @@ export function ServiceExplorer() {
       });
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    // Only measure on scroll while the stack is near the viewport; everywhere else it is idle.
+    let near = false;
+    const onScroll = () => { if (near) schedule(); };
+    const visibility = new IntersectionObserver(([entry]) => { near = entry.isIntersecting; if (near) schedule(); }, { rootMargin: "100% 0px" });
+    if (root.current) visibility.observe(root.current);
     const observer = new ResizeObserver(schedule);
     if (root.current) observer.observe(root.current);
     slots.current.forEach(slot => { if (slot?.firstElementChild) observer.observe(slot.firstElementChild); });
-    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", schedule);
     motion.addEventListener("change", schedule);
     compact.addEventListener("change", schedule);
@@ -70,7 +75,8 @@ export function ServiceExplorer() {
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
-      window.removeEventListener("scroll", schedule);
+      visibility.disconnect();
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", schedule);
       motion.removeEventListener("change", schedule);
       compact.removeEventListener("change", schedule);

@@ -89,14 +89,20 @@ export function InspectionProcess() {
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
+    // Only track scroll while the sheet is near the viewport.
+    let near = false;
+    const onScroll = () => { if (near) schedule(); };
+    const visibility = new IntersectionObserver(([entry]) => { near = entry.isIntersecting; if (near) schedule(); }, { rootMargin: "100% 0px" });
+    visibility.observe(root);
     const observer = new ResizeObserver(schedule);
     observer.observe(root);
-    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
-      window.removeEventListener("scroll", schedule);
+      visibility.disconnect();
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", schedule);
     };
   }, []);
