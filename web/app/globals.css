@@ -132,7 +132,13 @@ img { max-width: none; }
 @media (hover: none) { .crosshair { display: none; } }
 
 /* ---------- Marquee ---------- */
-.marquee { background: var(--surface); border-bottom: 1px solid var(--border); overflow: hidden; padding: 18px 0; }
+.marquee { position: relative; background: var(--surface); border-bottom: 1px solid var(--border); overflow: hidden; padding: 24px 0; }
+/* Calibration ruler: minor ticks every 10px, major ticks every 50px, along both edges. */
+.marquee::before, .marquee::after { content: ""; position: absolute; left: 0; right: 0; height: 10px; pointer-events: none; color: var(--ink-muted); opacity: .55;
+  background: linear-gradient(90deg, currentColor 1px, transparent 1px) 0 0 / 50px 10px repeat-x, linear-gradient(90deg, currentColor 1px, transparent 1px) 0 0 / 10px 5px repeat-x; }
+.marquee::before { top: 0; background-position: 0 0, 0 0; }
+.marquee::after { bottom: 0; background-position: 0 100%, 0 100%; }
+.marquee-track { will-change: transform; }
 .marquee-track { display: flex; width: max-content; }
 .marquee-run { display: flex; align-items: center; gap: 28px; padding-right: 28px; flex: none; }
 .marquee-std { font-family: var(--font-mono); font-size: 15px; color: var(--ink); white-space: nowrap; }
