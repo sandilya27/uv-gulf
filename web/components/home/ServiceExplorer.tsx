@@ -106,7 +106,7 @@ export function ServiceExplorer() {
         }
         const tl = gsap.timeline({
           defaults: { ease: EASE.enter },
-          scrollTrigger: { trigger: slot, start: full ? "top 62%" : "top 85%", once: true },
+          scrollTrigger: { trigger: slot, start: full ? "top 62%" : "top 85%", toggleActions: "play none none reset" },
         });
         tl.fromTo(q(".service-stack-title-line"), { yPercent: 105 }, { yPercent: 0, duration: DURATION.standard * k }, 0);
         const odo = q(".service-stack-odo-col");

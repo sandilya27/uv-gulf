@@ -115,8 +115,9 @@ export function InspectionProcess() {
     media.add("(prefers-reduced-motion: no-preference)", () => {
       sheet.classList.add("is-ready");
       const trigger = ScrollTrigger.create({
-        trigger: sheet, start: "top 85%", once: true,
+        trigger: sheet, start: "top 85%",
         onEnter: () => sheet.classList.add("is-assembled"),
+        onLeaveBack: () => sheet.classList.remove("is-assembled"),
       });
       return () => {
         trigger.kill();

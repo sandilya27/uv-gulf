@@ -31,7 +31,7 @@ export function ClientWall() {
       const order = tiles.map((_, i) => Math.floor(i / columns) + (i % columns));
       gsap.set(tiles, { opacity: 0, y: rise });
       gsap.set(rects, { strokeDasharray: 1, strokeDashoffset: 1 });
-      const timeline = gsap.timeline({ scrollTrigger: { trigger: root, start: "top 85%", once: true } });
+      const timeline = gsap.timeline({ scrollTrigger: { trigger: root, start: "top 85%", toggleActions: "play none none reset" } });
       tiles.forEach((tile, i) => {
         const at = order[i] * 0.14;
         timeline.to(tile, { opacity: 1, y: 0, duration: DURATION.standard, ease: EASE.enter, clearProps: "opacity,transform" }, at);

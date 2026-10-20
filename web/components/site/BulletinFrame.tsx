@@ -19,7 +19,7 @@ export function BulletinFrame({ children }: { children: ReactNode }) {
       gsap.fromTo(grids, { clipPath: "inset(0 100% 0 0)" }, {
         clipPath: "inset(0 0% 0 0)", duration: DURATION.hero, ease: EASE.enter, stagger: 0.12, delay: 0.2,
         clearProps: "clipPath",
-        scrollTrigger: { trigger: frame, start: "top 85%", once: true },
+        scrollTrigger: { trigger: frame, start: "top 85%", toggleActions: "play none none reset" },
       });
     });
     return () => media.revert();

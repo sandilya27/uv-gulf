@@ -19,7 +19,7 @@ export function BadgeGrid({ className, children }: { className?: string; childre
       gsap.fromTo(badges, { rotateY: 90, opacity: 0, transformPerspective: 900, transformOrigin: "50% 50%" }, {
         rotateY: 0, opacity: 1, duration: DURATION.hero, ease: EASE.enter, stagger: 0.12,
         clearProps: "opacity,transform",
-        scrollTrigger: { trigger: grid, start: "top 85%", once: true },
+        scrollTrigger: { trigger: grid, start: "top 85%", toggleActions: "play none none reset" },
       });
     });
     return () => media.revert();

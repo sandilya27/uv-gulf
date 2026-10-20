@@ -44,7 +44,7 @@ export function Motion() {
           gsap.fromTo(el, { opacity: 0, y: 28 }, {
             opacity: 1, y: 0, duration: 0.85, delay: Number(el.dataset.delay || 0) / 1000,
             ease: "power3.out", clearProps: "opacity,transform",
-            scrollTrigger: { trigger: el, start: "top 92%", once: true },
+            scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reset" },
           });
         });
         once("[data-words]", (el) => {
@@ -76,7 +76,7 @@ export function Motion() {
           const value = { n: 0 };
           gsap.to(value, {
             n: Number(el.dataset.count), duration: 1.6, ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 95%", once: true },
+            scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reset" },
             onUpdate: () => { el.textContent = String(Math.round(value.n)); },
           });
         });
@@ -91,7 +91,7 @@ export function Motion() {
           gsap.to(strokes, {
             strokeDashoffset: 0, duration: DURATION.hero, ease: EASE.enter,
             delay: Number(el.dataset.delay || 0) / 1000, stagger: 0.11,
-            scrollTrigger: { trigger: el, start: "top 90%", once: true },
+            scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reset" },
           });
         });
         // Stamp: a quick press-in with a small overshoot settle.
@@ -99,7 +99,7 @@ export function Motion() {
           gsap.fromTo(el, { opacity: 0, scale: 1.06 }, {
             opacity: 1, scale: 1, duration: DURATION.stamp, ease: EASE.stamp,
             delay: Number(el.dataset.delay || 0) / 1000, clearProps: "opacity,transform",
-            scrollTrigger: { trigger: el, start: "top 92%", once: true },
+            scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none none reset" },
           });
         });
         // Header ruler: ticks fill left to right with whole-document scroll progress.

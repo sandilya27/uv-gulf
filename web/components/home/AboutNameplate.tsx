@@ -28,7 +28,7 @@ export function AboutNameplate() {
       if (!root || !inner) return;
       const q = gsap.utils.selector(root);
       const desktop = window.innerWidth > 760;
-      gsap.timeline({ defaults: { ease: EASE.enter }, scrollTrigger: { trigger: root, start: "top 85%", once: true } })
+      gsap.timeline({ defaults: { ease: EASE.enter }, scrollTrigger: { trigger: root, start: "top 85%", toggleActions: "play none none reset" } })
         .fromTo(root, { opacity: 0, y: desktop ? 36 : 20, rotateX: desktop ? 8 : 0, transformPerspective: 900, transformOrigin: "50% 100%" },
           { opacity: 1, y: 0, rotateX: 0, duration: DURATION.hero * (desktop ? 1 : 0.6), clearProps: "opacity,transform" }, 0)
         .fromTo(q(".nameplate-rivet"), { scale: 0 }, { scale: 1, duration: DURATION.stamp, ease: EASE.stamp, stagger: 0.14, clearProps: "transform" }, 0.45);

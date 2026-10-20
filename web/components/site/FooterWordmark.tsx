@@ -24,7 +24,7 @@ export function FooterWordmark() {
       });
       gsap.set(fill.current, { opacity: 0 });
       gsap.set(stroke.current, { clipPath: "inset(0 100% 0 0)" });
-      gsap.timeline({ scrollTrigger: { trigger: el, start: "top 100%", once: true } })
+      gsap.timeline({ scrollTrigger: { trigger: el, start: "top 100%", toggleActions: "play none none reset" } })
         .to(stroke.current, { clipPath: "inset(0 0% 0 0)", duration: DURATION.hero * 1.4, ease: EASE.enter })
         .to(fill.current, { opacity: 1, duration: DURATION.standard * 1.5, ease: "power2.out" }, "-=0.2")
         .to(stroke.current, { opacity: 0, duration: DURATION.standard }, "<");

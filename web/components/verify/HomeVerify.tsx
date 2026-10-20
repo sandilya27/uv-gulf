@@ -34,7 +34,7 @@ export function HomeVerify({ intro, closing }: { intro: ReactNode; closing: Reac
       const q = gsap.utils.selector(root);
       const k = window.innerWidth > 760 ? 1 : 0.6;
       const [top, right, bottom, left] = q(".verify-cert-edge");
-      gsap.timeline({ defaults: { ease: EASE.enter }, scrollTrigger: { trigger: root, start: "top 80%", once: true } })
+      gsap.timeline({ defaults: { ease: EASE.enter }, scrollTrigger: { trigger: root, start: "top 80%", toggleActions: "play none none reset" } })
         .fromTo([top, bottom], { scaleX: 0 }, { scaleX: 1, duration: DURATION.standard * k, stagger: 0.12 }, 0)
         .fromTo([right, left], { scaleY: 0 }, { scaleY: 1, duration: DURATION.standard * k, stagger: 0.12 }, 0.25 * k)
         .fromTo(q(".verify-cert-title"), { opacity: 0, x: -24 * k }, { opacity: 1, x: 0, duration: DURATION.standard * k }, 0.5 * k)

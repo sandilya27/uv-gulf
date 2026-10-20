@@ -64,7 +64,7 @@ export function ScanBand({ slotId, src, placeholder, height, title, children }: 
       const progress = { p: 0 };
       const tween = gsap.to(progress, {
         p: 1, duration: 1.2, ease: "power2.inOut", onUpdate: () => apply(progress.p),
-        scrollTrigger: { trigger: band, start: "top 75%", once: true },
+        scrollTrigger: { trigger: band, start: "top 75%", toggleActions: "play none none reset" },
       });
       return () => { tween.scrollTrigger?.kill(); tween.kill(); band.classList.remove("is-scanning"); };
     });
