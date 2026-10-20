@@ -693,6 +693,9 @@ img { max-width: none; }
 .cta-band { background: var(--gradient-brand-mist); }
 .uvg-deep.site-footer { background: radial-gradient(ellipse at 50% 100%, #004e7240, transparent 65%), linear-gradient(180deg, #031b29, #02131e); }
 .footer-gradient-wordmark { font-family: var(--font-display); font-weight: 700; font-size: clamp(88px,20vw,290px); line-height: .85; letter-spacing: -.055em; text-align: center; white-space: nowrap; user-select: none; color: #14516c; padding-top: 12px; transform: translateY(.12em); }
+.footer-wordmark { position: relative; }
+.footer-wordmark-stroke { position: absolute; inset: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(88px,20vw,290px); line-height: .85; letter-spacing: -.055em; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; color: transparent; -webkit-text-stroke: 1.5px #279bd6; padding-top: 12px; transform: translateY(.12em); }
+@media (prefers-reduced-motion: reduce) { .footer-wordmark-stroke { display: none; } }
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .gradient-text-light, .page-hero-title { background-image: var(--gradient-brand-light); }
   .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
@@ -702,7 +705,7 @@ img { max-width: none; }
 }
 @media (forced-colors: active) {
   .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background: none; color: CanvasText; }
-  .footer-gradient-wordmark { display: none; }
+  .footer-gradient-wordmark, .footer-wordmark-stroke { display: none; }
 }
 
 /* Gradient numerals: solid fallbacks remain available without text clipping. */

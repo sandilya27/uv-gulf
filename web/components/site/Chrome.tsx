@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { CredentialSeal, Eyebrow, LocationList } from "@/components/ds";
 import { ScanBand } from "@/components/home/ScanBand";
+import { FooterWordmark } from "@/components/site/FooterWordmark";
 import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { FOOTER_COLS } from "@/lib/content";
 
@@ -31,7 +32,7 @@ export function SiteFooter() {
           <span>United Vetting Gulf Co. Ltd. · Khobar, Kingdom of Saudi Arabia</span>
           <a href="mailto:sales@uvgulf.com">sales@uvgulf.com</a>
         </div>
-        <div className="footer-gradient-wordmark" aria-hidden="true">UV GULF</div>
+        <FooterWordmark />
       </div>
     </footer>
   );
