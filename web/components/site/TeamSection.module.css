@@ -1,5 +1,12 @@
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
 .profile { min-width: 0; display: grid; align-content: start; gap: var(--space-6); }
+/* Compact (homepage) variant: site ID-badge header above each card. */
+.badgeStrip { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px; background: #031b29; border-radius: 14px 14px 0 0; border-bottom: 2px solid var(--accent); }
+.badgeStrip img { height: 22px; width: auto; flex: none; }
+.badgeStrip span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--sky-300); }
+.badgeStrip i { flex: none; width: 28px; height: 8px; border-radius: 4px; background: #0b2b40; box-shadow: inset 0 1px 2px #0008; }
+.profile:has(.badgeStrip) { gap: 0; }
+.profile:has(.badgeStrip) :global(.profile-card__body) { border-top-left-radius: 0; border-top-right-radius: 0; }
 .bio { margin: 0; padding-inline: 10px; color: var(--ink-muted); line-height: 1.7; overflow-wrap: anywhere; }
 .notice { margin: 0; color: var(--ink-muted); font-size: 14px; line-height: 1.6; }
 .profile :global(.profile-card) { width: 100%; }
