@@ -1,6 +1,6 @@
-import { CardEntrances } from "@/components/site/CardEntrances";
 import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
+import { AboutNameplate } from "@/components/home/AboutNameplate";
 import { Divisions } from "@/components/home/Divisions";
 import { HomeHero } from "@/components/home/HomeHero";
 import { InspectionProcess } from "@/components/home/InspectionProcess";
@@ -14,7 +14,7 @@ import { NewsSection } from "@/components/site/NewsSection";
 import { getNewsArticles } from "@/lib/news";
 import { HomeVerify } from "@/components/verify/Verifier";
 import Link from "next/link";
-import { COUNTERS, enquiryHref } from "@/lib/content";
+import { enquiryHref } from "@/lib/content";
 import { INDUSTRY_SECTORS } from "@/lib/industries";
 
 export default function HomePage() {
@@ -59,28 +59,7 @@ export default function HomePage() {
               <Button variant="ghost" arrow href="/industries">Explore industries</Button>
             </div>
           </div>
-          <div className="counters">
-            {COUNTERS.map((k, i) => (
-              <div key={k.label} data-reveal="1" data-delay={i * 100} className="counter">
-                <span data-count={k.n} className="counter-n">{k.n}</span>
-                <span className="counter-label">{k.label}</span>
-                <span className="counter-sub">{k.sub}</span>
-              </div>
-            ))}
-            <div className="about-credentials">
-              <h3 className="counter-label">Accreditation &amp; certification</h3>
-              <CardEntrances as="dl" className="about-credential-list">
-                <div>
-                  <dt>ISO/IEC 17020:2012</dt>
-                  <dd>Inspection-body accreditation</dd>
-                </div>
-                <div>
-                  <dt>ISO 9001:2015</dt>
-                  <dd>Quality-management system certification</dd>
-                </div>
-              </CardEntrances>
-            </div>
-          </div>
+          <AboutNameplate />
         </div>
       </section>
 
