@@ -1,6 +1,7 @@
 import { MaskedHeading } from "@/components/site/MaskedHeading";
 import { Button, Eyebrow } from "@/components/ds";
 import { AboutNameplate } from "@/components/home/AboutNameplate";
+import { ClientWall } from "@/components/home/ClientWall";
 import { Divisions } from "@/components/home/Divisions";
 import { HomeHero } from "@/components/home/HomeHero";
 import { InspectionProcess } from "@/components/home/InspectionProcess";
@@ -63,24 +64,7 @@ export default function HomePage() {
       <section className="home-clients" aria-labelledby="clients-title">
         <div className="wrap">
           <MaskedHeading id="clients-title" className="">Our Clients</MaskedHeading>
-          <div className="client-marquee">
-          <div className="client-marquee-track">
-          {[0, 1, 2].map((copy) => <ul className="home-client-grid" key={copy} aria-hidden={copy > 0 ? true : undefined}>
-            {[
-              ["SABIC", "sabic"],
-              ["Saudi Aramco", "aramco"],
-              ["Yasref", "yasref"],
-              ["Saudi Electricity Company", "saudi-electricity"],
-              ["Marafiq", "marafiq"],
-              ["Ma’aden", "maaden"],
-            ].map(([name, logo]) => (
-              <li key={name}>
-                <img src={`/assets/clients/${logo}.jpeg`} alt={name} className="home-client-logo" width={370} height={202} loading="lazy" />
-              </li>
-            ))}
-          </ul>)}
-          </div>
-          </div>
+          <ClientWall />
         </div>
       </section>
 

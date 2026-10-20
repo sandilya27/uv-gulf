@@ -1007,41 +1007,20 @@ img { max-width: none; }
 /* Individual client logos on the shared brand palette. */
 .home-clients { background: var(--surface-deep); padding: 64px 0; }
 .home-clients h2 { margin: 0 0 36px; text-align: center; color: var(--on-deep); font-family: var(--font-display); font-weight: 600; font-size: clamp(30px,3vw,46px); line-height: 1.2; }
-.home-client-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 28px; margin: 0; padding: 0; list-style: none; }
-.home-client-grid li { min-width: 0; overflow: hidden; background: #eee; border-radius: var(--radius-md); }
+.client-wall { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; padding: 0; list-style: none; }
+.client-wall li { position: relative; min-width: 0; overflow: hidden; background: #eee; border-radius: var(--radius-md); }
 .home-client-logo { display: block; width: 100%; height: auto; aspect-ratio: 240 / 131; object-fit: contain; }
-@media (max-width: 1000px) { .home-client-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; } }
-@media (max-width: 560px) { .home-clients { padding: 40px 0; } .home-clients h2 { margin-bottom: 24px; } .home-client-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; } }
-
+/* Border that draws on; pathLength 1 lets the dash be set without measuring. */
+.client-wall-edge { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; fill: none; stroke: var(--sky-300); stroke-width: 4; }
+@media (max-width: 560px) { .home-clients { padding: 40px 0; } .home-clients h2 { margin-bottom: 24px; } .client-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; } }
 
 @media (prefers-reduced-motion: no-preference) and (hover: hover) {
-  .home-client-logo { transition: transform 350ms cubic-bezier(.2,.7,.2,1), filter 350ms ease; }
-  .home-client-grid li { transition: box-shadow 350ms ease; }
-  .home-client-grid li:hover { box-shadow: 0 12px 28px rgb(0 0 0 / 20%); }
-  .home-client-grid li:hover .home-client-logo { transform: translateY(-3px) scale(1.035); filter: saturate(1.1); }
+  .client-wall li { transition: transform 180ms cubic-bezier(.2,.7,.2,1), box-shadow 300ms ease; }
+  .client-wall .home-client-logo { opacity: .92; transition: opacity 300ms ease; }
+  .client-wall li:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgb(0 0 0 / 20%); }
+  .client-wall li:hover .home-client-logo { opacity: 1; }
 }
-
-/* Equal repeated groups keep the client marquee seamless at every viewport. */
-.client-marquee { overflow: hidden; mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent); }
-.client-marquee-track { display: flex; width: max-content; animation: clients-marquee 32s linear infinite; }
-.client-marquee .home-client-grid { display: flex; flex-shrink: 0; gap: 24px; padding-right: 24px; }
-.client-marquee .home-client-grid li { flex: 0 0 200px; width: 200px; }
-.client-marquee:hover .client-marquee-track { animation-play-state: paused; }
-@keyframes clients-marquee { to { transform: translateX(-33.333333%); } }
-@media (max-width: 560px) {
-  .client-marquee .home-client-grid { gap: 16px; padding-right: 16px; }
-  .client-marquee .home-client-grid li { flex-basis: 150px; width: 150px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .client-marquee { mask-image: none; }
-  .client-marquee-track { animation: none; width: 100%; }
-  .client-marquee .home-client-grid[aria-hidden] { display: none; }
-  .client-marquee .home-client-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); width: 100%; padding-right: 0; }
-  .client-marquee .home-client-grid li { width: auto; }
-}
-@media (prefers-reduced-motion: reduce) and (max-width: 560px) {
-  .client-marquee .home-client-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-}
+@media (prefers-reduced-motion: reduce) { .client-wall-edge { display: none; } }
 
 /* ---------- Navbar: floating glass capsule with a sliding highlight ---------- */
 .uvg-nav { position: relative; }
