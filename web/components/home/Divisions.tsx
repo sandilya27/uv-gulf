@@ -2,7 +2,7 @@
 
 // Equal-width division panels share content rows for consistent alignment.
 import { useEffect, useId, useRef, useState } from "react";
-import { Button, Eyebrow } from "@/components/ds";
+import { Button } from "@/components/ds";
 import { DIVISION_LINKS } from "@/lib/content";
 
 type Side = "i" | "t";
@@ -72,7 +72,6 @@ export function Divisions() {
                 <text x="60" y="57" className="division-stamp-brand">UV GULF</text>
                 <path d="m49 68 7 7 15-16" className="division-stamp-check" />
               </svg>
-              <Eyebrow>{p.eyebrow}</Eyebrow>
               <h2 className="division-title">{p.title}</h2>
               <p className="division-text">{p.text}</p>
               <ul className="division-links">

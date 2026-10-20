@@ -10,7 +10,7 @@ export function TeamSection({ variant = "full" }: { variant?: "compact" | "full"
   const members = variant === "compact" ? profiles.slice(0, 3) : profiles;
   return <section id="team" className="section anchor" aria-labelledby="team-title">
     <div className="wrap stack-24">
-      <Eyebrow>Our team</Eyebrow>
+      {variant === "full" ? <Eyebrow>Our team</Eyebrow> : null}
       <MaskedHeading id="team-title" className="h2">The people behind UV Gulf.</MaskedHeading>
       {isPreview ? <p className={styles.notice}>Sample profiles — fictional names, bios and AI-generated portraits for layout review.</p> : null}
       <div className={styles.grid}>

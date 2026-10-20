@@ -40,16 +40,12 @@ export default function HomePage() {
       <InspectionProcess />
 
       <PhotoBand slotId="band-home" src="/assets/images/inspection.webp" placeholder="Illustrative image of a technician performing ultrasonic inspection on a pipeline" height="100vh" variant="scan" title="On-site inspection, wherever your asset is.">
-        <Eyebrow>Onshore and offshore</Eyebrow>
       </PhotoBand>
 
       <section id="about" className="section anchor about-section">
         <div className="wrap about-grid">
           <div className="stack-24">
-            <div className="stack-12">
-              <Eyebrow>About UV Gulf</Eyebrow>
-              <MaskedHeading>Inspection expertise. Across Saudi Arabia.</MaskedHeading>
-            </div>
+            <MaskedHeading>Inspection expertise. Across Saudi Arabia.</MaskedHeading>
             <p data-reveal="1" className="body-lg">Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.</p>
             <p data-reveal="1" className="about-industries"><strong>Industries served</strong><span>{INDUSTRY_SECTORS.map((industry, index) => <span key={industry.slug}>{index > 0 ? " · " : ""}{industry.href ? <Link href={industry.href}>{industry.title}</Link> : industry.title}</span>)}</span></p>
             <div data-reveal="1" className="btn-row">
@@ -88,7 +84,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <NewsSection id="home-news-title" eyebrow="From UV Gulf" title="News & Insights" action={<Button variant="ghost" arrow href="/news-insights">View all News & Insights</Button>}>
+      <NewsSection id="home-news-title" title="News & Insights" action={<Button variant="ghost" arrow href="/news-insights">View all News & Insights</Button>}>
         <NewsGrid articles={getNewsArticles().slice(0, 3)} />
       </NewsSection>
 

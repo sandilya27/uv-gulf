@@ -5,7 +5,7 @@ import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MaskedHeading } from "@/components/site/MaskedHeading";
-import { Button, Eyebrow, Icon } from "@/components/ds";
+import { Button, Icon } from "@/components/ds";
 import { enquiryHref, STEPS } from "@/lib/content";
 import { DURATION, EASE } from "@/lib/motion";
 
@@ -140,7 +140,6 @@ export function InspectionProcess() {
       <div className="wrap process-grid">
         <div className="process-aside">
           <div className="stack-12">
-            <Eyebrow>How an inspection runs</Eyebrow>
             <MaskedHeading>From enquiry to verified certificate.</MaskedHeading>
           </div>
           <div ref={visual} className="process-visual">
