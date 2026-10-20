@@ -848,9 +848,9 @@ img { max-width: none; }
 .atlas-country{fill:var(--primary);opacity:.28;font:13px var(--font-mono);letter-spacing:5px}
 .atlas-sea{fill:var(--ink-muted);opacity:.45;font:italic 10px var(--font-sans);letter-spacing:4px}
 .atlas-route{fill:none;stroke:var(--accent);stroke-width:1;opacity:.2;stroke-dasharray:1;transition:opacity 400ms,stroke-width 400ms}
-.coverage-atlas.is-visible .atlas-route{animation:atlas-draw 1.6s cubic-bezier(.16,1,.3,1) var(--route-delay) both}
 .atlas-route.is-active{stroke:var(--link);stroke-width:2;opacity:.85}
-.atlas-trace{fill:none;stroke:var(--signal);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:.06 .94;animation:atlas-travel 1.8s ease-in-out 2;pointer-events:none}
+.atlas-traveler{fill:var(--signal);stroke:var(--surface);stroke-width:1.5;opacity:0;pointer-events:none}
+.atlas-name{display:inline-block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}.atlas-name>span{display:inline-block;animation:atlas-name 520ms var(--ease-enter) both}
 .atlas-hq{fill:var(--signal);fill-opacity:.12;stroke:var(--signal);stroke-opacity:.4}
 .atlas-pin{cursor:pointer}.atlas-dot{fill:var(--accent);stroke:var(--surface);stroke-width:1.5;transition:fill 250ms}.atlas-pin.is-active .atlas-dot{fill:var(--signal)}
 .atlas-pin text{fill:var(--ink-muted);font:10px var(--font-sans);paint-order:stroke;stroke:var(--surface-alt);stroke-width:3px;stroke-linejoin:round;transition:fill 250ms}
@@ -865,10 +865,10 @@ img { max-width: none; }
 .atlas-cities button::after{content:'';position:absolute;inset:auto 0 -1px;height:2px;background:var(--link);transform:scaleX(0);transform-origin:left;transition:transform 300ms ease}
 .atlas-cities button:is(:hover,.is-active){color:var(--link)}.atlas-cities button.is-active::after{transform:scaleX(1)}.atlas-cities button>span:last-child{font:9px var(--font-mono);opacity:.7}.atlas-cities button:focus-visible{outline:2px solid var(--focus-ring);outline-offset:4px}.atlas-panel>.uvg-btn{margin-top:auto}
 .atlas-footer{display:flex;align-items:center;gap:40px;padding-top:28px}.atlas-footer>span{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--ink-muted)}.atlas-footer strong{font:500 28px var(--font-display);letter-spacing:-.04em;color:var(--primary)}.atlas-footer p{margin:0 0 0 auto;font-size:12px;color:var(--ink-muted)}.atlas-footer p span{color:var(--link)}
-@keyframes atlas-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes atlas-travel{from{stroke-dashoffset:1;opacity:0}15%,80%{opacity:1}to{stroke-dashoffset:0;opacity:0}}@keyframes atlas-detail{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes atlas-name{from{transform:translateY(105%)}to{transform:none}}@keyframes atlas-detail{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:960px){.atlas-heading{align-items:flex-start;flex-direction:column;gap:24px}.atlas-heading>p br{display:none}.atlas-heading>p{max-width:48ch}.atlas-stage{grid-template-columns:minmax(0,1.3fr) minmax(260px,1fr)}.atlas-panel{padding-left:24px}.atlas-map .atlas-caption{flex-direction:column;gap:4px}.atlas-footer{gap:24px;flex-wrap:wrap}.atlas-footer p{margin-left:0}}
 @media(max-width:680px){.atlas-heading{margin-bottom:28px}.atlas-stage{grid-template-columns:minmax(0,1fr)}.atlas-map{padding:20px 0}.atlas-map .atlas-caption{flex-direction:row;font-size:8px}.atlas-panel{border-left:0;border-top:1px solid var(--border);padding:24px 0}.atlas-detail{margin-top:24px}.atlas-detail p{min-height:0;max-width:48ch}.atlas-cities{margin-block:20px 28px}.atlas-pin text{font-size:12px}.atlas-footer{gap:16px 24px;padding-top:24px}.atlas-footer p{width:100%}}
-@media(prefers-reduced-motion:reduce){.coverage-atlas *,.coverage-atlas.is-visible .atlas-route{animation:none!important;transition:none!important}.atlas-trace{display:none}}
+@media(prefers-reduced-motion:reduce){.coverage-atlas *{animation:none!important;transition:none!important}.atlas-traveler{display:none}}
 
 /* Digital certificate: paper, engraved rules and a restrained issuer seal. */
 .certificate-card { --certificate-status: #13794f; position: relative; overflow: hidden; border: 1px solid #c9d5da; border-top: 4px solid #00679a; border-radius: 6px; background: #fffdf7; box-shadow: 0 14px 40px #002a3f12; color: #002a3f; }
