@@ -2,7 +2,7 @@ import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Button, Eyebrow } from "@/components/ds";
 import { CtaBand, PageHero, PhotoSlot } from "@/components/site/Chrome";
-import { DivisionArtifact } from "@/components/site/DivisionArtifact";
+import { HERO_CALLOUTS } from "@/lib/hero-callouts";
 import { CourseGrid } from "@/components/training/CourseGrid";
 import { enquiryHref } from "@/lib/content";
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: "Training & certification" };
 export default function TrainingPage() {
   return (
     <>
-      <PageHero eyebrow="Training division" title="Training & certification" lead="Industrial skills, safety and operator certification for individuals and workforces across the Kingdom." artifact={<DivisionArtifact division="training" />}>
+      <PageHero eyebrow="Training division" title="Training &" accent="certification" lead="Industrial skills, safety and operator certification for individuals and workforces across the Kingdom." callouts={HERO_CALLOUTS.training}>
         <Button variant="on-deep" size="lg" arrow href={enquiryHref("Training")}>Ask about group training</Button>
         <Button variant="outline-deep" size="lg" href="/verify">Verify a certificate</Button>
       </PageHero>

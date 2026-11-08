@@ -5,7 +5,10 @@ import type { ReactNode } from "react";
 import { CredentialSeal, Eyebrow, LocationList } from "@/components/ds";
 import { ScanBand } from "@/components/home/ScanBand";
 import { FooterWordmark } from "@/components/site/FooterWordmark";
-import { DivisionArtifact } from "@/components/site/DivisionArtifact";
+import { HeroCrosshair } from "@/components/site/HeroCrosshair";
+import { HeroGears } from "@/components/home/HeroGears";
+import { HeroSpool } from "@/components/site/HeroSpool";
+import type { HeroCallouts } from "@/lib/hero-callouts";
 import { FOOTER_COLS } from "@/lib/content";
 
 export function SiteFooter() {
@@ -38,18 +41,20 @@ export function SiteFooter() {
   );
 }
 
-/** Shared cube hero for inner pages, with a consistent layout. */
-export function PageHero({ eyebrow, title, lead, titleMeasure = true, artifact = <DivisionArtifact division="inspection" />, children }: { eyebrow: string; title: string; lead: string; titleMeasure?: boolean; artifact?: ReactNode; children?: ReactNode }) {
+/** Shared hero for inner pages: the homepage spool scan, gears and crosshair, with per-page callouts. */
+export function PageHero({ eyebrow, title, accent, lead, callouts, children }: { eyebrow: string; title: string; accent?: string; lead: string; callouts?: HeroCallouts; children?: ReactNode }) {
   return (
     <section data-hero="1" className="uvg-deep page-hero">
-      <div className={artifact ? "wrap page-hero-layout" : "wrap"}>
-      <div className="page-hero-inner">
-        <div data-reveal="1"><Eyebrow>{eyebrow}</Eyebrow></div>
-        <h1 data-reveal="1" data-delay="80" className="page-hero-title" style={titleMeasure ? undefined : { maxWidth: "none" }}>{title}</h1>
-        <p data-reveal="1" data-delay="160" className="lead-deep">{lead}</p>
-        {children ? <div data-reveal="1" data-delay="240" className="btn-row page-hero-actions">{children}</div> : null}
-      </div>
-      {artifact ? <div className="page-hero-artifact">{artifact}</div> : null}
+      <HeroGears />
+      <HeroCrosshair />
+      <div className="wrap page-hero-layout">
+        <div className="page-hero-inner">
+          <div data-reveal="1"><Eyebrow>{eyebrow}</Eyebrow></div>
+          <h1 data-reveal="1" data-delay="80" className="page-hero-title">{title}{accent ? <>{" "}<span className="gradient-text-light">{accent}</span></> : null}</h1>
+          <p data-reveal="1" data-delay="160" className="lead-deep">{lead}</p>
+          {children ? <div data-reveal="1" data-delay="240" className="btn-row page-hero-actions">{children}</div> : null}
+        </div>
+        <div className="page-hero-artifact"><HeroSpool callouts={callouts} /></div>
       </div>
     </section>
   );

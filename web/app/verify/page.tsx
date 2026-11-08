@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Icon, VERIFY_STATUS, type VerifyStatus } from "@/components/ds";
 import { PageHero } from "@/components/site/Chrome";
 import { VerifyPageForm } from "@/components/verify/Verifier";
-import { VerificationArtifact } from "@/components/verify/VerificationArtifact";
+import { HERO_CALLOUTS } from "@/lib/hero-callouts";
 
 export const metadata: Metadata = { title: "Verify a certificate" };
 
@@ -17,7 +17,7 @@ const OUTCOME_COLOR: Record<VerifyStatus, string> = {
 export default function VerifyPage() {
   return (
     <>
-      <PageHero eyebrow="Verification" title="Verify a certificate" lead="Enter the number printed under the QR code on a UV Gulf certificate or ID card." titleMeasure={false} artifact={<VerificationArtifact />} />
+      <PageHero eyebrow="Verification" title="Verify a" accent="certificate" lead="Enter the number printed under the QR code on a UV Gulf certificate or ID card." callouts={HERO_CALLOUTS.verify} />
 
       <section className="section-verify">
         <div className="verify-col">

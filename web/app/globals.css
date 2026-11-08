@@ -88,14 +88,13 @@ img { max-width: none; }
 .page-hero-inner { position: relative; z-index: 1; display: grid; gap: var(--space-4); }
 .page-hero-title { margin: 0; font-family: var(--font-display); font-size: clamp(40px,5vw,64px); line-height: 1.04; font-weight: 700; max-width: 18ch; text-wrap: balance; color: var(--on-deep); }
 .page-hero-actions { margin-top: var(--space-4); }
+.page-hero { display: flex; align-items: center; min-height: min(66vh, 640px); }
+.page-hero > .wrap { position: relative; z-index: 1; width: 100%; box-sizing: border-box; }
 .page-hero-layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; gap: var(--space-8); }
 .page-hero-artifact { position: relative; isolation: isolate; min-width: 0; }
 .page-hero-artifact .inspection-artifact { transform: none; margin: 0; max-width: none; }
-.page-hero-artifact .artifact-canvas { height: clamp(260px, 28vw, 350px); }
-@media (max-width: 760px) {
-  .page-hero-layout { grid-template-columns: minmax(0, 1fr); }
-  .page-hero-artifact { width: 100%; max-width: 460px; justify-self: center; }
-}
+.page-hero-artifact .artifact-canvas { height: clamp(300px, 32vw, 420px); }
+.page-hero-title .gradient-text-light { display: inline-block; }
 
 /* ---------- Home hero ---------- */
 .home-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--surface-deep); color: var(--on-deep); min-height: calc(100vh - var(--header-height)); display: flex; align-items: center; }
@@ -697,14 +696,14 @@ img { max-width: none; }
 .footer-wordmark-stroke { position: absolute; inset: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(88px,20vw,290px); line-height: .85; letter-spacing: -.055em; text-align: center; white-space: nowrap; user-select: none; pointer-events: none; color: transparent; -webkit-text-stroke: 1.5px #279bd6; padding-top: 12px; transform: translateY(.12em); }
 @media (prefers-reduced-motion: reduce) { .footer-wordmark-stroke { display: none; } }
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
-  .gradient-text-light, .page-hero-title { background-image: var(--gradient-brand-light); }
+  .gradient-text-light { background-image: var(--gradient-brand-light); }
   .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
-  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word], .footer-gradient-wordmark { background-clip: text; -webkit-background-clip: text; color: transparent; }
+  .gradient-text-light, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word], .footer-gradient-wordmark { background-clip: text; -webkit-background-clip: text; color: transparent; }
   .coverage-copy .h2 > span { display: inline-block; }
   .footer-gradient-wordmark { background-image: linear-gradient(180deg, #279bd699 0%, #004e7280 45%, #031b2900 100%); }
 }
 @media (forced-colors: active) {
-  .gradient-text-light, .page-hero-title, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background: none; color: CanvasText; }
+  .gradient-text-light, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background: none; color: CanvasText; }
   .footer-gradient-wordmark, .footer-wordmark-stroke { display: none; }
 }
 
@@ -1149,3 +1148,14 @@ img { max-width: none; }
 .photo-band--scan .photo-band-overlay { z-index: 0; }
 @media (prefers-reduced-motion: reduce) { .scan-bar { display: none; } .photo-band--scan { height: clamp(380px, 62vh, 580px) !important; min-height: 0; } }
 @media (max-width: 759px) { .photo-band--scan { height: clamp(380px, 62vh, 580px) !important; min-height: 0; } .scan-wave { height: 36px; } .photo-band--scan .wrap.photo-band-text { padding-bottom: calc(var(--space-12) + 24px); } }
+
+/* Narrow screens: the spool becomes a dimmed backdrop behind the copy, on every hero. */
+@media (max-width: 900px) {
+  .page-hero-layout { grid-template-columns: minmax(0, 1fr); }
+  .page-hero > .wrap, .wrap.home-hero-inner { position: static; }
+  .home-hero-visual, .page-hero-artifact { position: absolute; inset: 0; z-index: 0; width: auto; max-width: none; margin: 0; justify-self: stretch; opacity: 0.4; pointer-events: none; }
+  .home-hero-visual .inspection-artifact, .page-hero-artifact .inspection-artifact { position: absolute; inset: 0; width: 100%; height: 100%; align-self: stretch; max-width: none; margin: 0; }
+  .home-hero-visual .artifact-canvas, .page-hero-artifact .artifact-canvas { height: 100%; }
+  .home-hero-visual .artifact-callouts, .page-hero-artifact .artifact-callouts, .home-hero-visual .hero-text-loop { display: none; }
+  .home-hero-copy, .page-hero-inner { position: relative; z-index: 1; }
+}

@@ -5,6 +5,7 @@
 import { useEffect, useRef } from "react";
 import { createTimer } from "animejs";
 import * as THREE from "three";
+import { HERO_CALLOUTS, type HeroCallouts } from "@/lib/hero-callouts";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 const OUTER = 0.5;
@@ -21,13 +22,6 @@ const SWEEP = 5.4;
 const HOLD_END = 8.8;
 const CYCLE = 9.8;
 
-// Spool drawing tags: service on the first line, illustrative spool spec on the second.
-const CALLOUTS = [
-  ["Ultrasonic testing", "Phased-array ring scan"],
-  ["Girth weld W-01", "Butt weld · 100% UT"],
-  ["Weld-neck flange", "WN · RF · Class 150"],
-  ["Wall-thickness map", "NPS 12 · SCH 40"],
-] as const;
 // Label-side start of each leader line in the 0–100 callout box: [x, y, elbow x].
 const LEADERS = [[6, 17, 28], [94, 21, 76], [6, 89, 24], [94, 82, 72]] as const;
 
@@ -45,7 +39,7 @@ function ring(outer: number, inner: number, holes: [number, number, number][] = 
   return shape;
 }
 
-export default function SpoolScan() {
+export default function SpoolScan({ callouts = HERO_CALLOUTS.spool }: { callouts?: HeroCallouts }) {
   const host = useRef<HTMLDivElement>(null);
   const lines = useRef<(SVGPathElement | null)[]>([]);
   const dots = useRef<(SVGCircleElement | null)[]>([]);
@@ -354,10 +348,10 @@ export default function SpoolScan() {
       <div ref={host} className="artifact-canvas" />
       <div className="artifact-callouts">
         <svg className="artifact-callout-lines" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-          {CALLOUTS.map(([label], i) => <path key={label} ref={(el) => { lines.current[i] = el; }} />)}
-          {CALLOUTS.map(([label], i) => <circle key={label} ref={(el) => { dots.current[i] = el; }} r="0.65" />)}
+          {callouts.map(([label], i) => <path key={label} ref={(el) => { lines.current[i] = el; }} />)}
+          {callouts.map(([label], i) => <circle key={label} ref={(el) => { dots.current[i] = el; }} r="0.65" />)}
         </svg>
-        {CALLOUTS.map(([label, spec], i) => (
+        {callouts.map(([label, spec], i) => (
           <span key={label} className={`artifact-callout artifact-callout--${["inspection", "training", "calibration", "certification"][i]}`}>
             {label}<span className="artifact-callout-spec">{spec}</span>
           </span>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function NewsInsightsPage() {
   return <>
-    <PageHero eyebrow="News & Insights" title="Perspectives on industrial work." lead="A place for UV Gulf news and insights on inspection and industrial training." />
+    <PageHero eyebrow="News & Insights" title="Perspectives on" accent="industrial work." lead="A place for UV Gulf news and insights on inspection and industrial training." />
     <NewsSection id="articles" eyebrow="From UV Gulf" title="News & Insights" intro="Explore updates and perspectives on the equipment, people and requirements behind industrial work.">
       <NewsGrid articles={getNewsArticles()} />
     </NewsSection>

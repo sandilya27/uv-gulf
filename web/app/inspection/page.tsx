@@ -2,7 +2,6 @@ import { MaskedHeading } from "@/components/site/MaskedHeading";
 import type { Metadata } from "next";
 import { Button, Eyebrow, ServiceCard } from "@/components/ds";
 import { PageHero, PhotoBand } from "@/components/site/Chrome";
-import { DivisionArtifact } from "@/components/site/DivisionArtifact";
 import { enquiryHref, SERVICES } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Inspection, testing and calibration" };
@@ -10,7 +9,7 @@ export const metadata: Metadata = { title: "Inspection, testing and calibration"
 export default function InspectionPage() {
   return (
     <>
-      <PageHero eyebrow="Inspection division" title="Inspection, testing and calibration" lead="Third-party inspection, testing, calibration and technical advisory across the Kingdom." artifact={<DivisionArtifact division="inspection" />}>
+      <PageHero eyebrow="Inspection division" title="Inspection, testing and" accent="calibration" lead="Third-party inspection, testing, calibration and technical advisory across the Kingdom.">
         <Button variant="on-deep" size="lg" arrow href={enquiryHref("Inspection")}>Request an inspection</Button>
         <Button variant="outline-deep" size="lg" href="/verify">Verify a certificate</Button>
       </PageHero>

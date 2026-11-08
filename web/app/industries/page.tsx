@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function IndustriesPage() {
   return <>
-    <PageHero eyebrow="Industries" title="Support shaped by your industry." lead="Connect your asset challenges and workforce needs with inspection, testing, calibration, technical advisory and training. Start with the equipment, activity and operating context.">
+    <PageHero eyebrow="Industries" title="Support shaped by your" accent="industry." lead="Connect your asset challenges and workforce needs with inspection, testing, calibration, technical advisory and training. Start with the equipment, activity and operating context.">
       <Button variant="on-deep" size="lg" arrow href={enquiryHref("General")}>Discuss your industry requirements</Button>
     </PageHero>
     <section className="section" aria-labelledby="sectors">

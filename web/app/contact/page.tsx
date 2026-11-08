@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { LocationList } from "@/components/ds";
 import { EnquiryForm } from "@/components/contact/EnquiryForm";
 import { PageHero } from "@/components/site/Chrome";
-import { DivisionArtifact } from "@/components/site/DivisionArtifact";
+import { HERO_CALLOUTS } from "@/lib/hero-callouts";
 import type { EnquiryType } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Send an enquiry" };
@@ -16,7 +16,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <PageHero eyebrow="Contact" title="Send an enquiry" lead="Tell us about the asset, the site and the timing. We reply from sales@uvgulf.com." titleMeasure={false} artifact={<DivisionArtifact division="contact" />} />
+      <PageHero eyebrow="Contact" title="Send an" accent="enquiry" lead="Tell us about the asset, the site and the timing. We reply from sales@uvgulf.com." callouts={HERO_CALLOUTS.contact} />
 
       <section className="section-contact">
         <div className="wrap contact-grid">

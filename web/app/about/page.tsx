@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return <>
-    <PageHero eyebrow="About UV Gulf" title="Inspection and training. A clear way forward." lead="Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.">
+    <PageHero eyebrow="About UV Gulf" title="Inspection and training." accent="A clear way forward." lead="Based in Khobar, United Vetting Gulf Co. Ltd. provides third-party inspection, non-destructive testing, calibration, technical advisory and industrial training across Saudi Arabia.">
       <Button variant="on-deep" size="lg" arrow href={enquiryHref("General")}>Talk to UV Gulf</Button>
     </PageHero>
     <ServiceDetailSection id="company" eyebrow="United Vetting Gulf" title="Support for assets and the people who work with them.">
