@@ -689,7 +689,8 @@ img { max-width: none; }
 .page-hero { background: var(--gradient-brand-deep); }
 .home-hero { background: radial-gradient(ellipse at 0% 100%, #00679a35, transparent 58%), var(--surface-deep); }
 .coverage-section .map-card { background: var(--gradient-brand-deep); }
-.cta-band { background: var(--gradient-brand-mist); }
+.cta-band { background: linear-gradient(rgba(119, 180, 208, 0.07) 1px, transparent 1px) 0 0 / 28px 28px, linear-gradient(90deg, rgba(119, 180, 208, 0.07) 1px, transparent 1px) 0 0 / 28px 28px, var(--gradient-brand-deep); border-top: 0; }
+.cta-band .h-cta { color: var(--on-deep); }
 .uvg-deep.site-footer { background: radial-gradient(ellipse at 50% 100%, #004e7240, transparent 65%), linear-gradient(180deg, #031b29, #02131e); }
 .footer-gradient-wordmark { font-family: var(--font-display); font-weight: 700; font-size: clamp(88px,20vw,290px); line-height: .85; letter-spacing: -.055em; text-align: center; white-space: nowrap; user-select: none; color: #14516c; padding-top: 12px; transform: translateY(.12em); }
 .footer-wordmark { position: relative; }
@@ -697,7 +698,8 @@ img { max-width: none; }
 @media (prefers-reduced-motion: reduce) { .footer-wordmark-stroke { display: none; } }
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .gradient-text-light { background-image: var(--gradient-brand-light); }
-  .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
+  .coverage-copy .h2 > span, .verify-closing .h-cta [data-masked-word] { background-image: var(--gradient-brand-text); }
+  .cta-band .h-cta [data-masked-word] { background-image: var(--gradient-brand-light); }
   .gradient-text-light, .coverage-copy .h2 > span, .cta-band .h-cta [data-masked-word], .verify-closing .h-cta [data-masked-word], .footer-gradient-wordmark { background-clip: text; -webkit-background-clip: text; color: transparent; }
   .coverage-copy .h2 > span { display: inline-block; }
   .footer-gradient-wordmark { background-image: linear-gradient(180deg, #279bd699 0%, #004e7280 45%, #031b2900 100%); }
@@ -1159,3 +1161,6 @@ img { max-width: none; }
   .home-hero-visual .artifact-callouts, .page-hero-artifact .artifact-callouts, .home-hero-visual .hero-text-loop { display: none; }
   .home-hero-copy, .page-hero-inner { position: relative; z-index: 1; }
 }
+
+/* Section index counter for ServiceDetailSection heads. */
+main { counter-reset: uvg-section; }

@@ -1,8 +1,8 @@
 import { MaskedHeading } from "@/components/site/MaskedHeading";
 // Server-rendered building blocks shared across pages.
 import Link from "next/link";
-import type { ReactNode } from "react";
-import { CredentialSeal, Eyebrow, LocationList } from "@/components/ds";
+import { Children, cloneElement, isValidElement, type ReactNode } from "react";
+import { Button, CredentialSeal, Eyebrow, LocationList } from "@/components/ds";
 import { ScanBand } from "@/components/home/ScanBand";
 import { FooterWordmark } from "@/components/site/FooterWordmark";
 import { HeroCrosshair } from "@/components/site/HeroCrosshair";
@@ -87,11 +87,18 @@ export function PhotoSlot({ id, placeholder, src }: { id: string; placeholder: s
 
 export function CtaBand({ title, titleMeasure, children }: { title: string; titleMeasure?: string; children: ReactNode }) {
   return (
-    <section className="cta-band">
+    <section className="uvg-deep cta-band">
       <div className="wrap cta-band-inner">
         <MaskedHeading className="h-cta" style={titleMeasure ? { maxWidth: titleMeasure } : undefined}>{title}</MaskedHeading>
-        <div data-reveal="1" className="btn-row">{children}</div>
+        <div data-reveal="1" className="btn-row">{Children.map(children, onDeepButton)}</div>
       </div>
     </section>
   );
+}
+
+/** The CTA band is dark, so its buttons use the on-deep variants whatever the page asked for. */
+function onDeepButton(child: ReactNode) {
+  if (!isValidElement<{ variant?: string }>(child) || child.type !== Button) return child;
+  const variant = child.props.variant;
+  return cloneElement(child, { variant: !variant || variant === "primary" ? "on-deep" : variant === "secondary" || variant === "ghost" ? "outline-deep" : variant } as { variant: "on-deep" });
 }

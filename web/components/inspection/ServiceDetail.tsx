@@ -21,7 +21,7 @@ export function ServiceDetail({ title, lead, children, ctaLabel = "Request an in
 export function ServiceDetailSection({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: ReactNode }) {
   return <section className="section" aria-labelledby={id}>
     <div className={`wrap ${styles.section}`}>
-      <div><Eyebrow>{eyebrow}</Eyebrow><MaskedHeading id={id} className="h2">{title}</MaskedHeading></div>
+      <div className={styles.head}><Eyebrow>{eyebrow}</Eyebrow><MaskedHeading id={id} className="h2">{title}</MaskedHeading></div>
       <div className={styles.content}>{children}</div>
     </div>
   </section>;

@@ -22,7 +22,7 @@ export function NewsArticleDetail({ article, related }: { article: NewsArticle; 
         <Link href="/news-insights">Back to News & Insights</Link>
       </div></div></div>
     </article>
-    {related.length ? <NewsSection id="related-articles" eyebrow="Keep reading" title="Related insights"><NewsGrid articles={related} /></NewsSection> : null}
+    {related.length ? <NewsSection id="related-articles" eyebrow="Keep reading" title="Related insights"><NewsGrid variant="bulletin" articles={related} /></NewsSection> : null}
     <CtaBand title="Discuss your inspection or training requirements."><Button arrow href={enquiryHref("General")}>Talk to UV Gulf</Button></CtaBand>
   </>;
 }
