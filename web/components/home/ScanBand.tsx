@@ -4,7 +4,7 @@
 // to full colour, drawing an ultrasonic trace and revealing the heading as it passes.
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
 // Ultrasonic A-scan style trace: flat baseline broken by a few echo pulses.
 const WAVE = "M0 30 L90 30 L96 26 L102 34 L108 30 L220 30 L226 22 L232 38 L238 30 L350 30 L356 28 L362 32 L368 30 L470 30 L476 8 L484 52 L492 14 L500 30 L610 30 L616 27 L622 33 L628 30 L740 30 L746 20 L752 40 L758 30 L860 30 L866 28 L872 32 L878 30 L980 30 L986 12 L994 48 L1002 26 L1010 30 L1100 30 L1106 27 L1112 33 L1118 30 L1200 30";
@@ -13,7 +13,9 @@ const clamp = (n: number) => Math.min(1, Math.max(0, n));
 export function ScanBand({ slotId, src, placeholder, height, title, children }: { slotId: string; src: string; placeholder: string; height: string; title: string; children?: ReactNode }) {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  // Layout effect on purpose: GSAP wraps the pinned section in a pin-spacer, and React removes the section
+  // from its original parent. Passive-effect cleanup runs after that removal, which throws removeChild errors.
+  useLayoutEffect(() => {
     const band = root.current;
     if (!band) return;
     gsap.registerPlugin(ScrollTrigger);
