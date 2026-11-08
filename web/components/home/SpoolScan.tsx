@@ -39,7 +39,23 @@ function ring(outer: number, inner: number, holes: [number, number, number][] = 
   return shape;
 }
 
-export default function SpoolScan({ callouts = HERO_CALLOUTS.spool }: { callouts?: HeroCallouts }) {
+const MOBILE = "(max-width: 900px)";
+
+// One WebGL context and one prefiltered environment map are kept for the whole session and handed to
+// whichever hero is mounted, so navigating between pages skips context creation, PMREM and shader compiles.
+type Shared = { renderer: THREE.WebGLRenderer; environment: THREE.Texture; inUse: boolean };
+let shared: Shared | null = null;
+
+function createRenderer(mobile: boolean) {
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: !mobile, powerPreference: "high-performance" });
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const room = new RoomEnvironment();
+  const environment = pmrem.fromScene(room, 0.04).texture;
+  pmrem.dispose(); room.dispose();
+  return { renderer, environment };
+}
+
+export default function SpoolScan({ callouts = HERO_CALLOUTS.spool, onFallback }: { callouts?: HeroCallouts; onFallback?: () => void }) {
   const host = useRef<HTMLDivElement>(null);
   const lines = useRef<(SVGPathElement | null)[]>([]);
   const dots = useRef<(SVGCircleElement | null)[]>([]);
@@ -47,17 +63,30 @@ export default function SpoolScan({ callouts = HERO_CALLOUTS.spool }: { callouts
   useEffect(() => {
     const element = host.current;
     if (!element) return;
+    const mobile = window.matchMedia(MOBILE).matches;
     let renderer: THREE.WebGLRenderer;
+    let environment: THREE.Texture;
+    let handle: Shared | null = null;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      if (shared && !shared.inUse) {
+        handle = shared;
+      } else {
+        const created = createRenderer(mobile);
+        handle = { ...created, inUse: false };
+        if (!shared) shared = handle;
+      }
+      handle.inUse = true;
+      ({ renderer, environment } = handle);
     } catch {
+      onFallback?.();
       return;
     }
+    const owner = handle;
+    const lost = (event: Event) => { event.preventDefault(); if (shared === owner) shared = null; onFallback?.(); };
+    renderer.domElement.addEventListener("webglcontextlost", lost);
     element.appendChild(renderer.domElement);
     const scene = new THREE.Scene();
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    const room = new RoomEnvironment();
-    scene.environment = pmrem.fromScene(room, 0.04).texture;
+    scene.environment = environment;
     scene.environmentIntensity = 0.32;
     const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
     camera.position.set(0, 0, 9);
@@ -303,7 +332,8 @@ export default function SpoolScan({ callouts = HERO_CALLOUTS.spool }: { callouts
       const width = element.clientWidth, height = element.clientHeight;
       if (!width || !height) return;
       // Render at the transformed size so the scaled hero artwork stays sharp.
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio * element.getBoundingClientRect().width / width, 2));
+      // Capped at 1.5 on desktop and 1.25 on narrow screens: the spool is soft-lit, extra pixels buy little.
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio * element.getBoundingClientRect().width / width, window.matchMedia(MOBILE).matches ? 1.25 : 1.5));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.zoom = 1.2 * Math.min(1, camera.aspect) * (width < 480 ? 0.88 : 1);
@@ -334,12 +364,17 @@ export default function SpoolScan({ callouts = HERO_CALLOUTS.spool }: { callouts
       scene.traverse(object => {
         if (object instanceof THREE.Mesh) {
           disposed.add(object.geometry);
-          (Array.isArray(object.material) ? object.material : [object.material]).forEach(m => disposed.add(m));
+          // Materials are left alone on purpose: disposing them would drop the renderer's compiled programs,
+          // and the next hero would pay for the shader compiles again.
         }
       });
       disposed.forEach(item => item.dispose());
-      scene.environment?.dispose(); pmrem.dispose(); room.dispose();
-      renderer.dispose(); renderer.domElement.remove();
+      // The renderer and environment map outlive this hero; only a stray renderer is torn down.
+      scene.environment = null;
+      renderer.domElement.removeEventListener("webglcontextlost", lost);
+      renderer.domElement.remove();
+      owner.inUse = false;
+      if (shared !== owner) { environment.dispose(); renderer.dispose(); renderer.forceContextLoss(); }
     };
   }, []);
 

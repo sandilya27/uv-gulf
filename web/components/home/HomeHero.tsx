@@ -3,12 +3,10 @@
 // Home hero: word-by-word headline, pipe spool scan, and cursor crosshair.
 import { Button, CredentialSeal, Eyebrow } from "@/components/ds";
 import { enquiryHref } from "@/lib/content";
-import dynamic from "next/dynamic";
 import { HeroCrosshair } from "@/components/site/HeroCrosshair";
+import { HeroSpool } from "@/components/site/HeroSpool";
 import { HeroGears } from "./HeroGears";
 import { HeroTextLoop } from "./HeroTextLoop";
-
-const SpoolScan = dynamic(() => import("./SpoolScan"), { ssr: false });
 
 const WORDS = ["Third-party", "inspection,", "testing", "and", "calibration", "you", "can"];
 
@@ -35,7 +33,7 @@ export function HomeHero() {
         </div>
         </div>
         <div className="home-hero-visual">
-          <SpoolScan />
+          <HeroSpool />
           <HeroTextLoop />
         </div>
       </div>
